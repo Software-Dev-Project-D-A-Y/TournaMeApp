@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button signInBtn;
     private Button managerSignUpBtn;
     private Button playerSignUpBtn;
-
+//checking
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
