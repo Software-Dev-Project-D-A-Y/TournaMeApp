@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "385151724826",
+    "firebase_url": "https://tournamedb.firebaseio.com",
+    "project_id": "tournamedb",
+    "storage_bucket": "tournamedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385151724826:android:5f54497d1f4d9a589c50a3",
+        "android_client_info": {
+          "package_name": "com.example.tournameapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385151724826-eibp9d2i6690l6rk8jdqtjc41pp0u5tu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tournameapp",
+            "certificate_hash": "c1520ed02e2a0f56eba0130e1ebf9d26ab2d2e0a"
+          }
+        },
+        {
+          "client_id": "385151724826-terukc0gnteqq1chfm3976kbj3216oe1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsk8Na8eUBNmCLM-DO4y74acK7uXlkLfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385151724826-terukc0gnteqq1chfm3976kbj3216oe1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
