@@ -23,9 +23,16 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("Users");
 
-        myRef.setValue("Hello, World!");
+        User user1 = new User(0,"Dovie","Chitiz","dovic","123");
+        String userID = myRef.push().getKey();
+        myRef.child(userID).setValue(user1);
+
+        User user2 = new User(1,"Alon","Perlmuter","alonp","123");
+        userID = myRef.push().getKey();
+        myRef.child(userID).setValue(user2);
+
 
     }
 }
