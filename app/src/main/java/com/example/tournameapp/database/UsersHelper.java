@@ -1,6 +1,6 @@
-package com.example.tournameapp.Database;
+package com.example.tournameapp.database;
 
-import com.example.tournameapp.Utils.User;
+import com.example.tournameapp.model.Player;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -16,7 +16,7 @@ public class UsersHelper {
         dbRef = database.getReference(USERS);
     }
 
-    public boolean insertUser(User newUser)
+    public boolean insertUser(Player newUser)
     {
         ////
         return false;

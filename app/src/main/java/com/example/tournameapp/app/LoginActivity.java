@@ -1,4 +1,4 @@
-package com.example.tournameapp.App;
+package com.example.tournameapp.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), SignUpActivity.class);
-                intent.putExtra("signedAs","Manager");
+                intent.putExtra("signAs","Manager");
                 startActivity(intent);
             }
         });
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), SignUpActivity.class);
-                intent.putExtra("signedAs","Player");
+                intent.putExtra("signAs","Player");
                 startActivity(intent);
             }
         });
