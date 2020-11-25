@@ -1,4 +1,7 @@
-package com.example.tournameapp.model;
+package com.example.tournameapp.utils;
+
+import com.example.tournameapp.model.Match;
+import com.example.tournameapp.model.Tournament;
 
 public class MatchRequest {
 
