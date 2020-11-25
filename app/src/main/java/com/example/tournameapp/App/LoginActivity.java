@@ -1,4 +1,4 @@
-package com.example.tournameapp;
+package com.example.tournameapp.App;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.tournameapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

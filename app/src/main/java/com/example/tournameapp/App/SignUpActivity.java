@@ -1,10 +1,12 @@
-package com.example.tournameapp;
+package com.example.tournameapp.App;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.tournameapp.R;
 
 import org.w3c.dom.Text;
 
