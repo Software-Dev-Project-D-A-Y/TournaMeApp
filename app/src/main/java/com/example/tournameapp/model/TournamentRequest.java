@@ -1,4 +1,4 @@
-package com.example.tournameapp.utils;
+package com.example.tournameapp.model;
 
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;

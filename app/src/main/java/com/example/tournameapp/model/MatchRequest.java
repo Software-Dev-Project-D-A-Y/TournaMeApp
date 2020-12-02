@@ -1,11 +1,10 @@
-package com.example.tournameapp.utils;
+package com.example.tournameapp.model;
 
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Tournament;
 
 public class MatchRequest {
 
-    //matchID	tournamentID	isApproved
     private Match match;
     private Tournament tournament;
     private boolean isApproved;

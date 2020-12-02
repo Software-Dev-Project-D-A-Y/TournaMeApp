@@ -10,10 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements SignUpListener {
 
     private TextView signAsTxt;
     private String signAs;
@@ -27,12 +26,14 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView emailSignUpTxt;
     private Button signUpBtn;
 
-
+    private SignUpPresenter signUpPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        signUpPresenter = new SignUpPresenter(this);
 
         Intent intent = getIntent();
         signAs = intent.getExtras().getString("signAs");
@@ -57,37 +58,70 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = usernameSignUpTxt.getText().toString();
                 String password = passwordSignUpTxt.getText().toString();
                 String confirmPassword = confirmPassSignUpTxt.getText().toString();
-                int age =Integer.parseInt( ageSignUpTxt.getText().toString());
                 String email = emailSignUpTxt.getText().toString();
 
-
-              //  Validadtion CHECK
-
-
-
+                int age = -1;
+                try {
+                    age = Integer.parseInt( ageSignUpTxt.getText().toString());
+                } catch (Exception e1) {
+                    //Toast.makeText(v.getContext(),e1.getMessage(),Toast.LENGTH_SHORT).show();
+                    ageSignUpTxt.setError("Wrong age!");
+                    return;
+                }
 
                 switch (signAs) {
                     case "Manager":
-                        Manager newManager = new Manager(firstName,lastName,age,email,username,password);
-
-                        // Insertion to database
-                        Log.d("Manager","Insert to db");
-
+                        signUpPresenter.signUpManager(firstName,lastName,age,email,username,password,confirmPassword);
                         break;
 
                     case "Player":
-                        Player newPlayer = new Player(firstName,lastName,age,email,username,password);
-
-                        // Insertion to database
-                        Log.d("Player","Insert to db");
-
+                        signUpPresenter.signUpPlayer(firstName,lastName,age,email,username,password,confirmPassword);
                         break;
                     default:
                         break;
                 }
-                Intent intent = new Intent(v.getContext(),LoginActivity.class);
-                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onFirstNameError(String message) {
+        firstNameSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onLastNameError(String message) {
+        lastNameSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onAgeError(String message) {
+        ageSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onUsernameError(String message) {
+        usernameSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onPasswordError(String message) {
+        passwordSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onMatchedPasswordsError(String message) {
+        confirmPassSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void onEmailError(String message) {
+        emailSignUpTxt.setError(message);
+    }
+
+    @Override
+    public void signUp() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 }
