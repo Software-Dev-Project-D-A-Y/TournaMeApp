@@ -23,8 +23,10 @@ public class SignUpPresenter {
         if (!isValid) return;
 
         Manager newManager = new Manager(firstName, lastName, age, email, username, password);
-        usersService.insertUser(newManager);
-        signUpListener.signUp();
+        boolean isInserted = usersService.insertUser(newManager);
+
+        if (isInserted)
+            signUpListener.signUp();
 
     }
 
@@ -34,7 +36,10 @@ public class SignUpPresenter {
 
         Player newPlayer = new Player(firstName, lastName, age, email, username, password);
         usersService.insertUser(newPlayer);
-        signUpListener.signUp();
+        boolean isInserted = usersService.insertUser(newPlayer);
+
+        if (isInserted)
+            signUpListener.signUp();
 
     }
 
