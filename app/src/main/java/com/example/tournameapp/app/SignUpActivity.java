@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.model.Player;
+import com.example.tournameapp.utils.SignUpPresenter;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpListener {
 
@@ -64,9 +63,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpListener 
                 try {
                     age = Integer.parseInt( ageSignUpTxt.getText().toString());
                 } catch (Exception e1) {
-                    //Toast.makeText(v.getContext(),e1.getMessage(),Toast.LENGTH_SHORT).show();
-                    ageSignUpTxt.setError("Wrong age!");
-                    return;
+                    age = -1;
                 }
 
                 switch (signAs) {
