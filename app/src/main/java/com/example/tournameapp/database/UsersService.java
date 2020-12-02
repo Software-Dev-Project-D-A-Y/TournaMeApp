@@ -40,7 +40,7 @@ public class UsersService {
         dbRef.child(USER_NAMES).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String userName = snapshot.getValue(String.class);
+                String userName = snapshot.getKey();
                 Log.d("USER_NAMES.onChildAdded", userName);
                 userNames.add(userName);
             }
@@ -98,16 +98,16 @@ public class UsersService {
     public boolean insertUser(Manager newManager) {
         Log.d("Insert user", "newManager");
         dbRef.child(MANAGERS).child(newManager.getUserName()).setValue(newManager);
-        dbRef.child(USER_NAMES).push().setValue(newManager.getUserName());
-        dbRef.child(EMAILS).push().setValue(newManager.getEmail());
+        dbRef.child(USER_NAMES).child(newManager.getUserName()).setValue("Manager");
+        dbRef.child(EMAILS).child(newManager.getUserName()).setValue(newManager.getEmail());
         return true;
     }
 
     public boolean insertUser(Player newPlayer) {
         Log.d("Insert user", "newPlayer");
         dbRef.child(PLAYERS).child(newPlayer.getUserName()).setValue(newPlayer);
-        dbRef.child(USER_NAMES).push().setValue(newPlayer.getUserName());
-        dbRef.child(EMAILS).push().setValue(newPlayer.getEmail());
+        dbRef.child(USER_NAMES).child(newPlayer.getUserName()).setValue("Player");
+        dbRef.child(EMAILS).child(newPlayer.getUserName()).setValue(newPlayer.getEmail());
         return true;
     }
 

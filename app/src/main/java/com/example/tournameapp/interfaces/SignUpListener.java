@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.interfaces;
 
 public interface SignUpListener {
 

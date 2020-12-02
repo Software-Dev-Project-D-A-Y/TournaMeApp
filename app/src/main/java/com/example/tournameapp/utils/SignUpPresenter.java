@@ -1,6 +1,6 @@
 package com.example.tournameapp.utils;
 
-import com.example.tournameapp.app.SignUpListener;
+import com.example.tournameapp.interfaces.SignUpListener;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
