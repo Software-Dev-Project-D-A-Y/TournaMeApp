@@ -14,7 +14,7 @@ public class LoginPresenter {
 
     public LoginPresenter(LoginListener loginListener) {
         this.loginListener = loginListener;
-        usersService = new UsersService();
+        usersService = UsersService.getInstance();
     }
 
     public void logIn(String userName, String password, boolean rememberMe) {

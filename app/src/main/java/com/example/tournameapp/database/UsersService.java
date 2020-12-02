@@ -23,6 +23,8 @@ public class UsersService {
     public final static String PLAYERS = "Players";
     public final static String MANAGERS = "Managers";
 
+    public static UsersService instance = null;
+
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
 
@@ -32,7 +34,7 @@ public class UsersService {
     private HashMap<String, Manager> managers;
     private HashMap<String, Player> players;
 
-    public UsersService() {
+    private UsersService() {
         Log.d("UserService", "Default Constructor");
         database = FirebaseDatabase.getInstance();
         dbRef = database.getReference(USERS);
@@ -156,6 +158,14 @@ public class UsersService {
 
             }
         });
+    }
+
+    public static UsersService getInstance() {
+        if (instance == null){
+            instance = new UsersService();
+        }
+
+        return instance;
     }
 
     public boolean insertUser(Manager newManager) {

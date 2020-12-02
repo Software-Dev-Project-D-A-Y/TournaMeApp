@@ -15,7 +15,7 @@ public class SignUpPresenter {
 
     public SignUpPresenter(SignUpListener signUpListener) {
         this.signUpListener = signUpListener;
-        usersService = new UsersService();
+        usersService = UsersService.getInstance();
     }
 
     public void signUpManager(String firstName, String lastName, int age, String email, String username, String password, String confirmPassword) {
