@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.LoginListener;
+import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.utils.LoginPresenter;
 
 public class LoginActivity extends AppCompatActivity implements LoginListener {
@@ -22,7 +24,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     private Button managerSignUpBtn;
     private Button playerSignUpBtn;
     private LoginPresenter loginPresenter;
-//checking
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +71,25 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
     @Override
     public void onUserNameError(String message) {
-
+        usernameTxt.setError(message);
     }
 
     @Override
     public void onPasswordError(String message) {
-
+        passwordTxt.setError(message);
     }
+
+    @Override
+    public void login(Manager manager) {
+        Intent intent = new Intent(this,ManagerActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void login(Player player) {
+        Intent intent = new Intent(this,PlayerActivity.class);
+        startActivity(intent);
+    }
+
+
 }

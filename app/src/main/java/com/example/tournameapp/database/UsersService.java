@@ -12,7 +12,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -28,22 +27,84 @@ public class UsersService {
     private DatabaseReference dbRef;
 
 
-    private HashMap<String,String> userNames;
-    private HashMap<String,String> emails;
+    private HashMap<String, String> userNames;
+    private HashMap<String, String> emails;
+    private HashMap<String, Manager> managers;
+    private HashMap<String, Player> players;
 
     public UsersService() {
+        Log.d("UserService", "Default Constructor");
         database = FirebaseDatabase.getInstance();
         dbRef = database.getReference(USERS);
 
         userNames = new HashMap<>();
         emails = new HashMap<>();
+        managers = new HashMap<>();
+        players = new HashMap<>();
+
+        dbRef.child(MANAGERS).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String userName = snapshot.getKey();
+                Manager manager = snapshot.getValue(Manager.class);
+                managers.put(userName, manager);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        dbRef.child(PLAYERS).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String userName = snapshot.getKey();
+                Player player = snapshot.getValue(Player.class);
+                players.put(userName, player);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         dbRef.child(USER_NAMES).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String userName = snapshot.getKey();
                 String type = snapshot.getValue(String.class);
                 Log.d("USER_NAMES.onChildAdded", userName);
-                userNames.put(userName,type);
+                userNames.put(userName, type);
             }
 
             @Override
@@ -72,7 +133,7 @@ public class UsersService {
                 String email = snapshot.getValue(String.class);
                 String userName = snapshot.getKey();
                 Log.d("EMAILS.onChildAdded", email);
-                emails.put(userName,email);
+                emails.put(userName, email);
             }
 
             @Override
@@ -122,41 +183,22 @@ public class UsersService {
         return userNames.containsKey(username);
     }
 
-//    public boolean isPasswordMatch(String userName, String password)
-//    {
-//        String type = getUserType(userName);
-//        switch (type){
-//            case MANAGERS:
-//                dbRef.child(type).child(userName)).setValue(newPlayer);
-//                break; ;
-//            case PLAYERS:
-//                break; ;
-//
-//    }
-//    }
-
-    public String getUserType(String userName)
-    {
+    public String getUserType(String userName) {
         return userNames.get(userName);
     }
 
-    public Manager getManager(String userName, String password) {
-        dbRef.child(MANAGERS).child(userName).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Manager manager = snapshot.getValue(Manager.class);
-                manager.getEmail();
-            }
+    public Manager loginManager(String userName, String password) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        })
-        return null;
+        Manager manager = managers.get(userName);
+        if (!manager.getPassword().equals(password)) return null;
+        return manager;
     }
 
-    public Player getPlayer(String userName, String password) {
-        return null;
+    public Player loginPlayer(String userName, String password) {
+
+        Player player = players.get(userName);
+        if (!player.getPassword().equals(password)) return null;
+        return player;
     }
+
 }

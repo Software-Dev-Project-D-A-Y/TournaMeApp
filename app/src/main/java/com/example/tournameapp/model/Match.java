@@ -79,4 +79,5 @@ public class Match {
     public void setUpdated(boolean updated) {
         isUpdated = updated;
     }
+
 }

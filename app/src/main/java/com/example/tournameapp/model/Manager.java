@@ -89,4 +89,16 @@ public class Manager {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
