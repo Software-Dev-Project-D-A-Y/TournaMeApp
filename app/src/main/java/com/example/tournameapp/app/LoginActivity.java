@@ -93,12 +93,14 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     @Override
     public void login(Manager manager) {
         Intent intent = new Intent(this,ManagerActivity.class);
+        intent.putExtra("managerLogged",manager.getUserName());
         startActivity(intent);
     }
 
     @Override
     public void login(Player player) {
         Intent intent = new Intent(this,PlayerActivity.class);
+        intent.putExtra("playerLogged",player.getUserName());
         startActivity(intent);
     }
 

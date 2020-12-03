@@ -62,40 +62,30 @@ public class LoginPresenter {
     }
 
     public void checkLoggedUser() {
+        usersService.displayData();
+
         SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
         boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
         Log.d("isLogged", isLogged + "");
         if (!isLogged) return;
 
-        final String userLogged = sharedPreferences.getString("loggedUser", null);
+        String userLogged = sharedPreferences.getString("loggedUser", null);
         Log.d("userLogged", userLogged + "");
         if (userLogged == null) return;
 
+        String type = usersService.getUserType(userLogged);
+        Log.d("type",type);
 
-        usersService.getUserType(userLogged, new UsersService.OnGetDataListener() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                String type = dataSnapshot.getValue(String.class);
-                checkLoggedUser(type, userLogged);
-            }
-        });
-    }
+        switch (type) {
+            case UsersService.MANAGERS:
+                Manager manager = usersService.getManager(userLogged);
+                loginListener.login(manager);
+                break;
 
-    private void checkLoggedUser(final String type, final String userLogged) {
-        usersService.getUserLogged(type, userLogged, new UsersService.OnGetDataListener() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                switch (type) {
-                    case UsersService.MANAGERS:
-                        Manager manager = dataSnapshot.getValue(Manager.class);
-                        loginListener.login(manager);
-                        break;
-                    case UsersService.PLAYERS:
-                        Player player = dataSnapshot.getValue(Player.class);
-                        loginListener.login(player);
-                        break;
-                }
-            }
-        });
+            case UsersService.PLAYERS:
+                Player player = usersService.getPlayer(userLogged);
+                loginListener.login(player);
+                break;
+        }
     }
 }

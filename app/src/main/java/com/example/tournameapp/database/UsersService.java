@@ -193,20 +193,6 @@ public class UsersService {
         return userNames.get(userName);
     }
 
-    public void getUserType(String userName, final OnGetDataListener onGetDataListener){
-
-        dbRef.child(USER_NAMES).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                onGetDataListener.onSuccess(snapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
     public Manager getManager(String userName) {
         return managers.get(userName);
     }
@@ -215,19 +201,25 @@ public class UsersService {
         return players.get(userName);
     }
 
-    public void getUserLogged(String type, String userName, final OnGetDataListener listener) {
-
-        dbRef.child(type).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void loadData(final OnGetDataListener onGetDataListener){
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listener.onSuccess(snapshot);
+                onGetDataListener.onSuccess(snapshot);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+    }
 
+    public void displayData() { // NEED TO DELETE
+        Log.d("userNames",userNames.toString());
+        Log.d("emails",emails.toString());
+        Log.d("managers",managers.toString());
+        Log.d("players",players.toString());
     }
 
     public interface OnGetDataListener {
