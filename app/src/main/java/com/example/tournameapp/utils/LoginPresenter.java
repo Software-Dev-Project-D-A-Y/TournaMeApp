@@ -50,13 +50,13 @@ public class LoginPresenter {
                 break;
         }
 
-        if (rememberMe) setLoggedUser(userName);
+        setLoggedUser(userName,rememberMe);
     }
 
-    private void setLoggedUser(String userName) {
+    private void setLoggedUser(String userName,boolean rememberMe) {
         SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("rememberUser", true);
+        editor.putBoolean("rememberUser", rememberMe);
         editor.putString("loggedUser", userName);
         editor.apply();
     }
@@ -71,44 +71,18 @@ public class LoginPresenter {
         Log.d("userLogged", userLogged + "");
         if (userLogged == null) return;
 
+
         usersService.getUserType(userLogged, new UsersService.OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 String type = dataSnapshot.getValue(String.class);
-                checkLoggedUser(type,userLogged);
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFailure() {
-
+                checkLoggedUser(type, userLogged);
             }
         });
-
-
-//        String type = usersService.getUserType(userLogged);
-//        Log.d("type",type+"");
-//        if(type == null) return;
-//
-//        switch (type){
-//            case UsersService.MANAGERS:
-//                Manager manager = usersService.getManager(userLogged);
-//                loginListener.login(manager);
-//                break;
-//
-//            case UsersService.PLAYERS:
-//                Player player = usersService.getPlayer(userLogged);
-//                loginListener.login(player);
-//                break;
-//        }
     }
 
     private void checkLoggedUser(final String type, final String userLogged) {
-        usersService.readData(type,userLogged, new UsersService.OnGetDataListener() {
+        usersService.getUserLogged(type, userLogged, new UsersService.OnGetDataListener() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 switch (type) {
@@ -121,16 +95,6 @@ public class LoginPresenter {
                         loginListener.login(player);
                         break;
                 }
-            }
-
-
-            @Override
-            public void onStart() {
-            }
-
-            @Override
-            public void onFailure() {
-                Log.d("onFailure", "onFailure");
             }
         });
     }

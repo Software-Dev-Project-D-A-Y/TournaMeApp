@@ -194,7 +194,6 @@ public class UsersService {
     }
 
     public void getUserType(String userName, final OnGetDataListener onGetDataListener){
-        onGetDataListener.onStart();
 
         dbRef.child(USER_NAMES).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -204,7 +203,6 @@ public class UsersService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                onGetDataListener.onFailure();
             }
         });
     }
@@ -217,8 +215,7 @@ public class UsersService {
         return players.get(userName);
     }
 
-    public void readData(String type, String userName,final OnGetDataListener listener) {
-        listener.onStart();
+    public void getUserLogged(String type, String userName, final OnGetDataListener listener) {
 
         dbRef.child(type).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -228,16 +225,12 @@ public class UsersService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                listener.onFailure();
             }
         });
 
     }
 
     public interface OnGetDataListener {
-        //this is for callbacks
         void onSuccess(DataSnapshot dataSnapshot);
-        void onStart();
-        void onFailure();
     }
 }
