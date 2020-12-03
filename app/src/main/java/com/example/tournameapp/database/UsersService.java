@@ -7,11 +7,13 @@ import androidx.annotation.Nullable;
 
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -35,9 +37,9 @@ public class UsersService {
     private HashMap<String, Player> players;
 
     private UsersService() {
-        Log.d("UserService", "Default Constructor");
         database = FirebaseDatabase.getInstance();
         dbRef = database.getReference(USERS);
+
 
         userNames = new HashMap<>();
         emails = new HashMap<>();
@@ -105,7 +107,6 @@ public class UsersService {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String userName = snapshot.getKey();
                 String type = snapshot.getValue(String.class);
-                Log.d("USER_NAMES.onChildAdded", userName);
                 userNames.put(userName, type);
             }
 
@@ -134,7 +135,6 @@ public class UsersService {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String email = snapshot.getValue(String.class);
                 String userName = snapshot.getKey();
-                Log.d("EMAILS.onChildAdded", email);
                 emails.put(userName, email);
             }
 
@@ -164,12 +164,10 @@ public class UsersService {
         if (instance == null){
             instance = new UsersService();
         }
-
         return instance;
     }
 
     public boolean insertUser(Manager newManager) {
-        Log.d("Insert user", "newManager");
         dbRef.child(MANAGERS).child(newManager.getUserName()).setValue(newManager);
         dbRef.child(USER_NAMES).child(newManager.getUserName()).setValue(MANAGERS);
         dbRef.child(EMAILS).child(newManager.getUserName()).setValue(newManager.getEmail());
@@ -177,7 +175,6 @@ public class UsersService {
     }
 
     public boolean insertUser(Player newPlayer) {
-        Log.d("Insert user", "newPlayer");
         dbRef.child(PLAYERS).child(newPlayer.getUserName()).setValue(newPlayer);
         dbRef.child(USER_NAMES).child(newPlayer.getUserName()).setValue(PLAYERS);
         dbRef.child(EMAILS).child(newPlayer.getUserName()).setValue(newPlayer.getEmail());
@@ -189,7 +186,6 @@ public class UsersService {
     }
 
     public boolean isUsernameExists(String username) {
-        Log.d("userNames", userNames.toString());
         return userNames.containsKey(username);
     }
 
@@ -197,18 +193,51 @@ public class UsersService {
         return userNames.get(userName);
     }
 
-    public Manager loginManager(String userName, String password) {
+    public void getUserType(String userName, final OnGetDataListener onGetDataListener){
+        onGetDataListener.onStart();
 
-        Manager manager = managers.get(userName);
-        if (!manager.getPassword().equals(password)) return null;
-        return manager;
+        dbRef.child(USER_NAMES).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                onGetDataListener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                onGetDataListener.onFailure();
+            }
+        });
     }
 
-    public Player loginPlayer(String userName, String password) {
-
-        Player player = players.get(userName);
-        if (!player.getPassword().equals(password)) return null;
-        return player;
+    public Manager getManager(String userName) {
+        return managers.get(userName);
     }
 
+    public Player getPlayer(String userName) {
+        return players.get(userName);
+    }
+
+    public void readData(String type, String userName,final OnGetDataListener listener) {
+        listener.onStart();
+
+        dbRef.child(type).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onFailure();
+            }
+        });
+
+    }
+
+    public interface OnGetDataListener {
+        //this is for callbacks
+        void onSuccess(DataSnapshot dataSnapshot);
+        void onStart();
+        void onFailure();
+    }
 }
