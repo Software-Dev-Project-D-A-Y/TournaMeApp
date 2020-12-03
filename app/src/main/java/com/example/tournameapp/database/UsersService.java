@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -201,11 +200,12 @@ public class UsersService {
         return players.get(userName);
     }
 
-    public void loadData(final OnGetDataListener onGetDataListener){
+    public void loadData(final OnDataLoadedListener onDataLoadedListener){
+        onDataLoadedListener.onStart();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                onGetDataListener.onSuccess(snapshot);
+                onDataLoadedListener.onSuccess(snapshot);
             }
 
             @Override
@@ -222,7 +222,8 @@ public class UsersService {
         Log.d("players",players.toString());
     }
 
-    public interface OnGetDataListener {
+    public interface OnDataLoadedListener {
+        void onStart();
         void onSuccess(DataSnapshot dataSnapshot);
     }
 }

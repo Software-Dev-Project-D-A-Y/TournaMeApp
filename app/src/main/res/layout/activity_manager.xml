@@ -7,7 +7,7 @@
     tools:context=".app.ManagerActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/managerTextView"
         android:layout_width="145dp"
         android:layout_height="71dp"
         android:gravity="center"
