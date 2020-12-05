@@ -1,11 +1,13 @@
 package com.example.tournameapp.utils;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.LoginListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
+import com.google.firebase.database.DataSnapshot;
 
 public class LoginPresenter {
 
@@ -14,7 +16,7 @@ public class LoginPresenter {
 
     public LoginPresenter(LoginListener loginListener) {
         this.loginListener = loginListener;
-        usersService = UsersService.getInstance();
+        this.usersService = UsersService.getInstance();
     }
 
     public void logIn(String userName, String password, boolean rememberMe) {
@@ -24,24 +26,65 @@ public class LoginPresenter {
             loginListener.onUserNameError("No such user!");
             return;
         }
+
         String type = usersService.getUserType(userName);
         switch (type) {
             case UsersService.MANAGERS:
-                Manager manager = usersService.loginManager(userName, password);
-                if (manager == null) {
+                Manager manager = usersService.getManager(userName);
+
+                if (!manager.getPassword().equals(password)) {
                     loginListener.onPasswordError("Wrong password!");
-                } else {
-                    loginListener.login(manager);
+                    break;
                 }
+                loginListener.login(manager);
                 break;
 
             case UsersService.PLAYERS:
-                Player player = usersService.loginPlayer(userName, password);
-                if (player == null) {
+                Player player = usersService.getPlayer(userName);
+
+                if (!player.getPassword().equals(password)) {
                     loginListener.onPasswordError("Wrong password!");
-                } else {
-                    loginListener.login(player);
+                    break;
                 }
+                loginListener.login(player);
+                break;
+        }
+
+        setLoggedUser(userName,rememberMe);
+    }
+
+    private void setLoggedUser(String userName,boolean rememberMe) {
+        SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("rememberUser", rememberMe);
+        editor.putString("loggedUser", userName);
+        editor.apply();
+    }
+
+    public void checkLoggedUser() {
+        usersService.displayData();
+
+        SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
+        boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
+        Log.d("isLogged", isLogged + "");
+        if (!isLogged) return;
+
+        String userLogged = sharedPreferences.getString("loggedUser", null);
+        Log.d("userLogged", userLogged + "");
+        if (userLogged == null) return;
+
+        String type = usersService.getUserType(userLogged);
+        Log.d("type",type);
+
+        switch (type) {
+            case UsersService.MANAGERS:
+                Manager manager = usersService.getManager(userLogged);
+                loginListener.login(manager);
+                break;
+
+            case UsersService.PLAYERS:
+                Player player = usersService.getPlayer(userLogged);
+                loginListener.login(player);
                 break;
         }
     }
