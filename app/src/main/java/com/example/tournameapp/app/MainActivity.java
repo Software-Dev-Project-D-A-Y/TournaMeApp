@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.database.UsersService;
+import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.google.firebase.database.DataSnapshot;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         loadDataTxt = (TextView) findViewById(R.id.loadDataTxt);
 
         usersService = UsersService.getInstance();
-        usersService.loadData(new UsersService.OnDataLoadedListener() {
+        usersService.loadData(new OnDataLoadedListener() {
             @Override
             public void onStart() {
                 loadDataTxt.setText("Wait until data is loaded");

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 import com.google.firebase.database.ChildEventListener;
@@ -222,8 +223,4 @@ public class UsersService {
         Log.d("players",players.toString());
     }
 
-    public interface OnDataLoadedListener {
-        void onStart();
-        void onSuccess(DataSnapshot dataSnapshot);
-    }
 }

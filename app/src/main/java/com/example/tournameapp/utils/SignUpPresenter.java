@@ -26,7 +26,7 @@ public class SignUpPresenter {
         boolean isInserted = usersService.insertUser(newManager);
 
         if (isInserted)
-            onSignUpListener.signUp();
+            onSignUpListener.onSignUp();
 
     }
 
@@ -39,7 +39,7 @@ public class SignUpPresenter {
         boolean isInserted = usersService.insertUser(newPlayer);
 
         if (isInserted)
-            onSignUpListener.signUp();
+            onSignUpListener.onSignUp();
 
     }
 

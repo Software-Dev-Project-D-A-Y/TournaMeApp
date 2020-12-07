@@ -9,5 +9,5 @@ public interface OnSignUpListener {
     void onPasswordError(String message);
     void onMatchedPasswordsError(String message);
     void onEmailError(String message);
-    void signUp();
+    void onSignUp();
 }

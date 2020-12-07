@@ -35,7 +35,7 @@ public class LoginPresenter {
                     onLoginListener.onPasswordError("Wrong password!");
                     break;
                 }
-                onLoginListener.login(manager);
+                onLoginListener.onLogin(manager);
                 break;
 
             case UsersService.PLAYERS:
@@ -45,7 +45,7 @@ public class LoginPresenter {
                     onLoginListener.onPasswordError("Wrong password!");
                     break;
                 }
-                onLoginListener.login(player);
+                onLoginListener.onLogin(player);
                 break;
         }
 
@@ -78,12 +78,12 @@ public class LoginPresenter {
         switch (type) {
             case UsersService.MANAGERS:
                 Manager manager = usersService.getManager(userLogged);
-                onLoginListener.login(manager);
+                onLoginListener.onLogin(manager);
                 break;
 
             case UsersService.PLAYERS:
                 Player player = usersService.getPlayer(userLogged);
-                onLoginListener.login(player);
+                onLoginListener.onLogin(player);
                 break;
         }
     }

@@ -97,4 +97,14 @@ public class Tournament {
     public void setJoinable(boolean joinable) {
         isJoinable = joinable;
     }
+
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "manager=" + manager.getUserName() +
+                ", tournamentName='" + tournamentName + '\'' +
+                ", tournamentDescription='" + tournamentDescription + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
 }

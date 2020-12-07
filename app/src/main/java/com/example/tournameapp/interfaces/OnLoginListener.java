@@ -10,7 +10,7 @@ public interface OnLoginListener {
     SharedPreferences getSharedPreferences();
     void onUserNameError(String message);
     void onPasswordError(String message);
-    void login(Manager manager);
-    void login(Player player);
+    void onLogin(Manager manager);
+    void onLogin(Player player);
 
 }

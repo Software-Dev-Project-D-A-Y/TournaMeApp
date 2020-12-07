@@ -20,6 +20,7 @@ public class ManagerActivity extends AppCompatActivity {
 
     private TextView managerTextView;
     private Button addNewTournamentBtn;
+    private Button myTournamentsBtn;
     private Button logoutButton;
     private Manager manager;
 
@@ -31,6 +32,7 @@ public class ManagerActivity extends AppCompatActivity {
 
         managerTextView = (TextView) findViewById(R.id.managerTextView);
         addNewTournamentBtn = (Button) findViewById(R.id.mAddTournamentBtn);
+        myTournamentsBtn = (Button) findViewById(R.id.mMyTournamentsBtn);
         logoutButton = (Button) findViewById(R.id.mLogoutBtn);
 
         Intent intent = getIntent();
@@ -42,8 +44,6 @@ public class ManagerActivity extends AppCompatActivity {
 
         managerTextView.setText("Hello "+managerLogged);
 
-
-
         addNewTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +52,15 @@ public class ManagerActivity extends AppCompatActivity {
             }
         });
 
+
+        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ManagerTournamentsActivity.class);
+                intent.putExtra("manager",manager.getUserName());
+                startActivity(intent);
+            }
+        });
 
 
         /*

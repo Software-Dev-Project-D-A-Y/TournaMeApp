@@ -118,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
     }
 
     @Override
-    public void signUp() {
+    public void onSignUp() {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
     }

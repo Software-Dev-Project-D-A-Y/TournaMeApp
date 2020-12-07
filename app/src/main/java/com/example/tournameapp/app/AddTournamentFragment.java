@@ -69,7 +69,7 @@ public class AddTournamentFragment extends DialogFragment implements OnAddTourna
     }
 
     @Override
-    public void add(Tournament newTournament) {
+    public void onAdd(Tournament newTournament) {
         Toast.makeText(getActivity(),"Tournament Added for "+newTournament.getManager().getUserName(),Toast.LENGTH_SHORT).show();
         dismiss();
     }
