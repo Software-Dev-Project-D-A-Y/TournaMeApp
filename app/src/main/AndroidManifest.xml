@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".app.ManagerTournamentsActivity"></activity>
+        <activity android:name=".ManagerEditTournamentActivity"></activity>
+        <activity android:name=".app.ManagerTournamentsActivity" />
         <activity android:name=".app.PlayerActivity" />
         <activity android:name=".app.ManagerActivity" />
         <activity android:name=".app.SignUpActivity" />

@@ -42,10 +42,25 @@ public class TournamentsService {
 
     public boolean insertTournament(Tournament tournament){
         String key = dbRef.child("tournaments").push().getKey();
-
+        tournament.setId(key);
         dbRef.child("tournaments").child(key).setValue(tournament);
         dbRef.child("manager-tournaments").child(tournament.getManager().getUserName()).child(key).setValue(tournament);
         return true;
+    }
+
+    public void getTournament(String tournamentID, final OnDataLoadedListener listener){
+        listener.onStart();
+        dbRef.child("tournaments").child(tournamentID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void loadManagerTournaments(Manager manager, final OnDataLoadedListener listener){

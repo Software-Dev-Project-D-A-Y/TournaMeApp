@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.tournameapp.ManagerEditTournamentActivity;
 import com.example.tournameapp.R;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
@@ -77,6 +78,10 @@ public class ManagerTournamentsActivity extends AppCompatActivity {
                 loadingLbl.setText("Item clicked: "+position);
                 Tournament tournamentChose = tournaments.get(position);
                 loadingLbl.setText("Item clicked: "+tournamentChose);
+
+                Intent intent = new Intent(getApplicationContext(), ManagerEditTournamentActivity.class);
+                intent.putExtra("tournamentID", tournamentChose.getId());
+                startActivity(intent);
             }
         });
     }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Tournament {
     //tournamentID	managerID	isActive	tournamentDate	tournamentName	tournamentDescription	capacity	isJoinable
-    private long id;
+    private String id;
     private Manager manager;
     private boolean isActive;
     private Date tournamentDate;
@@ -18,6 +18,7 @@ public class Tournament {
     public Tournament() {
     }
     public Tournament(Manager manager, String tournamentName, String tournamentDescription, int capacity) {
+
         this.manager = manager;
         this.tournamentName = tournamentName;
         this.tournamentDescription = tournamentDescription;
@@ -34,11 +35,11 @@ public class Tournament {
         this.isJoinable = isJoinable;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
