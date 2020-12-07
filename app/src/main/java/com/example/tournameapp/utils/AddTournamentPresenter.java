@@ -6,6 +6,8 @@ import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.interfaces.OnAddTournamentListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
+import com.example.tournameapp.utils.validation.Validation;
+import com.example.tournameapp.utils.validation.ValidationException;
 
 public class AddTournamentPresenter {
 
@@ -22,7 +24,7 @@ public class AddTournamentPresenter {
 
 
     public void addTournament(String tourName, String tourDesc, int tourCap) {
-        boolean isValid = checkValidation(tourName, tourDesc, tourCap);
+        boolean isValid = checkValidation(tourName, tourCap);
         if (!isValid) return;
 
         Tournament newTournament = new Tournament(manager, tourName, tourDesc, tourCap);
@@ -33,15 +35,26 @@ public class AddTournamentPresenter {
         }
     }
 
-    private boolean checkValidation(String tourName, String tourDesc, int tourCap) {
+    private boolean checkValidation(String tourName,int tourCap) {
         boolean res = true;
 
         // VALIDATION
-        if (tourCap == -1) {
-            listener.onCapacityError("Wrong number!");
+
+        try {
+            Validation.isTournamentNameValid(tourName);
+        }
+        catch (ValidationException e){
+            listener.onTournamentNameError(e.getValidationError());
             res = false;
         }
 
+        try {
+            Validation.isCapacityValid(tourCap);
+        }
+        catch (ValidationException e){
+            listener.onCapacityError(e.getValidationError());
+            res = false;
+        }
         return res;
     }
 }

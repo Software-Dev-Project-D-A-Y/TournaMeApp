@@ -64,6 +64,11 @@ public class AddTournamentFragment extends DialogFragment implements OnAddTourna
     }
 
     @Override
+    public void onTournamentNameError(String message) {
+        tournamentNameTxt.setError(message);
+    }
+
+    @Override
     public void onCapacityError(String message) {
         tournamentCapacityTxt.setError(message);
     }

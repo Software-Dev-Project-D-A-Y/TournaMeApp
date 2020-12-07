@@ -40,9 +40,16 @@ public class ValidationException extends Exception {
             case EMAIL:
                 validationError = "Error on Email field";
                 break;
+            case TOURNAMENT_NAME:
+                validationError = "Error on Tournament Name field ";
+                break;
+            case CAPACITY:
+                validationError = "Error on Capacity Name field ";
+                break;
             default:
                 validationError = DEFAULT_MESSAGE;
                 break;
+
         }
     }
 

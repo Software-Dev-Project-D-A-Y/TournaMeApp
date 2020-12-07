@@ -7,5 +7,7 @@ public enum ValidationErrorType {
     PASSWORD,
     PASSWORD_MATCH,
     EMAIL,
-    AGE;
+    AGE,
+    TOURNAMENT_NAME,
+    CAPACITY;
 }

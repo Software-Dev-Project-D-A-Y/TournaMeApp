@@ -71,6 +71,21 @@ public class Validation {
         }
         throw new ValidationException(ValidationErrorType.EMAIL);
     }
+    // validate User Name
+    public static boolean isTournamentNameValid(String tournamentName) throws ValidationException {
+        String pattern = "[A-Za-z0-9_]+";
+        if(tournamentName.matches(pattern)){
+            return true;
+        }
+        throw new ValidationException(ValidationErrorType.TOURNAMENT_NAME);
+    }
+    public static boolean isCapacityValid(int capacity) throws ValidationException {
+        if(capacity >= 2 && capacity <= 100){
+            return true;
+        }
+        throw new ValidationException(ValidationErrorType.CAPACITY);
+    }
+
 }
 
 
