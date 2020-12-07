@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.tournameapp.ManagerEditTournamentActivity;
 import com.example.tournameapp.R;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
