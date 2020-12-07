@@ -11,12 +11,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.interfaces.LoginListener;
+import com.example.tournameapp.interfaces.OnLoginListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.utils.LoginPresenter;
 
-public class LoginActivity extends AppCompatActivity implements LoginListener {
+public class LoginActivity extends AppCompatActivity implements OnLoginListener {
 
     private TextView usernameTxt;
     private TextView passwordTxt;

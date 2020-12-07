@@ -1,6 +1,6 @@
 package com.example.tournameapp.interfaces;
 
-public interface SignUpListener {
+public interface OnSignUpListener {
 
     void onFirstNameError(String message);
     void onLastNameError(String message);

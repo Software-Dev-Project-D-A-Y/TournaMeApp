@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/tournamentNameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tournament Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/tournamentCapacityTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tournament Capacity"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/tournamentDescTxt"
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Tounament Description"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/tournamentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="tournamentDate"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/addNewTournamentBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

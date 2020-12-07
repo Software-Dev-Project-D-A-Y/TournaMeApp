@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 
-public interface LoginListener {
+public interface OnLoginListener {
 
     SharedPreferences getSharedPreferences();
     void onUserNameError(String message);

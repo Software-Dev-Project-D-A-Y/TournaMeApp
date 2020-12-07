@@ -17,9 +17,14 @@ public class Tournament {
 
     public Tournament() {
     }
+    public Tournament(Manager manager, String tournamentName, String tournamentDescription, int capacity) {
+        this.manager = manager;
+        this.tournamentName = tournamentName;
+        this.tournamentDescription = tournamentDescription;
+        this.capacity = capacity;
+    }
 
-    public Tournament(long id, Manager manager, boolean isActive, Date tournamentDate, String tournamentName, String tournamentDescription, int capacity, boolean isJoinable) {
-        this.id = id;
+    public Tournament(Manager manager, boolean isActive, Date tournamentDate, String tournamentName, String tournamentDescription, int capacity, boolean isJoinable) {
         this.manager = manager;
         this.isActive = isActive;
         this.tournamentDate = tournamentDate;

@@ -1,6 +1,6 @@
 package com.example.tournameapp.utils;
 
-import com.example.tournameapp.interfaces.SignUpListener;
+import com.example.tournameapp.interfaces.OnSignUpListener;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
@@ -10,11 +10,11 @@ import com.example.tournameapp.utils.validation.ValidationException;
 public class SignUpPresenter {
 
 
-    private SignUpListener signUpListener;
+    private OnSignUpListener onSignUpListener;
     private UsersService usersService;
 
-    public SignUpPresenter(SignUpListener signUpListener) {
-        this.signUpListener = signUpListener;
+    public SignUpPresenter(OnSignUpListener onSignUpListener) {
+        this.onSignUpListener = onSignUpListener;
         this.usersService = UsersService.getInstance();
     }
 
@@ -26,7 +26,7 @@ public class SignUpPresenter {
         boolean isInserted = usersService.insertUser(newManager);
 
         if (isInserted)
-            signUpListener.signUp();
+            onSignUpListener.signUp();
 
     }
 
@@ -39,7 +39,7 @@ public class SignUpPresenter {
         boolean isInserted = usersService.insertUser(newPlayer);
 
         if (isInserted)
-            signUpListener.signUp();
+            onSignUpListener.signUp();
 
     }
 
@@ -49,59 +49,59 @@ public class SignUpPresenter {
         try {
             Validation.isValidFirstName(firstName);
         } catch (ValidationException e) {
-            signUpListener.onFirstNameError(e.getValidationError());
+            onSignUpListener.onFirstNameError(e.getValidationError());
             res = false;
         }
 
         try {
             Validation.isValidLastName(lastName);
         } catch (ValidationException e) {
-            signUpListener.onLastNameError(e.getValidationError());
+            onSignUpListener.onLastNameError(e.getValidationError());
             res = false;
         }
 
         try {
             Validation.isValidAge(age);
         } catch (ValidationException e) {
-            signUpListener.onAgeError(e.getValidationError());
+            onSignUpListener.onAgeError(e.getValidationError());
             res = false;
         }
 
         try {
             Validation.isValidUsername(username);
         } catch (ValidationException e) {
-            signUpListener.onUsernameError(e.getValidationError());
+            onSignUpListener.onUsernameError(e.getValidationError());
             res = false;
         }
 
         if (usersService.isUsernameExists(username)) {
-            signUpListener.onUsernameError("Username is already Exists!");
+            onSignUpListener.onUsernameError("Username is already Exists!");
             res = false;
         }
 
         try {
             Validation.isValidPassword(password);
         } catch (ValidationException e) {
-            signUpListener.onPasswordError(e.getValidationError());
+            onSignUpListener.onPasswordError(e.getValidationError());
             res = false;
         }
 
         try {
             Validation.isMatchedPasswords(password, confirmPassword);
         } catch (ValidationException e) {
-            signUpListener.onMatchedPasswordsError(e.getValidationError());
+            onSignUpListener.onMatchedPasswordsError(e.getValidationError());
             res = false;
         }
 
         try {
             Validation.isValidEmail(email);
         } catch (ValidationException e) {
-            signUpListener.onEmailError(e.getValidationError());
+            onSignUpListener.onEmailError(e.getValidationError());
             res = false;
         }
 
         if (usersService.isEmailExists(email)) {
-            signUpListener.onEmailError("Email is already Exists!");
+            onSignUpListener.onEmailError("Email is already Exists!");
             res = false;
         }
 

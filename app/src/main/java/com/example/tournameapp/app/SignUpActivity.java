@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.interfaces.SignUpListener;
+import com.example.tournameapp.interfaces.OnSignUpListener;
 import com.example.tournameapp.utils.SignUpPresenter;
 
-public class SignUpActivity extends AppCompatActivity implements SignUpListener {
+public class SignUpActivity extends AppCompatActivity implements OnSignUpListener {
 
     private TextView signAsTxt;
     private String signAs;

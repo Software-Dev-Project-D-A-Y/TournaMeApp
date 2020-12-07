@@ -4,18 +4,17 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.tournameapp.database.UsersService;
-import com.example.tournameapp.interfaces.LoginListener;
+import com.example.tournameapp.interfaces.OnLoginListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
-import com.google.firebase.database.DataSnapshot;
 
 public class LoginPresenter {
 
-    private LoginListener loginListener;
+    private OnLoginListener onLoginListener;
     private UsersService usersService;
 
-    public LoginPresenter(LoginListener loginListener) {
-        this.loginListener = loginListener;
+    public LoginPresenter(OnLoginListener onLoginListener) {
+        this.onLoginListener = onLoginListener;
         this.usersService = UsersService.getInstance();
     }
 
@@ -23,7 +22,7 @@ public class LoginPresenter {
 
         boolean isExists = usersService.isUsernameExists(userName);
         if (!isExists) {
-            loginListener.onUserNameError("No such user!");
+            onLoginListener.onUserNameError("No such user!");
             return;
         }
 
@@ -33,20 +32,20 @@ public class LoginPresenter {
                 Manager manager = usersService.getManager(userName);
 
                 if (!manager.getPassword().equals(password)) {
-                    loginListener.onPasswordError("Wrong password!");
+                    onLoginListener.onPasswordError("Wrong password!");
                     break;
                 }
-                loginListener.login(manager);
+                onLoginListener.login(manager);
                 break;
 
             case UsersService.PLAYERS:
                 Player player = usersService.getPlayer(userName);
 
                 if (!player.getPassword().equals(password)) {
-                    loginListener.onPasswordError("Wrong password!");
+                    onLoginListener.onPasswordError("Wrong password!");
                     break;
                 }
-                loginListener.login(player);
+                onLoginListener.login(player);
                 break;
         }
 
@@ -54,7 +53,7 @@ public class LoginPresenter {
     }
 
     private void setLoggedUser(String userName,boolean rememberMe) {
-        SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
+        SharedPreferences sharedPreferences = onLoginListener.getSharedPreferences();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("rememberUser", rememberMe);
         editor.putString("loggedUser", userName);
@@ -64,7 +63,7 @@ public class LoginPresenter {
     public void checkLoggedUser() {
         usersService.displayData();
 
-        SharedPreferences sharedPreferences = loginListener.getSharedPreferences();
+        SharedPreferences sharedPreferences = onLoginListener.getSharedPreferences();
         boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
         Log.d("isLogged", isLogged + "");
         if (!isLogged) return;
@@ -79,12 +78,12 @@ public class LoginPresenter {
         switch (type) {
             case UsersService.MANAGERS:
                 Manager manager = usersService.getManager(userLogged);
-                loginListener.login(manager);
+                onLoginListener.login(manager);
                 break;
 
             case UsersService.PLAYERS:
                 Player player = usersService.getPlayer(userLogged);
-                loginListener.login(player);
+                onLoginListener.login(player);
                 break;
         }
     }
