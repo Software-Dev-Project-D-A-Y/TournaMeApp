@@ -5,6 +5,8 @@ import com.example.tournameapp.model.Tournament;
 
 public class TournamentRequest {
     //tournamentID	playerID	managerApprove	playerApprove
+    private String id;
+
     private Tournament tournament;
     private Player player;
     private boolean managerApprove;
@@ -18,6 +20,14 @@ public class TournamentRequest {
         this.player = player;
         this.managerApprove = managerApprove;
         this.playerApprove = playerApprove;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Tournament getTournament() {
@@ -50,5 +60,16 @@ public class TournamentRequest {
 
     public void setPlayerApprove(boolean playerApprove) {
         this.playerApprove = playerApprove;
+    }
+
+    @Override
+    public String toString() {
+        return "TournamentRequest{" +
+                "id='" + id + '\'' +
+                ", tournament=" + tournament.getId() +
+                ", player=" + player.getUserName() +
+                ", managerApprove=" + managerApprove +
+                ", playerApprove=" + playerApprove +
+                '}';
     }
 }
