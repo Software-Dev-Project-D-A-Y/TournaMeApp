@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,7 @@ public class TournamentsService {
     public static final String TOURNAMENTS = "Tournaments";
     public static final String ALL_TOURNAMENTS = "All-Tournaments";
     public static final String MANAGER_TOURNAMENTS = "Manager-Tournaments";
+    public static final String TOURNAMENT_PLAYERS = "Tournament-Players";
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
@@ -78,5 +80,12 @@ public class TournamentsService {
 
             }
         });
+    }
+
+    public void addPlayerToTournament(Player player, Tournament tournament) {
+        String username = player.getUserName();
+        String tournamentID = tournament.getId();
+
+        dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).setValue(player);
     }
 }

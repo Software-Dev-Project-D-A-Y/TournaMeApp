@@ -5,23 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.database.RequestsService;
-import com.example.tournameapp.database.UsersService;
-import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.model.Player;
+import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.TournamentRequest;
-import com.google.firebase.database.DataSnapshot;
+import com.example.tournameapp.utils.PlayerPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerActivity extends AppCompatActivity {
+public class PlayerActivity extends AppCompatActivity implements PlayerObserver {
 
     private TextView playerTextView;
     private Button myRequestsBtn;
@@ -29,9 +25,9 @@ public class PlayerActivity extends AppCompatActivity {
     private Button joinTournamentBtn;
     private Button logoutBtn;
 
-    private UsersService usersService;
+    private PlayerPresenter presenter;
 
-    private Player player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +36,23 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String playerLogged = intent.getExtras().getString("loggedUser");
 
+        presenter = new PlayerPresenter(this,playerLogged);
+
         playerTextView = (TextView) findViewById(R.id.playerTextView);
         myRequestsBtn = (Button) findViewById(R.id.pMyRequestsBtn);
         myTournamentsBtn = (Button) findViewById(R.id.pMyTournamentsBtn);
         joinTournamentBtn = (Button) findViewById(R.id.pJoinTournamentBtn);
         logoutBtn = (Button) findViewById(R.id.pLogoutBtn);
 
-        usersService = UsersService.getInstance();
-        player = usersService.getPlayer(playerLogged);
 
 
 
-
-
+        myRequestsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onMyRequestsClicked();
+            }
+        });
 
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,5 +72,21 @@ public class PlayerActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMyRequestsSuccess(List<TournamentRequest> requests) {
+        PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
+        fragment.show(getSupportFragmentManager(),"My Requests");
+    }
+
+    @Override
+    public void onRequestApproved(TournamentRequest requestChose) {
+        presenter.setRequestApproved(requestChose);
+    }
+
+    @Override
+    public void onPlayerAddedToTournament(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
