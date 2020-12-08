@@ -18,6 +18,8 @@ import java.util.HashMap;
 public class TournamentsService {
 
     public static final String TOURNAMENTS = "Tournaments";
+    public static final String ALL_TOURNAMENTS = "All-Tournaments";
+    public static final String MANAGER_TOURNAMENTS = "Manager-Tournaments";
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
@@ -41,16 +43,16 @@ public class TournamentsService {
     }
 
     public boolean insertTournament(Tournament tournament){
-        String key = dbRef.child("tournaments").push().getKey();
+        String key = dbRef.child(ALL_TOURNAMENTS).push().getKey();
         tournament.setId(key);
-        dbRef.child("tournaments").child(key).setValue(tournament);
-        dbRef.child("manager-tournaments").child(tournament.getManager().getUserName()).child(key).setValue(tournament);
+        dbRef.child(ALL_TOURNAMENTS).child(key).setValue(tournament);
+        dbRef.child(MANAGER_TOURNAMENTS).child(tournament.getManager().getUserName()).child(key).setValue(tournament);
         return true;
     }
 
-    public void getTournament(String tournamentID, final OnDataLoadedListener listener){
+    public void loadTournament(String tournamentID, final OnDataLoadedListener listener){
         listener.onStart();
-        dbRef.child("tournaments").child(tournamentID).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child(ALL_TOURNAMENTS).child(tournamentID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listener.onSuccess(snapshot);
@@ -65,7 +67,7 @@ public class TournamentsService {
 
     public void loadManagerTournaments(Manager manager, final OnDataLoadedListener listener){
         listener.onStart();
-        dbRef.child("manager-tournaments").child(manager.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child(MANAGER_TOURNAMENTS).child(manager.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listener.onSuccess(snapshot);

@@ -1,14 +1,12 @@
 package com.example.tournameapp.app;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +19,7 @@ public class ManagerActivity extends AppCompatActivity {
     private TextView managerTextView;
     private Button addNewTournamentBtn;
     private Button myTournamentsBtn;
-    private Button logoutButton;
+    private Button logoutBtn;
     private Manager manager;
 
     @Override
@@ -33,10 +31,10 @@ public class ManagerActivity extends AppCompatActivity {
         managerTextView = (TextView) findViewById(R.id.managerTextView);
         addNewTournamentBtn = (Button) findViewById(R.id.mAddTournamentBtn);
         myTournamentsBtn = (Button) findViewById(R.id.mMyTournamentsBtn);
-        logoutButton = (Button) findViewById(R.id.mLogoutBtn);
+        logoutBtn = (Button) findViewById(R.id.mLogoutBtn);
 
         Intent intent = getIntent();
-        String managerLogged = intent.getExtras().getString("managerLogged");
+        String managerLogged = intent.getExtras().getString("loggedUser");
 
         UsersService usersService = UsersService.getInstance();
         manager = usersService.getManager(managerLogged);
@@ -63,21 +61,22 @@ public class ManagerActivity extends AppCompatActivity {
         });
 
 
-        /*
-            NEED TO DELETE!
-         */
-        managerTextView.setOnClickListener(new View.OnClickListener() {
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("rememberUser", false);
-                editor.putString("loggedUser", "");
-                editor.apply();
-
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                logout();
             }
         });
+    }
+
+    private void logout(){
+        SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("rememberUser", false);
+        editor.putString("loggedUser", "");
+        editor.apply();
+
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
     }
 }

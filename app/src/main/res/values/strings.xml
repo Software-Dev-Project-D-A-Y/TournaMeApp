@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TournaMeApp</string>
+    <string name="join_tournament">Join Tournament</string>
 </resources>
