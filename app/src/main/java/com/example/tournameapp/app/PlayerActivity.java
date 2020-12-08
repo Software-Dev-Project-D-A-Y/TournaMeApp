@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
@@ -22,62 +23,54 @@ import java.util.List;
 
 public class PlayerActivity extends AppCompatActivity {
 
-    TextView playerTextView;
+    private TextView playerTextView;
+    private Button myRequestsBtn;
+    private Button myTournamentsBtn;
+    private Button joinTournamentBtn;
+    private Button logoutBtn;
 
-    List<TournamentRequest> requests;
-    UsersService usersService;
-    RequestsService reqService;
+    private UsersService usersService;
 
-    Player player;
+    private Player player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        playerTextView = (TextView) findViewById(R.id.playerTextView);
-
         Intent intent = getIntent();
-        String playerLogged = intent.getExtras().getString("playerLogged");
-        playerTextView.setText("Hello "+playerLogged);
+        String playerLogged = intent.getExtras().getString("loggedUser");
+
+        playerTextView = (TextView) findViewById(R.id.playerTextView);
+        myRequestsBtn = (Button) findViewById(R.id.pMyRequestsBtn);
+        myTournamentsBtn = (Button) findViewById(R.id.pMyTournamentsBtn);
+        joinTournamentBtn = (Button) findViewById(R.id.pJoinTournamentBtn);
+        logoutBtn = (Button) findViewById(R.id.pLogoutBtn);
 
         usersService = UsersService.getInstance();
         player = usersService.getPlayer(playerLogged);
 
-        reqService = RequestsService.getInstance();
 
-        requests = new ArrayList<>();
 
-        reqService.loadPlayerRequests(player, new OnDataLoadedListener() {
-            @Override
-            public void onStart() {
 
-            }
 
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                for(DataSnapshot child: dataSnapshot.getChildren()) {
-                    TournamentRequest request = child.getValue(TournamentRequest.class);
-                    requests.add(request);
-                }
-                Log.d("requests",requests.toString());
-            }
-        });
 
-        /*
-            NEED TO DELETE!
-         */
-        playerTextView.setOnClickListener(new View.OnClickListener() {
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("rememberUser", false);
-                editor.putString("loggedUser", "");
-                editor.apply();
-
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                logout();
             }
         });
+    }
+
+    private void logout(){
+        SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("rememberUser", false);
+        editor.putString("loggedUser", "");
+        editor.apply();
+
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
     }
 }
