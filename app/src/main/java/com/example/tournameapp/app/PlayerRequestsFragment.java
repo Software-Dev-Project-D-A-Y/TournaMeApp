@@ -30,6 +30,16 @@ public class PlayerRequestsFragment extends DialogFragment {
         this.requests = requests;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof PlayerObserver){
+            observer = (PlayerObserver) context;
+        } else {
+            throw new RuntimeException(context.toString()+" Must implement PlayerObserver interface!");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,13 +62,4 @@ public class PlayerRequestsFragment extends DialogFragment {
         return view;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof PlayerObserver){
-            observer = (PlayerObserver) context;
-        } else {
-            throw new RuntimeException(context.toString()+" Must implement PlayerObserver interface!");
-        }
-    }
 }

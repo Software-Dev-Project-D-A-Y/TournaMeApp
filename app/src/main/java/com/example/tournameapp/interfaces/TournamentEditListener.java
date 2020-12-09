@@ -9,6 +9,8 @@ public interface TournamentEditListener {
 
     void onTournamentLoad(Tournament tournament);
     void onInviteUsernameError(String message);
-    void onInvite(String message);
     void onTournamentPlayersLoaded(List<Player> players);
+    void onInviteFailure(String message);
+    void onInvite(String message);
+
 }

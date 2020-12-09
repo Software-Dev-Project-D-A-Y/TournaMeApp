@@ -89,7 +89,6 @@ public class TournamentsService {
     }
 
     public void addPlayerToTournament(Player player, Tournament tournament) {
-
         String username = player.getUserName();
         String tournamentID = tournament.getId();
         dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).setValue(player);

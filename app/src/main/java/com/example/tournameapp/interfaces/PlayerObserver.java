@@ -11,4 +11,6 @@ public interface PlayerObserver {
     void onRequestApproved(TournamentRequest requestChose);
 
     void onPlayerAddedToTournament(String message);
+
+    void onAddFailure(String message);
 }

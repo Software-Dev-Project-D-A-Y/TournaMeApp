@@ -74,6 +74,7 @@ public class ManagerEditTournamentPresenter {
 
                 if(players.size() >= tournament.getCapacity()){
                     tournament.setJoinable(false);
+                    tourService.updateTournament(tournament);
                 }
 
                 listener.onTournamentPlayersLoaded(players);
@@ -98,7 +99,7 @@ public class ManagerEditTournamentPresenter {
         }
 
         if(!tournament.isJoinable()){
-            Log.d(tournament.toString(),"full capacity!");
+            listener.onInviteFailure("Tournament is full");
             return;
         }
 

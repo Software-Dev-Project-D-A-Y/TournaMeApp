@@ -77,7 +77,7 @@ public class PlayerPresenter {
                         observer.onPlayerAddedToTournament("Player added successfully!");
                     } else {
                         tournament.setJoinable(false);
-                        Log.d("onFailure", "full capacity!");
+                        observer.onAddFailure("Tournament is full!");
                     }
                 }
             });

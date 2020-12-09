@@ -89,4 +89,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
     public void onPlayerAddedToTournament(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAddFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 }

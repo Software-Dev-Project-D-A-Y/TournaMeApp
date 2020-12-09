@@ -117,4 +117,9 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         Log.d("Tournament Players",players.toString());
         playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
     }
+
+    @Override
+    public void onInviteFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 }
