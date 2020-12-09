@@ -15,12 +15,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RequestsService {
 
-    public static final String REQUESTS = "Requests";
-
+    private static final String REQUESTS = "Requests";
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
-
 
     private static RequestsService instance = null;
 
@@ -35,7 +33,6 @@ public class RequestsService {
         }
         return instance;
     }
-
 
     public boolean insertTournamentRequest(Tournament tournament, Player player) {
         TournamentRequest request = new TournamentRequest(tournament, player, true, false);

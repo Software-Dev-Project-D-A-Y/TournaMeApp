@@ -37,8 +37,9 @@ public class PlayerRequestsFragment extends DialogFragment {
 
 
         myRequestsLw = (ListView) view.findViewById(R.id.playerRequestsLw);
-        ArrayAdapter<TournamentRequest> adapter = new ArrayAdapter<TournamentRequest>(getContext(),R.layout.layout_tournaments_list,requests);
+        ArrayAdapter<TournamentRequest> adapter = new ArrayAdapter<>(getContext(),R.layout.layout_tournaments_list,requests);
         myRequestsLw.setAdapter(adapter);
+
         myRequestsLw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -47,7 +48,6 @@ public class PlayerRequestsFragment extends DialogFragment {
                 dismiss();
             }
         });
-
 
         return view;
     }

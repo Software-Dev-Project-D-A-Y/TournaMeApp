@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private UsersService usersService;
 
     private TextView loadDataTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +37,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        Intent intent = new Intent(this,LoginActivity.class);
-//        startActivity(intent);
-
-
-
     }
 }

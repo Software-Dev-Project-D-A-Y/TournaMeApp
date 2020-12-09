@@ -32,11 +32,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
-        Intent intent = getIntent();
-        String playerLogged = intent.getExtras().getString("loggedUser");
-
-        presenter = new PlayerPresenter(this,playerLogged);
+        setTitle("Player Dashboard");
 
         playerTextView = (TextView) findViewById(R.id.playerTextView);
         myRequestsBtn = (Button) findViewById(R.id.pMyRequestsBtn);
@@ -44,8 +40,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
         joinTournamentBtn = (Button) findViewById(R.id.pJoinTournamentBtn);
         logoutBtn = (Button) findViewById(R.id.pLogoutBtn);
 
+        Intent intent = getIntent();
+        String playerLogged = intent.getExtras().getString("loggedUser");
 
+        presenter = new PlayerPresenter(this,playerLogged);
 
+        playerTextView.setText("Hello "+playerLogged);
 
         myRequestsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

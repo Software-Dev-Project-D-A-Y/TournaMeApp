@@ -20,15 +20,13 @@ import java.util.HashMap;
 
 public class TournamentsService {
 
-    public static final String TOURNAMENTS = "Tournaments";
-    public static final String ALL_TOURNAMENTS = "All-Tournaments";
-    public static final String MANAGER_TOURNAMENTS = "Manager-Tournaments";
-    public static final String TOURNAMENT_PLAYERS = "Tournament-Players";
+    private static final String TOURNAMENTS = "Tournaments";
+    private static final String ALL_TOURNAMENTS = "All-Tournaments";
+    private static final String MANAGER_TOURNAMENTS = "Manager-Tournaments";
+    private static final String TOURNAMENT_PLAYERS = "Tournament-Players";
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
-
-    private Manager manager;
 
     private static TournamentsService instance = null;
 

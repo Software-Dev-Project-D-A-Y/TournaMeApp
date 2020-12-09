@@ -81,7 +81,6 @@ public class ManagerEditTournamentPresenter {
         });
     }
 
-
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }

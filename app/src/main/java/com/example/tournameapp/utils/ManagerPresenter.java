@@ -23,13 +23,12 @@ public class ManagerPresenter {
     private ManagerObserver observer;
 
     public ManagerPresenter(ManagerObserver observer, String managerLogged){
-        usersService = UsersService.getInstance();
-        tourService = TournamentsService.getInstance();
-        reqService = RequestsService.getInstance();
-        manager = usersService.getManager(managerLogged);
+        this.usersService = UsersService.getInstance();
+        this.tourService = TournamentsService.getInstance();
+        this.reqService = RequestsService.getInstance();
+        this.manager = usersService.getManager(managerLogged);
         this.observer = observer;
     }
-
 
     public void onAddTournamentClicked() {
         observer.onAddTournamentSuccess(manager);

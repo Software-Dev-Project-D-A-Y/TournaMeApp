@@ -32,6 +32,7 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
+        setTitle("Manager Dashboard");
 
 
         managerTextView = (TextView) findViewById(R.id.managerTextView);

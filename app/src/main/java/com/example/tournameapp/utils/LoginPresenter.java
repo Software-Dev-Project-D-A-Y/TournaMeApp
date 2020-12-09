@@ -33,7 +33,7 @@ public class LoginPresenter {
 
                 if (!manager.getPassword().equals(password)) {
                     onLoginListener.onPasswordError("Wrong password!");
-                    break;
+                    return;
                 }
                 onLoginListener.onLogin(manager);
                 break;
@@ -43,7 +43,7 @@ public class LoginPresenter {
 
                 if (!player.getPassword().equals(password)) {
                     onLoginListener.onPasswordError("Wrong password!");
-                    break;
+                    return;
                 }
                 onLoginListener.onLogin(player);
                 break;
@@ -61,19 +61,14 @@ public class LoginPresenter {
     }
 
     public void checkLoggedUser() {
-        usersService.displayData();
-
         SharedPreferences sharedPreferences = onLoginListener.getSharedPreferences();
         boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
-        Log.d("isLogged", isLogged + "");
         if (!isLogged) return;
 
         String userLogged = sharedPreferences.getString("loggedUser", null);
-        Log.d("userLogged", userLogged + "");
         if (userLogged == null) return;
 
         String type = usersService.getUserType(userLogged);
-//        Log.d("type",type);
 
         switch (type) {
             case UsersService.MANAGERS:

@@ -24,7 +24,7 @@ public class PlayerPresenter {
     private PlayerObserver observer;
     private Player player;
 
-    public PlayerPresenter(PlayerObserver observer, String playerLogged){
+    public PlayerPresenter(PlayerObserver observer, String playerLogged) {
         this.usersService = UsersService.getInstance();
         this.tourService = TournamentsService.getInstance();
         this.reqService = RequestsService.getInstance();
@@ -32,34 +32,33 @@ public class PlayerPresenter {
         this.observer = observer;
     }
 
-
     public void onMyRequestsClicked() {
         reqService.loadPlayerRequests(player, new OnDataLoadedListener() {
-                    @Override
-                    public void onStart() {
-                        Log.d("LoadPlayerRequests","Wait until data is loaded");
-                    }
+            @Override
+            public void onStart() {
+                Log.d("LoadPlayerRequests", "Wait until data is loaded");
+            }
 
-                    @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
-                        List<TournamentRequest> requests = new ArrayList<>();
-                        for(DataSnapshot child: dataSnapshot.getChildren()){
-                            TournamentRequest tr = child.getValue(TournamentRequest.class);
-                            requests.add(tr);
-                        }
-                        observer.onMyRequestsSuccess(requests);
-                    }
-                });
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<TournamentRequest> requests = new ArrayList<>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    TournamentRequest tr = child.getValue(TournamentRequest.class);
+                    requests.add(tr);
+                }
+                observer.onMyRequestsSuccess(requests);
+            }
+        });
     }
 
     public void setRequestApproved(final TournamentRequest requestChose) {
-        if(!requestChose.getTournament().isJoinable()){
-            Log.d(requestChose.getTournament().toString(),"full capacity!");
+        if (!requestChose.getTournament().isJoinable()) {
+            Log.d(requestChose.getTournament().toString(), "full capacity!");
             return;
         }
 
         requestChose.setPlayerApprove(true);
-        if(requestChose.isManagerApprove() && requestChose.isPlayerApprove()){
+        if (requestChose.isManagerApprove() && requestChose.isPlayerApprove()) {
             final Player player = requestChose.getPlayer();
             final Tournament tournament = requestChose.getTournament();
 
@@ -71,12 +70,14 @@ public class PlayerPresenter {
 
                 @Override
                 public void onSuccess(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getChildrenCount() < tournament.getCapacity()){
-                        tourService.addPlayerToTournament(player,tournament);
+                    long numOfPlayers = dataSnapshot.getChildrenCount();
+
+                    if (numOfPlayers < tournament.getCapacity()) {
+                        tourService.addPlayerToTournament(player, tournament);
                         observer.onPlayerAddedToTournament("Player added successfully!");
                     } else {
                         tournament.setJoinable(false);
-                        Log.d("onFailure","full capacity!");
+                        Log.d("onFailure", "full capacity!");
                     }
                 }
             });
