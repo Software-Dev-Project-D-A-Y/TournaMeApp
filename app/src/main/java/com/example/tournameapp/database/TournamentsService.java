@@ -1,5 +1,7 @@
 package com.example.tournameapp.database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -52,6 +54,12 @@ public class TournamentsService {
         return true;
     }
 
+    public boolean updateTournament(Tournament tournament){
+        dbRef.child(ALL_TOURNAMENTS).child(tournament.getId()).setValue(tournament);
+        dbRef.child(MANAGER_TOURNAMENTS).child(tournament.getManager().getUserName()).child(tournament.getId()).setValue(tournament);
+        return true;
+    }
+
     public void loadTournament(String tournamentID, final OnDataLoadedListener listener){
         listener.onStart();
         dbRef.child(ALL_TOURNAMENTS).child(tournamentID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,9 +91,9 @@ public class TournamentsService {
     }
 
     public void addPlayerToTournament(Player player, Tournament tournament) {
+
         String username = player.getUserName();
         String tournamentID = tournament.getId();
-
         dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).setValue(player);
     }
 

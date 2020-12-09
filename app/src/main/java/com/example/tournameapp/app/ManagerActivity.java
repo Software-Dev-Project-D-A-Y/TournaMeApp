@@ -42,10 +42,6 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
         Intent intent = getIntent();
         String managerLogged = intent.getExtras().getString("loggedUser");
 
-//        UsersService usersService = UsersService.getInstance();
-//        manager = usersService.getManager(managerLogged);
-//        Log.d("manager",manager.toString());
-
         presenter = new ManagerPresenter(this,managerLogged);
 
         managerTextView.setText("Hello "+managerLogged);
@@ -54,8 +50,6 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
             @Override
             public void onClick(View v) {
                 presenter.onAddTournamentClicked();
-//                AddTournamentFragment addTournamentFragment = new AddTournamentFragment(manager);
-//                addTournamentFragment.show(getSupportFragmentManager(),"Add");
             }
         });
 
@@ -64,9 +58,6 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
             @Override
             public void onClick(View v) {
                 presenter.onMyTournamentClicked();
-//                Intent intent = new Intent(getApplicationContext(),ManagerTournamentsActivity.class);
-//                intent.putExtra("manager",manager.getUserName());
-//                startActivity(intent);
             }
         });
 

@@ -25,10 +25,10 @@ public class PlayerPresenter {
     private Player player;
 
     public PlayerPresenter(PlayerObserver observer, String playerLogged){
-        usersService = UsersService.getInstance();
-        tourService = TournamentsService.getInstance();
-        reqService = RequestsService.getInstance();
-        player = usersService.getPlayer(playerLogged);
+        this.usersService = UsersService.getInstance();
+        this.tourService = TournamentsService.getInstance();
+        this.reqService = RequestsService.getInstance();
+        this.player = usersService.getPlayer(playerLogged);
         this.observer = observer;
     }
 
@@ -52,16 +52,35 @@ public class PlayerPresenter {
                 });
     }
 
-    public void setRequestApproved(TournamentRequest requestChose) {
+    public void setRequestApproved(final TournamentRequest requestChose) {
+        if(!requestChose.getTournament().isJoinable()){
+            Log.d(requestChose.getTournament().toString(),"full capacity!");
+            return;
+        }
+
         requestChose.setPlayerApprove(true);
         if(requestChose.isManagerApprove() && requestChose.isPlayerApprove()){
-            Player player = requestChose.getPlayer();
-            Tournament tournament = requestChose.getTournament();
+            final Player player = requestChose.getPlayer();
+            final Tournament tournament = requestChose.getTournament();
 
-            tourService.addPlayerToTournament(player,tournament);
+            tourService.loadTournamentPlayers(tournament, new OnDataLoadedListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getChildrenCount() < tournament.getCapacity()){
+                        tourService.addPlayerToTournament(player,tournament);
+                        observer.onPlayerAddedToTournament("Player added successfully!");
+                    } else {
+                        tournament.setJoinable(false);
+                        Log.d("onFailure","full capacity!");
+                    }
+                }
+            });
             reqService.removeRequest(requestChose);
-
-            observer.onPlayerAddedToTournament("Player added successfully!");
         } else {
             reqService.updateRequest(requestChose);
         }

@@ -13,6 +13,7 @@ public class Tournament {
     private String tournamentName;
     private String tournamentDescription;
     private int capacity;
+    private int numOfPlayers;
     private boolean isJoinable;
 
     public Tournament() {
@@ -23,6 +24,8 @@ public class Tournament {
         this.tournamentName = tournamentName;
         this.tournamentDescription = tournamentDescription;
         this.capacity = capacity;
+        this.numOfPlayers = 0;
+        this.isJoinable = true;
     }
 
     public Tournament(Manager manager, boolean isActive, Date tournamentDate, String tournamentName, String tournamentDescription, int capacity, boolean isJoinable) {
@@ -33,6 +36,17 @@ public class Tournament {
         this.tournamentDescription = tournamentDescription;
         this.capacity = capacity;
         this.isJoinable = isJoinable;
+    }
+
+    public void addPlayer(){
+        numOfPlayers++;
+        if(numOfPlayers == capacity){
+            setJoinable(false);
+        }
+    }
+
+    public int getNumOfPlayers(){
+        return numOfPlayers;
     }
 
     public String getId() {

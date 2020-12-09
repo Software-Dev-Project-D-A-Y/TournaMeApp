@@ -48,14 +48,14 @@ public class ManagerEditTournamentPresenter {
                 setTournament(tournament);
                 setManager(manager);
 
-                loadPlayers(tournament);
+                loadPlayers();
 
                 listener.onTournamentLoad(tournament);
             }
         });
     }
 
-    public void loadPlayers(Tournament tournament){
+    public void loadPlayers(){
 
         tourService.loadTournamentPlayers(tournament, new OnDataLoadedListener() {
             @Override
@@ -71,6 +71,11 @@ public class ManagerEditTournamentPresenter {
                     players.add(player);
                 }
                 Log.d("Tournament Players","After loading");
+
+                if(players.size() >= tournament.getCapacity()){
+                    tournament.setJoinable(false);
+                }
+
                 listener.onTournamentPlayersLoaded(players);
             }
         });
@@ -90,6 +95,11 @@ public class ManagerEditTournamentPresenter {
         boolean isExists = player != null;
         if(!isExists) {
             listener.onInviteUsernameError("Wrong Username!");
+            return;
+        }
+
+        if(!tournament.isJoinable()){
+            Log.d(tournament.toString(),"full capacity!");
             return;
         }
 
