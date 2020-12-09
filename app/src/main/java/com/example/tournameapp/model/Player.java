@@ -90,13 +90,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return userName;
     }
 }

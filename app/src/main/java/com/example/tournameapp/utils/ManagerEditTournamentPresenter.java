@@ -1,16 +1,23 @@
 package com.example.tournameapp.utils;
 
+import android.util.Log;
+
 import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
-import com.example.tournameapp.interfaces.OnInviteListener;
+import com.example.tournameapp.interfaces.OnDataLoadedListener;
+import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
+import com.google.firebase.database.DataSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManagerEditTournamentPresenter {
 
-    private OnInviteListener listener;
+    private TournamentEditListener listener;
 
     private TournamentsService tourService;
     private UsersService usersService;
@@ -19,14 +26,55 @@ public class ManagerEditTournamentPresenter {
     private Tournament tournament;
     private Manager manager;
 
-    public ManagerEditTournamentPresenter(OnInviteListener listener) {
+    public ManagerEditTournamentPresenter(TournamentEditListener listener) {
         this.listener = listener;
         tourService = TournamentsService.getInstance();
         usersService = UsersService.getInstance();
         reqService = RequestsService.getInstance();
     }
 
+    public void loadTournament(String tournamentID){
+        tourService.loadTournament(tournamentID, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
 
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                tournament = dataSnapshot.getValue(Tournament.class);
+                manager = tournament.getManager();
+
+                setTournament(tournament);
+                setManager(manager);
+
+                loadPlayers(tournament);
+
+                listener.onTournamentLoad(tournament);
+            }
+        });
+    }
+
+    public void loadPlayers(Tournament tournament){
+
+        tourService.loadTournamentPlayers(tournament, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+                Log.d("Tournament Players","Before loading");
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<Player> players = new ArrayList<>();
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    Player player = child.getValue(Player.class);
+                    players.add(player);
+                }
+                Log.d("Tournament Players","After loading");
+                listener.onTournamentPlayersLoaded(players);
+            }
+        });
+    }
 
 
     public void setTournament(Tournament tournament) {
@@ -41,7 +89,7 @@ public class ManagerEditTournamentPresenter {
         Player player = usersService.getPlayer(username);
         boolean isExists = player != null;
         if(!isExists) {
-            listener.onUsernameError("Wrong Username!");
+            listener.onInviteUsernameError("Wrong Username!");
             return;
         }
 

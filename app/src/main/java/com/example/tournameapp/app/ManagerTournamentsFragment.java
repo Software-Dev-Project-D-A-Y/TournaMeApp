@@ -40,7 +40,7 @@ public class ManagerTournamentsFragment extends DialogFragment {
         if(context instanceof ManagerObserver){
             observer = (ManagerObserver) context;
         } else {
-            throw new RuntimeException(context.toString()+" Must implement PlayerObserver interface!");
+            throw new RuntimeException(context.toString()+" Must implement ManagerObserver interface!");
         }
     }
 
@@ -65,7 +65,6 @@ public class ManagerTournamentsFragment extends DialogFragment {
                 startActivity(intent);
             }
         });
-
 
         return view;
     }

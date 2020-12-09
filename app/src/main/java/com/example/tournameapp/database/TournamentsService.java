@@ -88,4 +88,20 @@ public class TournamentsService {
 
         dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).setValue(player);
     }
+
+    public void loadTournamentPlayers(Tournament tournament, final OnDataLoadedListener listener) {
+        listener.onStart();
+
+        dbRef.child(TOURNAMENT_PLAYERS).child(tournament.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }
