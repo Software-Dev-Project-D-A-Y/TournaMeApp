@@ -10,25 +10,29 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.interfaces.OnInviteListener;
+import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.utils.ManagerEditTournamentPresenter;
 import com.google.firebase.database.DataSnapshot;
 
-public class ManagerEditTournamentActivity extends AppCompatActivity implements OnInviteListener {
+import java.util.List;
 
-    private TournamentsService service;
+public class ManagerEditTournamentActivity extends AppCompatActivity implements TournamentEditListener {
+
     private ManagerEditTournamentPresenter presenter;
 
     private Tournament tournament;
     private Manager manager;
 
+    private TextView playerAmountTxt;
     private Button inviteBtn;
 
 
@@ -37,40 +41,21 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_edit_tournament);
 
+        playerAmountTxt = (TextView) findViewById(R.id.playerAmountTxt);
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
 
-        service = TournamentsService.getInstance();
+        Intent intent = getIntent();
+        String tournamentID = intent.getExtras().getString("tournamentChose");
+
         presenter = new ManagerEditTournamentPresenter(this);
 
+        inviteBtn.setEnabled(false);
+        playerAmountTxt.setText("Loading data...");
 
-        Intent intent = getIntent();
-        String tournamentID = intent.getExtras().getString("tournamentID");
+        Log.d("Tournament","Before loading");
 
-        service.loadTournament(tournamentID, new OnDataLoadedListener() {
-            @Override
-            public void onStart() {
-                inviteBtn.setEnabled(false);
-                Log.d("tournament","loading");
-            }
+        presenter.loadTournament(tournamentID);
 
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                tournament = dataSnapshot.getValue(Tournament.class);
-                manager = tournament.getManager();
-
-                presenter.setTournament(tournament);
-                presenter.setManager(manager);
-
-                inviteBtn.setEnabled(true);
-                inviteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        inviteDialog();
-                    }
-                });
-                Log.d("tournament",tournament.toString());
-            }
-        });
     }
 
     private void inviteDialog(){
@@ -100,12 +85,41 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onUsernameError(String message) {
+    public void onTournamentLoad(Tournament tournament) {
+        this.tournament = tournament;
+        this.manager = tournament.getManager();
+
+        Log.d("Tournament","after loading");
+        Log.d("Tournament",tournament.toString());
+
+
+        inviteBtn.setEnabled(true);
+        inviteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inviteDialog();
+            }
+        });
+    }
+
+    @Override
+    public void onInviteUsernameError(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onInvite(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTournamentPlayersLoaded(List<Player> players) {
+        Log.d("Tournament Players",players.toString());
+        playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
+    }
+
+    @Override
+    public void onInviteFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

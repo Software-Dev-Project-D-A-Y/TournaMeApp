@@ -215,12 +215,4 @@ public class UsersService {
             }
         });
     }
-
-    public void displayData() { // NEED TO DELETE
-        Log.d("userNames",userNames.toString());
-        Log.d("emails",emails.toString());
-        Log.d("managers",managers.toString());
-        Log.d("players",players.toString());
-    }
-
 }

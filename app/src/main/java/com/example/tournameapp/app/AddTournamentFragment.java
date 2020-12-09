@@ -1,6 +1,5 @@
 package com.example.tournameapp.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,7 @@ public class AddTournamentFragment extends DialogFragment implements OnAddTourna
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_add_tournament, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_tournament, container, false);
 
         tournamentNameTxt = (TextView) view.findViewById(R.id.tournamentNameTxt);
         tournamentCapacityTxt = (TextView) view.findViewById(R.id.tournamentCapacityTxt);

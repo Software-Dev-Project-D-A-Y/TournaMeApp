@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
     private Button managerSignUpBtn;
     private Button playerSignUpBtn;
     private LoginPresenter loginPresenter;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

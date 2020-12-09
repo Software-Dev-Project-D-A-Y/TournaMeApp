@@ -64,12 +64,6 @@ public class TournamentRequest {
 
     @Override
     public String toString() {
-        return "TournamentRequest{" +
-                "id='" + id + '\'' +
-                ", tournament=" + tournament.getId() +
-                ", player=" + player.getUserName() +
-                ", managerApprove=" + managerApprove +
-                ", playerApprove=" + playerApprove +
-                '}';
+        return tournament.getTournamentName()+" -> "+player.getUserName();
     }
 }

@@ -22,7 +22,6 @@ public class AddTournamentPresenter {
         this.tournamentsService = TournamentsService.getInstance();
     }
 
-
     public void addTournament(String tourName, String tourDesc, int tourCap) {
         boolean isValid = checkValidation(tourName, tourCap);
         if (!isValid) return;
