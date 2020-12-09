@@ -33,7 +33,7 @@ public class PlayerRequestsFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_player_requests, container, false);
+        View view = inflater.inflate(R.layout.fragment_player_requests, container, false);
 
 
         myRequestsLw = (ListView) view.findViewById(R.id.playerRequestsLw);

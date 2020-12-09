@@ -17,9 +17,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.ManagerObserver;
-import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.Tournament;
-import com.example.tournameapp.model.TournamentRequest;
 
 import java.util.List;
 
@@ -49,7 +47,7 @@ public class ManagerTournamentsFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_manager_tournaments, container, false);
+        View view = inflater.inflate(R.layout.fragment_manager_tournaments, container, false);
 
         loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
         myTournamentsLv = (ListView) view.findViewById(R.id.myTournamentLv);

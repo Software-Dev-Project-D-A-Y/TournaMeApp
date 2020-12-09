@@ -73,7 +73,7 @@ public class LoginPresenter {
         if (userLogged == null) return;
 
         String type = usersService.getUserType(userLogged);
-        Log.d("type",type);
+//        Log.d("type",type);
 
         switch (type) {
             case UsersService.MANAGERS:
