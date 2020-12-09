@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
@@ -31,6 +32,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     private Tournament tournament;
     private Manager manager;
 
+    private TextView playerAmountTxt;
     private Button inviteBtn;
 
 
@@ -39,6 +41,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_edit_tournament);
 
+        playerAmountTxt = (TextView) findViewById(R.id.playerAmountTxt);
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
 
         Intent intent = getIntent();
@@ -47,6 +50,8 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         presenter = new ManagerEditTournamentPresenter(this);
 
         inviteBtn.setEnabled(false);
+        playerAmountTxt.setText("Loading data...");
+
         Log.d("Tournament","Before loading");
 
         presenter.loadTournament(tournamentID);
@@ -110,5 +115,6 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
         Log.d("Tournament Players",players.toString());
+        playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
     }
 }
