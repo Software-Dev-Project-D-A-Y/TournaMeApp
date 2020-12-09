@@ -101,11 +101,6 @@ public class Tournament {
 
     @Override
     public String toString() {
-        return "Tournament{" +
-                "manager=" + manager.getUserName() +
-                ", tournamentName='" + tournamentName + '\'' +
-                ", tournamentDescription='" + tournamentDescription + '\'' +
-                ", capacity=" + capacity +
-                '}';
+        return tournamentName+" ("+id+")";
     }
 }

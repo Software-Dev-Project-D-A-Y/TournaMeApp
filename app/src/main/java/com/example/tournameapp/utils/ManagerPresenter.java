@@ -4,7 +4,13 @@ import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.ManagerObserver;
+import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Tournament;
+import com.google.firebase.database.DataSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManagerPresenter {
 
@@ -25,4 +31,28 @@ public class ManagerPresenter {
     }
 
 
+    public void onAddTournamentClicked() {
+        observer.onAddTournamentSuccess(manager);
+    }
+
+    public void onMyTournamentClicked() {
+        tourService.loadManagerTournaments(manager, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<Tournament> tournaments = new ArrayList<>();
+
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    Tournament tournament = child.getValue(Tournament.class);
+                    tournaments.add(tournament);
+                }
+
+                observer.onMyTournamentsSuccess(tournaments);
+            }
+        });
+    }
 }

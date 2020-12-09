@@ -12,15 +12,21 @@ import android.widget.TextView;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.database.UsersService;
+import com.example.tournameapp.interfaces.ManagerObserver;
 import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Tournament;
+import com.example.tournameapp.utils.ManagerPresenter;
 
-public class ManagerActivity extends AppCompatActivity {
+import java.util.List;
+
+public class ManagerActivity extends AppCompatActivity implements ManagerObserver{
 
     private TextView managerTextView;
     private Button addNewTournamentBtn;
     private Button myTournamentsBtn;
     private Button logoutBtn;
-    private Manager manager;
+
+    private ManagerPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +42,20 @@ public class ManagerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String managerLogged = intent.getExtras().getString("loggedUser");
 
-        UsersService usersService = UsersService.getInstance();
-        manager = usersService.getManager(managerLogged);
-        Log.d("manager",manager.toString());
+//        UsersService usersService = UsersService.getInstance();
+//        manager = usersService.getManager(managerLogged);
+//        Log.d("manager",manager.toString());
+
+        presenter = new ManagerPresenter(this,managerLogged);
 
         managerTextView.setText("Hello "+managerLogged);
 
         addNewTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddTournamentFragment addTournamentFragment = new AddTournamentFragment(manager);
-                addTournamentFragment.show(getSupportFragmentManager(),"Add");
+                presenter.onAddTournamentClicked();
+//                AddTournamentFragment addTournamentFragment = new AddTournamentFragment(manager);
+//                addTournamentFragment.show(getSupportFragmentManager(),"Add");
             }
         });
 
@@ -54,9 +63,10 @@ public class ManagerActivity extends AppCompatActivity {
         myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ManagerTournamentsActivity.class);
-                intent.putExtra("manager",manager.getUserName());
-                startActivity(intent);
+                presenter.onMyTournamentClicked();
+//                Intent intent = new Intent(getApplicationContext(),ManagerTournamentsActivity.class);
+//                intent.putExtra("manager",manager.getUserName());
+//                startActivity(intent);
             }
         });
 
@@ -78,5 +88,17 @@ public class ManagerActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onAddTournamentSuccess(Manager manager) {
+        AddTournamentFragment addTournamentFragment = new AddTournamentFragment(manager);
+        addTournamentFragment.show(getSupportFragmentManager(),"Add");
+    }
+
+    @Override
+    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
+        ManagerTournamentsFragment managerTournamentsFragment = new ManagerTournamentsFragment(tournaments);
+        managerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 }

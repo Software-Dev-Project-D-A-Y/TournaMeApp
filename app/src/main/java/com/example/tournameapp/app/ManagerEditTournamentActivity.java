@@ -44,7 +44,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
 
         Intent intent = getIntent();
-        String tournamentID = intent.getExtras().getString("tournamentID");
+        String tournamentID = intent.getExtras().getString("tournamentChose");
 
         service.loadTournament(tournamentID, new OnDataLoadedListener() {
             @Override
