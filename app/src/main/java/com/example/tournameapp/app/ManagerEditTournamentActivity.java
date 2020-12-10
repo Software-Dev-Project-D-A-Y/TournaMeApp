@@ -32,7 +32,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     private TextView playerAmountTxt;
     private Button inviteBtn;
     private Button startTournamentBtn;
-
+    private Button viewTableBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         playerAmountTxt = (TextView) findViewById(R.id.playerAmountTxt);
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
         startTournamentBtn = (Button) findViewById(R.id.startTournamentBtn);
+        viewTableBtn = (Button) findViewById(R.id.viewTableBtn);
 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
@@ -112,8 +113,9 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onMatchesGenerated(String message) {
+    public void onTournamentStarted(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -130,6 +132,13 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 presenter.startTournament(tournament);
+            }
+        });
+        viewTableBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TournamentFragment fragment = new TournamentFragment();
+                fragment.show(getSupportFragmentManager(), "View Table");
             }
         });
     }

@@ -120,10 +120,11 @@ public class ManagerEditTournamentPresenter {
 
         if (!(tournament.isActive())) {
             generateLeagueMatches();
-            listener.onMatchesGenerated("Matches generated successfully");
         }
         tournament.setActive(true);
         tourService.updateTournament(tournament);
+        listener.onTournamentStarted("Tournament has started");
+
     }
 
     private void generateLeagueMatches() {
