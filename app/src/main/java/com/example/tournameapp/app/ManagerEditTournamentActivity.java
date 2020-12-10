@@ -101,6 +101,14 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
                 inviteDialog();
             }
         });
+
+        viewTableBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TournamentFragment fragment = new TournamentFragment(tournament);
+                fragment.show(getSupportFragmentManager(), "View Table");
+            }
+        });
     }
 
     @Override
@@ -121,13 +129,13 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentAllMatchesLoaded(final List<Match> matches) {
-        viewTableBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TournamentFragment fragment = new TournamentFragment(matches);
-                fragment.show(getSupportFragmentManager(), "View Table");
-            }
-        });
+//        viewTableBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TournamentFragment fragment = new TournamentFragment(matches);
+//                fragment.show(getSupportFragmentManager(), "View Table");
+//            }
+//        });
     }
 
     @Override
