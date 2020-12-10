@@ -29,7 +29,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerTextView"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.05"
+        android:background="@drawable/shape"/>
 
     <Button
         android:id="@+id/pMyTournamentsBtn"
@@ -41,7 +42,8 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pMyRequestsBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/shape" />
 
     <Button
         android:id="@+id/pJoinTournamentBtn"
@@ -52,7 +54,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pMyTournamentsBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/shape" />
 
     <Button
         android:id="@+id/pLogoutBtn"
@@ -64,5 +67,6 @@
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pJoinTournamentBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/shape"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

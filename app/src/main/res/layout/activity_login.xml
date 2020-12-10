@@ -44,7 +44,9 @@
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rememberMeCb"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/shape"
+        android:textColor="@android:color/black"/>
 
     <Button
         android:id="@+id/signUpBtn"
@@ -56,7 +58,9 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInBtn"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.39"
+        android:background="@drawable/shape"
+        android:textColor="@android:color/black"/>
 
     <Button
         android:id="@+id/playerSignUpBtn"
@@ -67,7 +71,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/shape"
+        android:textColor="@android:color/black" />
 
     <CheckBox
         android:id="@+id/rememberMeCb"
@@ -91,6 +97,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.46"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

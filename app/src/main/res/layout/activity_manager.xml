@@ -32,19 +32,25 @@
             android:id="@+id/mAddTournamentBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add new tournament" />
+            android:text="Add new tournament"
+            android:background="@drawable/shape"
+            />
 
         <Button
             android:id="@+id/mMyTournamentsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Tournaments" />
+            android:text="My Tournaments"
+            android:background="@drawable/shape"
+            />
 
         <Button
             android:id="@+id/mLogoutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout" />
+            android:text="Logout"
+            android:background="@drawable/shape"
+            />
     </LinearLayout>
 
     <ImageView
@@ -57,6 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
