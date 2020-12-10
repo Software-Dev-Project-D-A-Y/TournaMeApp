@@ -14,14 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.database.TournamentsService;
-import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.utils.ManagerEditTournamentPresenter;
-import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
@@ -34,6 +31,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     private TextView playerAmountTxt;
     private Button inviteBtn;
+    private Button startTournamentBtn;
 
 
     @Override
@@ -43,6 +41,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
         playerAmountTxt = (TextView) findViewById(R.id.playerAmountTxt);
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
+        startTournamentBtn = (Button) findViewById(R.id.startTournamentBtn);
 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
@@ -85,7 +84,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onTournamentLoad(Tournament tournament) {
+    public void onTournamentLoad(final Tournament tournament) {
         this.tournament = tournament;
         this.manager = tournament.getManager();
 
@@ -116,6 +115,13 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     public void onTournamentPlayersLoaded(List<Player> players) {
         Log.d("Tournament Players",players.toString());
         playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
+
+        startTournamentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.startTournament(tournament);
+            }
+        });
     }
 
     @Override

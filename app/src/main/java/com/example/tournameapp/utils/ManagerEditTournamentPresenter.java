@@ -26,6 +26,8 @@ public class ManagerEditTournamentPresenter {
     private Tournament tournament;
     private Manager manager;
 
+    private List<Player> players;
+
     public ManagerEditTournamentPresenter(TournamentEditListener listener) {
         this.listener = listener;
         tourService = TournamentsService.getInstance();
@@ -65,7 +67,7 @@ public class ManagerEditTournamentPresenter {
 
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                List<Player> players = new ArrayList<>();
+                players = new ArrayList<>();
                 for(DataSnapshot child: dataSnapshot.getChildren()){
                     Player player = child.getValue(Player.class);
                     players.add(player);
@@ -107,6 +109,10 @@ public class ManagerEditTournamentPresenter {
         if (isInserted){
             listener.onInvite("Invite sent");
         }
+
+    }
+
+    public void startTournament(Tournament tournament) {
 
     }
 }
