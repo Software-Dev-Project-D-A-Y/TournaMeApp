@@ -1,12 +1,15 @@
 package com.example.tournameapp.app;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +46,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
         Intent intent = getIntent();
         String playerLogged = intent.getExtras().getString("loggedUser");
 
-        presenter = new PlayerPresenter(this,playerLogged);
+        presenter = new PlayerPresenter(this, playerLogged);
 
-        playerTextView.setText("Hello "+playerLogged);
+        playerTextView.setText("Hello " + playerLogged);
 
         myRequestsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,27 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
                 logout();
             }
         });
+//        joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                private void inviteDialog(){
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//                    alert.setTitle("Invite a Player");
+//                    alert.setMessage("Enter Username:");
+//
+//                    final EditText input = new EditText(this);
+//                    alert.setView(input);
+//
+//                    alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            String value = input.getText().toString();
+//                            presenter.sendInvite(value);
+//                            return;
+//                        }
+//                    });
+//            }
+//        });
+
     }
 
     private void logout(){
