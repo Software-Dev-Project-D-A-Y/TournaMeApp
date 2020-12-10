@@ -3,7 +3,7 @@ package com.example.tournameapp.model;
 public class Match {
     //matchID	tournamentID	homePlayerID	awayPlayerID	homeScore	awayScore	scoreIsUpdated
 
-    private long id;
+    private String id;
     private Tournament tournament;
     private Player homePlayer;
     private Player awayPlayer;
@@ -14,21 +14,20 @@ public class Match {
     public Match() {
     }
 
-    public Match(long id, Tournament tournament, Player homePlayer, Player awayPlayer, int homeScore, int awayScore, boolean isUpdated) {
-        this.id = id;
+    public Match( Tournament tournament, Player homePlayer, Player awayPlayer) {
         this.tournament = tournament;
         this.homePlayer = homePlayer;
         this.awayPlayer = awayPlayer;
-        this.homeScore = homeScore;
-        this.awayScore = awayScore;
-        this.isUpdated = isUpdated;
+        this.homeScore = 0;
+        this.awayScore = 0;
+
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -26,6 +26,7 @@ public class Tournament {
         this.capacity = capacity;
         this.numOfPlayers = 0;
         this.isJoinable = true;
+        this.isActive = false;
     }
 
     public Tournament(Manager manager, boolean isActive, Date tournamentDate, String tournamentName, String tournamentDescription, int capacity, boolean isJoinable) {

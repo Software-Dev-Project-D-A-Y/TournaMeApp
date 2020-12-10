@@ -112,10 +112,20 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
+    public void onMatchesGenerated(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
         Log.d("Tournament Players",players.toString());
         playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
 
+        if(players.size() < tournament.getCapacity()){
+            return;
+        }
         startTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

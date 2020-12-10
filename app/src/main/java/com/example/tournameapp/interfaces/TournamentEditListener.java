@@ -13,4 +13,5 @@ public interface TournamentEditListener {
     void onInviteFailure(String message);
     void onInvite(String message);
 
+    void onMatchesGenerated(String message);
 }

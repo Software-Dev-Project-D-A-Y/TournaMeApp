@@ -1,5 +1,7 @@
 package com.example.tournameapp.model;
 
+import java.util.Objects;
+
 public class Player {
 
     private long id;
@@ -87,6 +89,16 @@ public class Player {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Player) ){
+            return  false;
+        }
+        Player other = (Player) o;
+        return other.userName == this.userName;
+    }
+
 
     @Override
     public String toString() {
