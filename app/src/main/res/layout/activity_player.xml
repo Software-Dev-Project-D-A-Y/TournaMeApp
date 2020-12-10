@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.PlayerActivity">
+    tools:context=".app.PlayerActivity"
+    android:background="@drawable/two_layer_color">
 
     <TextView
         android:id="@+id/playerTextView"
@@ -21,16 +22,16 @@
 
     <Button
         android:id="@+id/pMyRequestsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="106dp"
+        android:layout_height="49dp"
+        android:background="@drawable/shape"
         android:text="My Requests"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerTextView"
-        app:layout_constraintVertical_bias="0.05"
-        android:background="@drawable/shape"/>
+        app:layout_constraintVertical_bias="0.05" />
 
     <Button
         android:id="@+id/pMyTournamentsBtn"
@@ -47,15 +48,15 @@
 
     <Button
         android:id="@+id/pJoinTournamentBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape"
         android:text="@string/join_tournament"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pMyTournamentsBtn"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/shape" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/pLogoutBtn"
