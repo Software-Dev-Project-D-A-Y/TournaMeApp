@@ -34,14 +34,19 @@ public class RequestsService {
         return instance;
     }
 
-    public boolean insertTournamentRequest(Tournament tournament, Player player) {
-        TournamentRequest request = new TournamentRequest(tournament, player, true, false);
+    public boolean insertTournamentRequest(Tournament tournament, Player player, boolean fromManager) {
+
+
+        TournamentRequest request = new TournamentRequest(tournament, player, fromManager, !fromManager);
         String key = dbRef.child("All-Requests").push().getKey();
         request.setId(key);
 
         dbRef.child("All-Requests").child(key).setValue(request);
+        if (!fromManager) {
+            dbRef.child("Manager-Requests").child(tournament.getId()).child(key).setValue(request);
+            return true;
+        }
         dbRef.child("Player-Requests").child(player.getUserName()).child(key).setValue(request);
-
         return true;
     }
 
@@ -65,7 +70,7 @@ public class RequestsService {
         dbRef.child("Player-Requests").child(requestUpdated.getPlayer().getUserName()).child(requestUpdated.getId()).setValue(requestUpdated);
     }
 
-    public void removeRequest(TournamentRequest requestRemoved){
+    public void removeRequest(TournamentRequest requestRemoved) {
         dbRef.child("All-Requests").child(requestRemoved.getId()).removeValue();
         dbRef.child("Player-Requests").child(requestRemoved.getPlayer().getUserName()).child(requestRemoved.getId()).removeValue();
     }

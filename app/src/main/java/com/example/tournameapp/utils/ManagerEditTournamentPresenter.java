@@ -103,7 +103,7 @@ public class ManagerEditTournamentPresenter {
             return;
         }
 
-        boolean isInserted = reqService.insertTournamentRequest(tournament,player);
+        boolean isInserted = reqService.insertTournamentRequest(tournament,player,true);
         if (isInserted){
             listener.onInvite("Invite sent");
         }

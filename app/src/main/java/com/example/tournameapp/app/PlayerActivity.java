@@ -64,44 +64,56 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
                 logout();
             }
         });
-//        joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                private void inviteDialog(){
-//                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//                    alert.setTitle("Invite a Player");
-//                    alert.setMessage("Enter Username:");
-//
-//                    final EditText input = new EditText(this);
-//                    alert.setView(input);
-//
-//                    alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int whichButton) {
-//                            String value = input.getText().toString();
-//                            presenter.sendInvite(value);
-//                            return;
-//                        }
-//                    });
-//            }
-//        });
+        joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinTournamentDialog();
+            }
+        });
 
     }
 
-    private void logout(){
-        SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
+    private void joinTournamentDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Join a Tournament");
+        alert.setMessage("Enter tournament ID");
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String inputString = input.getText().toString();
+               presenter.onJoinRequest(inputString);
+            }
+
+        });
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        return;
+                    }
+                });
+        alert.show();
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences("rememberMe", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("rememberUser", false);
         editor.putString("loggedUser", "");
         editor.apply();
 
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onMyRequestsSuccess(List<TournamentRequest> requests) {
         PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
-        fragment.show(getSupportFragmentManager(),"My Requests");
+        fragment.show(getSupportFragmentManager(), "My Requests");
     }
 
     @Override
@@ -111,11 +123,22 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
 
     @Override
     public void onPlayerAddedToTournament(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAddFailure(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onJoinRequestSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onJoinRequestFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 }

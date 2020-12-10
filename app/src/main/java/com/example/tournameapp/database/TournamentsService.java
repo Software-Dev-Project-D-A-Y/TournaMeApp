@@ -109,4 +109,20 @@ public class TournamentsService {
             }
         });
     }
+
+    public void loadAllTournaments(final OnDataLoadedListener listener){
+        listener.onStart();
+        dbRef.child(ALL_TOURNAMENTS).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 }

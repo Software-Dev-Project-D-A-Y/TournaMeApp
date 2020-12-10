@@ -88,6 +88,30 @@ public class PlayerPresenter {
 
     }
 
+    public void onJoinRequest(final String inputString) {
+        tourService.loadAllTournaments(new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
 
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String key = child.getKey();
+                    Log.d(key,inputString);
+                    if (key.equals(inputString)) {
+                        Tournament tournament = child.getValue(Tournament.class);
+                        reqService.insertTournamentRequest(tournament, player, false);
+                        observer.onJoinRequestSuccess("request added successfully");
+                        return;
+                    }
+                }
+                observer.onJoinRequestFailure("Couldn't find this tournamnet Id, try another tournament ID");
+                return;// there is no such tournament should update the player
+            }
+        });
+
+    }
 
 }
