@@ -79,4 +79,8 @@ public class Match {
         isUpdated = updated;
     }
 
+    @Override
+    public String toString() {
+        return "{"+tournament.getId()+"}: "+homePlayer.getUserName()+" vs. "+awayPlayer.getUserName();
+    }
 }

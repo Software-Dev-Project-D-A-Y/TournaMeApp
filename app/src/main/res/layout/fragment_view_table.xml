@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="335dp"
-        android:layout_height="580dp"
+        android:layout_width="379dp"
+        android:layout_height="516dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +26,61 @@
                 android:orientation="vertical">
 
                 <TableLayout
-                    android:id="@+id/table_main"
+                    android:id="@+id/tournamentTbl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"></TableLayout>
+                    android:layout_centerHorizontal="true">
+
+                    <TableRow android:id="@+id/tableRow1">
+
+                        <TextView
+                            android:id="@+id/posTxt"
+                            android:paddingRight="20dp"
+                            android:text="POS" />
+
+                        <TextView
+                            android:id="@+id/playerTxt"
+                            android:paddingRight="20dp"
+                            android:text="Player" />
+
+                        <TextView
+                            android:id="@+id/winsTxt"
+                            android:paddingRight="20dp"
+                            android:text="W" />
+
+                        <TextView
+                            android:id="@+id/drawsTxt"
+                            android:paddingRight="20dp"
+                            android:text="D" />
+
+                        <TextView
+                            android:id="@+id/losesTxt"
+                            android:paddingRight="20dp"
+                            android:text="L" />
+
+                        <TextView
+                            android:id="@+id/forGoalsTxt"
+                            android:paddingRight="20dp"
+                            android:text="F" />
+
+                        <TextView
+                            android:id="@+id/againstGoalsTxt"
+                            android:paddingRight="20dp"
+                            android:text="A" />
+
+                        <TextView
+                            android:id="@+id/differenceTxt"
+                            android:paddingRight="20dp"
+                            android:text="GD" />
+
+                        <TextView
+                            android:id="@+id/pointsTxt"
+                            android:paddingRight="20dp"
+                            android:text="Pts" />
+
+                    </TableRow>
+
+                </TableLayout>
             </RelativeLayout>
         </HorizontalScrollView>
     </ScrollView>

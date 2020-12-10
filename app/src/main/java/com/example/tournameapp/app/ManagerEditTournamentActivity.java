@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Manager;
+import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.utils.ManagerEditTournamentPresenter;
@@ -85,7 +86,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onTournamentLoad(final Tournament tournament) {
+    public void onTournamentLoaded(final Tournament tournament) {
         this.tournament = tournament;
         this.manager = tournament.getManager();
 
@@ -103,24 +104,6 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onInviteUsernameError(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onInvite(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onTournamentStarted(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-
-
-
-    }
-
-    @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
         Log.d("Tournament Players",players.toString());
         playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
@@ -134,13 +117,40 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
                 presenter.startTournament(tournament);
             }
         });
+    }
+
+    @Override
+    public void onTournamentAllMatchesLoaded(final List<Match> matches) {
         viewTableBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TournamentFragment fragment = new TournamentFragment();
+                TournamentFragment fragment = new TournamentFragment(matches);
                 fragment.show(getSupportFragmentManager(), "View Table");
             }
         });
+    }
+
+    @Override
+    public void onTournamentMatchesPlayedLoaded(final List<Match> matchesPlayed) {
+
+    }
+
+    @Override
+    public void onTournamentStarted(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
+
+
+    }
+
+    @Override
+    public void onInviteUsernameError(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onInvite(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

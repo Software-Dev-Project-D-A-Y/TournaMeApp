@@ -30,6 +30,7 @@ public class ManagerEditTournamentPresenter {
     private Manager manager;
 
     private List<Player> players;
+    private List<Match> matches;
 
     public ManagerEditTournamentPresenter(TournamentEditListener listener) {
         this.listener = listener;
@@ -55,8 +56,48 @@ public class ManagerEditTournamentPresenter {
                 setManager(manager);
 
                 loadPlayers();
+                loadAllMatches();
+                loadMatchesPlayed();
 
-                listener.onTournamentLoad(tournament);
+                listener.onTournamentLoaded(tournament);
+            }
+        });
+    }
+
+    private void loadMatchesPlayed() {
+        matchesService.loadMatchesPlayed(tournament, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<Match> matchesPlayed = new ArrayList<>();
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    Match match = child.getValue(Match.class);
+                    matchesPlayed.add(match);
+                }
+                listener.onTournamentMatchesPlayedLoaded(matchesPlayed);
+            }
+        });
+    }
+
+    private void loadAllMatches() {
+        matchesService.loadAllMatches(tournament, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                matches = new ArrayList<>();
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    Match match = child.getValue(Match.class);
+                    matches.add(match);
+                }
+                listener.onTournamentAllMatchesLoaded(matches);
             }
         });
     }
@@ -86,14 +127,6 @@ public class ManagerEditTournamentPresenter {
                 listener.onTournamentPlayersLoaded(players);
             }
         });
-    }
-
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
     }
 
     public void sendInvite(String username) {
@@ -134,10 +167,22 @@ public class ManagerEditTournamentPresenter {
                     continue;
                 }
                 Match match = new Match(tournament, homePlayer, awayPlayer);
+                matches.add(match);
                 matchesService.addMatches(match);
 
             }
         }
     }
 
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
 }

@@ -96,7 +96,7 @@ public class Player {
             return  false;
         }
         Player other = (Player) o;
-        return other.userName == this.userName;
+        return other.userName.equals(this.userName);
     }
 
 
