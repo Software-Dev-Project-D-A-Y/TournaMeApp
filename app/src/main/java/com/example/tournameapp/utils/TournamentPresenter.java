@@ -55,7 +55,27 @@ public class TournamentPresenter {
                 }
                 Log.d("matches",matches.toString());
                 initPlayers();
+                loadMatchesPlayed();
                 listener.onMatchesLoad(matches);
+            }
+        });
+    }
+
+    public void loadMatchesPlayed() {
+        matchesService.loadMatchesPlayed(tournament, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    Match match = child.getValue(Match.class);
+                    matchesPlayed.add(match);
+                }
+
+                listener.onMatchesPlayedLoaded(matchesPlayed);
             }
         });
     }
@@ -101,6 +121,7 @@ public class TournamentPresenter {
     }
 
 
-
-
+    public void setMatchesPlayed(List<Match> matchesPlayed) {
+        this.matchesPlayed = matchesPlayed;
+    }
 }

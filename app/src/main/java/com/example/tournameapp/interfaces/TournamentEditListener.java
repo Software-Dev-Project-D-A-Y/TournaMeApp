@@ -18,4 +18,5 @@ public interface TournamentEditListener {
     void onInvite(String message);
 
 
+    void onMatchUpdated(Match match);
 }

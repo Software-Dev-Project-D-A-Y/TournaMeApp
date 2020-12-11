@@ -36,6 +36,7 @@ public class MatchesService {
     public void addMatches(Match match) {
         String tournamentID = match.getTournament().getId();
         String matchKey = dbRef.child(ALL_MATCHES).child(tournamentID).push().getKey();
+        match.setId(matchKey);
         dbRef.child(ALL_MATCHES).child(tournamentID).child(matchKey).setValue(match);
     }
 
@@ -68,5 +69,12 @@ public class MatchesService {
 
             }
         });
+    }
+
+    public void updateMatch(Match match) {
+        String tournamentID = match.getTournament().getId();
+        String matchKey = match.getId();
+        dbRef.child(ALL_MATCHES).child(tournamentID).child(matchKey).setValue(match);
+        dbRef.child(MATCHES_PLAYED).child(tournamentID).child(matchKey).setValue(match);
     }
 }

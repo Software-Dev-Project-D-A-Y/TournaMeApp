@@ -185,4 +185,8 @@ public class ManagerEditTournamentPresenter {
     public List<Match> getMatches() {
         return matches;
     }
+
+    public void updateMatch(Match match) {
+        matchesService.updateMatch(match);
+    }
 }

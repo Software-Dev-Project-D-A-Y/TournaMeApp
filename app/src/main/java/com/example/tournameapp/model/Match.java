@@ -1,5 +1,7 @@
 package com.example.tournameapp.model;
 
+import androidx.annotation.Nullable;
+
 public class Match {
     //matchID	tournamentID	homePlayerID	awayPlayerID	homeScore	awayScore	scoreIsUpdated
 
@@ -82,5 +84,17 @@ public class Match {
     @Override
     public String toString() {
         return "{"+tournament.getId()+"}: "+homePlayer.getUserName()+" vs. "+awayPlayer.getUserName();
+    }
+
+    public String matchToString() {
+        return  homePlayer.getUserName()+" vs. "+awayPlayer.getUserName();
+
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Match)) return false;
+        Match other = (Match) obj;
+        return this.id.equals(other.id);
     }
 }

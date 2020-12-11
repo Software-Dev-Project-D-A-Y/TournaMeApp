@@ -165,6 +165,11 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
+    public void onMatchUpdated(Match match) {
+        presenter.updateMatch(match);
+    }
+
+    @Override
     public void onInviteFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

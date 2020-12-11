@@ -10,4 +10,6 @@ public interface TournamentListener {
 
 
     void onMatchesLoad(List<Match> matches);
+
+    void onMatchesPlayedLoaded(List<Match> matchesPlayed);
 }
