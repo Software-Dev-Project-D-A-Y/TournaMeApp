@@ -23,6 +23,7 @@ import com.example.tournameapp.interfaces.TournamentListener;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
+import com.example.tournameapp.model.TournamentTableRow;
 import com.example.tournameapp.utils.TournamentPresenter;
 
 import java.util.ArrayList;
@@ -33,20 +34,18 @@ import java.util.List;
 public class TournamentFragment extends DialogFragment implements TournamentListener {
 
     TournamentPresenter presenter;
-   // private TournamentEditListener listener; // problem because its comimg from manager
     private List<Match> matches;
     private List<Match> matchesPlayed;
     private List<Player> players;
-    private HashMap<String, TournamentTableRow> rows;
+    private List<TournamentTableRow> rowsList;
 
-    private ArrayList<TournamentTableRow> rowsList;
+
 
 
     public TournamentFragment(Tournament tournament){
         presenter = new TournamentPresenter(this,tournament);
         matchesPlayed = new ArrayList<>();
         players = new ArrayList<>();
-        rows = new HashMap<>();
         presenter.loadAllMatches();
 
     }
@@ -55,7 +54,6 @@ public class TournamentFragment extends DialogFragment implements TournamentList
         this.matches = matches;
         matchesPlayed = new ArrayList<>();
         players = new ArrayList<>();
-        rows = new HashMap<>();
     }
 
 //    @Override
@@ -76,93 +74,72 @@ public class TournamentFragment extends DialogFragment implements TournamentList
         return view;
     }
 
-    private void initPlayers() {
-        for (Match match : matches) {
-            if (!players.contains(match.getHomePlayer())) {
-                players.add(match.getHomePlayer());
-            }
-        }
-    }
-
-    private void initTableRows() {
-        for (Player player : players) {
-            TournamentTableRow row = new TournamentTableRow(player);
-            rows.put(player.getUserName(), row);
-        }
-
-        for (Match match : matchesPlayed) {
-            String homePlayer = match.getHomePlayer().getUserName();
-            String awayPlayer = match.getAwayPlayer().getUserName();
-            int homeGoals = match.getHomeScore();
-            int awayGoals = match.getAwayScore();
-            TournamentTableRow homePlayerRow = rows.get(homePlayer);
-            TournamentTableRow awayPlayerRow = rows.get(awayPlayer);
-
-            homePlayerRow.updateRow(homeGoals, awayGoals);
-            awayPlayerRow.updateRow(awayGoals, homeGoals);
-        }
 
 
-        rowsList = new ArrayList<>();
-        for (TournamentTableRow row : rows.values()){
-            rowsList.add(row);
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            rowsList.sort(new TournamentTableRow());
-        }
 
-    }
 
     public void init(View view) {
         TableLayout tournamentTbl = (TableLayout) view.findViewById(R.id.tournamentTbl);
-
+        rowsList =  presenter.initTableRows();
         for(int i = 0 ; i < rowsList.size() ; i++) {
             TournamentTableRow row = rowsList.get(i);
 
+
+            // Position
             TableRow i_stPlaceRow = new TableRow(getContext());
             TextView posTxt = new TextView(getContext());
-            posTxt.setText(i+ 1 +"");
+            posTxt.setText(" " +(i+ 1) +"");
             posTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(posTxt);
 
+
+            //userName - Player
             TextView playerTxt = new TextView(getContext());
-            playerTxt.setText(row.player.getUserName());
+            playerTxt.setText(row.getPlayer().getUserName());
             playerTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(playerTxt);
 
+
+            //wins
             TextView wTxt = new TextView(getContext());
-            wTxt.setText(row.wins+"");
+            wTxt.setText(row.getWins()+"");
             wTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(wTxt);
 
+            //draws
             TextView dTxt = new TextView(getContext());
-            dTxt.setText(row.draws+"");
+            dTxt.setText(row.getDraws()+"");
             dTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(dTxt);
 
+            //loses
             TextView lTxt = new TextView(getContext());
-            lTxt.setText(row.loses+"");
+            lTxt.setText(row.getLoses()+"");
             lTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(lTxt);
 
+            //forGoals
             TextView forTxt = new TextView(getContext());
-            forTxt.setText(row.forGoals+"");
+            forTxt.setText(row.getForGoals()+"");
             forTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(forTxt);
 
+            //aggaintsGoals
             TextView againstTxt = new TextView(getContext());
-            againstTxt.setText(row.againstGoals+"");
+            againstTxt.setText(row.getAgainstGoals()+"");
             againstTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(againstTxt);
 
+            //goalsDiffernet
             TextView diffTxt = new TextView(getContext());
-            diffTxt.setText(row.goalsDifference+"");
+            diffTxt.setText(" "+row.getGoalsDifference()+"");
             diffTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(diffTxt);
 
+            //points
             TextView ptsTxt = new TextView(getContext());
-            ptsTxt.setText(row.points+"");
+            ptsTxt.setText(row.getPoints()+"");
             ptsTxt.setTextColor(Color.BLACK);
             i_stPlaceRow.addView(ptsTxt);
 
@@ -175,50 +152,9 @@ public class TournamentFragment extends DialogFragment implements TournamentList
     public void onMatchesLoad(List<Match> matches) {
         this.matches = matches;
         View view = getView();
-
-        initPlayers();
-        initTableRows();
         init(view);
     }
 
-    private class TournamentTableRow implements Comparator<TournamentTableRow>{
-        Player player;
-        int wins, draws, loses, forGoals, againstGoals, goalsDifference, points;
 
-        public TournamentTableRow(){}
-
-        public TournamentTableRow(Player player) {
-            this.player = player;
-        }
-
-        public void updateRow(int forGoals, int againstGoals) {
-            this.forGoals += forGoals;
-            this.againstGoals += againstGoals;
-            this.goalsDifference = this.forGoals - this.againstGoals;
-            if(forGoals > againstGoals) {
-                wins++;
-                points += 3;
-            } else if(forGoals == againstGoals) {
-                draws++;
-                points++;
-            } else {
-                loses++;
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "TournamentTableRow{" +
-                    "player=" + player.getUserName() +
-                    ", points=" + points +
-                    '}';
-        }
-
-        @Override
-        public int compare(TournamentTableRow o1, TournamentTableRow o2) {
-            int comp = o2.player.getUserName().compareTo(o1.player.getUserName());
-            return comp;
-        }
-    }
 
 }
