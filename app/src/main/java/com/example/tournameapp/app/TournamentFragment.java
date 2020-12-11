@@ -50,22 +50,6 @@ public class TournamentFragment extends DialogFragment implements TournamentList
 
     }
 
-    public TournamentFragment(List<Match> matches) {
-        this.matches = matches;
-        matchesPlayed = new ArrayList<>();
-        players = new ArrayList<>();
-    }
-
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        if (context instanceof TournamentEditListener) {
-//            listener = (TournamentEditListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString() + " Must implement TournamentEditListener!");
-//        }
-//    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,12 +58,7 @@ public class TournamentFragment extends DialogFragment implements TournamentList
         return view;
     }
 
-
-
-
-
-
-    public void init(View view) {
+    private void init(View view) {
         TableLayout tournamentTbl = (TableLayout) view.findViewById(R.id.tournamentTbl);
         rowsList =  presenter.initTableRows();
         for(int i = 0 ; i < rowsList.size() ; i++) {

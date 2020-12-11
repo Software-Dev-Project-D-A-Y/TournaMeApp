@@ -34,6 +34,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     private Button inviteBtn;
     private Button startTournamentBtn;
     private Button viewTableBtn;
+    private Button enterResultsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
         startTournamentBtn = (Button) findViewById(R.id.startTournamentBtn);
         viewTableBtn = (Button) findViewById(R.id.viewTableBtn);
+        enterResultsBtn = (Button) findViewById(R.id.enterResultsBtn);
+
 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
@@ -53,13 +56,13 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         inviteBtn.setEnabled(false);
         playerAmountTxt.setText("Loading data...");
 
-        Log.d("Tournament","Before loading");
+        Log.d("Tournament", "Before loading");
 
         presenter.loadTournament(tournamentID);
 
     }
 
-    private void inviteDialog(){
+    private void inviteDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Invite a Player");
         alert.setMessage("Enter Username:");
@@ -90,8 +93,8 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         this.tournament = tournament;
         this.manager = tournament.getManager();
 
-        Log.d("Tournament","after loading");
-        Log.d("Tournament",tournament.toString());
+        Log.d("Tournament", "after loading");
+        Log.d("Tournament", tournament.toString());
 
 
         inviteBtn.setEnabled(true);
@@ -113,10 +116,10 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
-        Log.d("Tournament Players",players.toString());
-        playerAmountTxt.setText(players.size()+"/"+tournament.getCapacity()+" Players joined");
+        Log.d("Tournament Players", players.toString());
+        playerAmountTxt.setText(players.size() + "/" + tournament.getCapacity() + " Players joined");
 
-        if(players.size() < tournament.getCapacity()){
+        if (players.size() < tournament.getCapacity()) {
             return;
         }
         startTournamentBtn.setOnClickListener(new View.OnClickListener() {
@@ -129,13 +132,14 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentAllMatchesLoaded(final List<Match> matches) {
-//        viewTableBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                TournamentFragment fragment = new TournamentFragment(matches);
-//                fragment.show(getSupportFragmentManager(), "View Table");
-//            }
-//        });
+        enterResultsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateScoreFragment fragment = new UpdateScoreFragment(matches);
+                fragment.show(getSupportFragmentManager(), "Update Score Table");
+
+            }
+        });
     }
 
     @Override
@@ -145,24 +149,23 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentStarted(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
 
     }
 
     @Override
     public void onInviteUsernameError(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onInvite(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onInviteFailure(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
