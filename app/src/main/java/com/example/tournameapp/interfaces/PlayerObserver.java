@@ -7,6 +7,7 @@ import com.example.tournameapp.model.TournamentRequest;
 import java.util.List;
 
 public interface PlayerObserver {
+    
     Player getPlayer();
 
     void onMyRequestsSuccess(List<TournamentRequest> requests);

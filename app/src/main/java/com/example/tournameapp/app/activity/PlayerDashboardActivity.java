@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
-import com.example.tournameapp.app.fragment.PlayerTournamentsFragment;
+import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
 import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
@@ -24,7 +24,7 @@ import com.example.tournameapp.utils.PlayerPresenter;
 
 import java.util.List;
 
-public class PlayerActivity extends AppCompatActivity implements PlayerObserver {
+public class PlayerDashboardActivity extends AppCompatActivity implements PlayerObserver {
 
     private TextView playerTextView;
     private Button myRequestsBtn;
@@ -172,8 +172,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
 
     @Override
     public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerTournamentsFragment playerTournamentsFragment = new PlayerTournamentsFragment(tournaments);
-        playerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
+        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
+        fragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 
     @Override

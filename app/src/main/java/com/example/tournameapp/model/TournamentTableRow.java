@@ -3,8 +3,8 @@ package com.example.tournameapp.model;
 import java.util.Comparator;
 
     public class TournamentTableRow implements Comparator<TournamentTableRow> {
-        Player player;
-        int wins, draws, loses, forGoals, againstGoals, goalsDifference, points;
+        private Player player;
+        private int wins, draws, loses, forGoals, againstGoals, goalsDifference, points;
 
         public TournamentTableRow(){}
 
@@ -41,15 +41,19 @@ import java.util.Comparator;
             int goalDiffComp = o2.getGoalsDifference() - o1.getGoalsDifference();
             int forGoalsComp = o2.getForGoals() - o1.getForGoals();
             if(pointsComp == 0) {
+
                 if (goalDiffComp == 0){
+
                     if (forGoalsComp == 0) {
                         return o1.getPlayer().getUserName().compareTo(o2.getPlayer().getUserName());
                     } else {
                         return forGoalsComp;
                     }
+
                 } else {
                     return goalDiffComp;
                 }
+
             } else {
                 return pointsComp;
             }

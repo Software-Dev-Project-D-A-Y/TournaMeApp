@@ -57,7 +57,7 @@ public class TournamentsService {
     public boolean updateTournament(final Tournament tournament) {
         dbRef.child(ALL_TOURNAMENTS).child(tournament.getId()).setValue(tournament);
         dbRef.child(MANAGER_TOURNAMENTS).child(tournament.getManager().getUserName()).child(tournament.getId()).setValue(tournament);
-        dbRef.child(PLAYER_TOURNAMENTS).orderByChild(tournament.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child(PLAYER_TOURNAMENTS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot player : snapshot.getChildren()) {

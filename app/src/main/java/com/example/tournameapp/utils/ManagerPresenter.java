@@ -54,4 +54,8 @@ public class ManagerPresenter {
             }
         });
     }
+
+    public Manager getManager() {
+        return manager;
+    }
 }

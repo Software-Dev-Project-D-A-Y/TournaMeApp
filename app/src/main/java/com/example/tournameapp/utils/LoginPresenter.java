@@ -18,6 +18,29 @@ public class LoginPresenter {
         this.usersService = UsersService.getInstance();
     }
 
+    public void checkLoggedUser() {
+        SharedPreferences sharedPreferences = onLoginListener.getSharedPreferences();
+        boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
+        if (!isLogged) return;
+
+        String userLogged = sharedPreferences.getString("loggedUser", null);
+        if (userLogged == null) return;
+
+        String type = usersService.getUserType(userLogged);
+
+        switch (type) {
+            case UsersService.MANAGERS:
+                Manager manager = usersService.getManager(userLogged);
+                onLoginListener.onLogin(manager);
+                break;
+
+            case UsersService.PLAYERS:
+                Player player = usersService.getPlayer(userLogged);
+                onLoginListener.onLogin(player);
+                break;
+        }
+    }
+
     public void logIn(String userName, String password, boolean rememberMe) {
 
         boolean isExists = usersService.isUsernameExists(userName);
@@ -58,28 +81,5 @@ public class LoginPresenter {
         editor.putBoolean("rememberUser", rememberMe);
         editor.putString("loggedUser", userName);
         editor.apply();
-    }
-
-    public void checkLoggedUser() {
-        SharedPreferences sharedPreferences = onLoginListener.getSharedPreferences();
-        boolean isLogged = sharedPreferences.getBoolean("rememberUser", false);
-        if (!isLogged) return;
-
-        String userLogged = sharedPreferences.getString("loggedUser", null);
-        if (userLogged == null) return;
-
-        String type = usersService.getUserType(userLogged);
-
-        switch (type) {
-            case UsersService.MANAGERS:
-                Manager manager = usersService.getManager(userLogged);
-                onLoginListener.onLogin(manager);
-                break;
-
-            case UsersService.PLAYERS:
-                Player player = usersService.getPlayer(userLogged);
-                onLoginListener.onLogin(player);
-                break;
-        }
     }
 }

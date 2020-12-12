@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.app.fragment.ManagerTournamentsFragment;
+import com.example.tournameapp.app.fragment.ManagerMyTournamentsFragment;
 import com.example.tournameapp.app.fragment.AddTournamentFragment;
 import com.example.tournameapp.interfaces.ManagerObserver;
 import com.example.tournameapp.model.Manager;
@@ -21,7 +21,7 @@ import com.example.tournameapp.utils.ManagerPresenter;
 
 import java.util.List;
 
-public class ManagerActivity extends AppCompatActivity implements ManagerObserver{
+public class ManagerDashboardActivity extends AppCompatActivity implements ManagerObserver{
 
     private TextView managerTextView;
     private Button addNewTournamentBtn;
@@ -52,7 +52,8 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
         addNewTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onAddTournamentClicked();
+                AddTournamentFragment fragment = new AddTournamentFragment(getManager());
+                fragment.show(getSupportFragmentManager(),"Add");
             }
         });
 
@@ -118,14 +119,18 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
 
 
     @Override
+    public Manager getManager() {
+        return presenter.getManager();
+    }
+
+    @Override
     public void onAddTournamentSuccess(Manager manager) {
-        AddTournamentFragment addTournamentFragment = new AddTournamentFragment(manager);
-        addTournamentFragment.show(getSupportFragmentManager(),"Add");
+
     }
 
     @Override
     public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        ManagerTournamentsFragment managerTournamentsFragment = new ManagerTournamentsFragment(tournaments);
-        managerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
+        ManagerMyTournamentsFragment fragment = new ManagerMyTournamentsFragment(tournaments);
+        fragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 }
