@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
 import com.example.tournameapp.utils.PlayerPresenter;
 
@@ -56,18 +57,23 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
                 presenter.onMyRequestsClicked();
             }
         });
-
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
-            }
+                presenter.onMyTournamentClicked();            }
         });
+
+
         joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 joinTournamentDialog();
+            }
+        });
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
             }
         });
 
@@ -140,5 +146,11 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
     public void onJoinRequestFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
+        PlayerTournamentsFragment playerTournamentsFragment = new PlayerTournamentsFragment(tournaments);
+        playerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 }

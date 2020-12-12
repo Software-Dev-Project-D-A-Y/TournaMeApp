@@ -114,4 +114,25 @@ public class PlayerPresenter {
 
     }
 
+    public void onMyTournamentClicked() {
+        tourService.loadPlayerTournaments(player, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<Tournament> tournaments = new ArrayList<>();
+
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    Tournament tournament = child.getValue(Tournament.class);
+                    tournaments.add(tournament);
+                }
+
+                observer.onMyTournamentsSuccess(tournaments);
+            }
+        });
+    }
+
 }

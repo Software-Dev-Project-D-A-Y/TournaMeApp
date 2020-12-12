@@ -24,6 +24,8 @@ public class TournamentsService {
     private static final String ALL_TOURNAMENTS = "All-Tournaments";
     private static final String MANAGER_TOURNAMENTS = "Manager-Tournaments";
     private static final String TOURNAMENT_PLAYERS = "Tournament-Players";
+    private static final String PLAYER_TOURNAMENTS = "Player-Tournaments";
+
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
@@ -92,6 +94,7 @@ public class TournamentsService {
         String username = player.getUserName();
         String tournamentID = tournament.getId();
         dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).setValue(player);
+        dbRef.child(PLAYER_TOURNAMENTS).child(username).child(tournamentID).setValue(tournament);
     }
 
     public void loadTournamentPlayers(Tournament tournament, final OnDataLoadedListener listener) {
@@ -125,4 +128,21 @@ public class TournamentsService {
         });
 
     }
+
+    //player
+    public void loadPlayerTournaments(Player player, final OnDataLoadedListener listener){
+        listener.onStart();
+        dbRef.child(PLAYER_TOURNAMENTS).child(player.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

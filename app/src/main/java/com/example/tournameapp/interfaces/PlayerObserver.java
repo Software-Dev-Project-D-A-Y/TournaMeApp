@@ -17,4 +17,5 @@ public interface PlayerObserver {
     void onJoinRequestSuccess(String message);
     void onJoinRequestFailure(String message);
 
+    void onMyTournamentsSuccess(List<Tournament> tournaments);
 }

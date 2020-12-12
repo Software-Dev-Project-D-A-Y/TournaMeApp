@@ -37,9 +37,9 @@ import java.util.Comparator;
 
         @Override
         public int compare(TournamentTableRow o1, TournamentTableRow o2) {
-            int pointsComp = o1.getPoints() - o2.getPoints();
-            int goalDiffComp = o1.getGoalsDifference() - o2.getGoalsDifference();
-            int forGoalsComp = o1.getForGoals() - o2.getForGoals();
+            int pointsComp = o2.getPoints() - o1.getPoints();
+            int goalDiffComp = o2.getGoalsDifference() - o1.getGoalsDifference();
+            int forGoalsComp = o2.getForGoals() - o1.getForGoals();
             if(pointsComp == 0) {
                 if (goalDiffComp == 0){
                     if (forGoalsComp == 0) {
