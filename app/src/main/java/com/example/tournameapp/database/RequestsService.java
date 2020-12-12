@@ -16,6 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 public class RequestsService {
 
     private static final String REQUESTS = "Requests";
+    private static final String ALL_REQUESTS = "All-Requests";
+    private static final String MANAGER_REQUESTS = "Manager-Requests";
+    private static final String PLAYER_REQUESTS = "Player-Requests";
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
@@ -34,25 +37,39 @@ public class RequestsService {
         return instance;
     }
 
+    // INSERTIONS
     public boolean insertTournamentRequest(Tournament tournament, Player player, boolean fromManager) {
 
 
         TournamentRequest request = new TournamentRequest(tournament, player, fromManager, !fromManager);
-        String key = dbRef.child("All-Requests").push().getKey();
+        String key = dbRef.child(ALL_REQUESTS).push().getKey();
+        if(key == null) return false;
+
         request.setId(key);
 
-        dbRef.child("All-Requests").child(key).setValue(request);
+        dbRef.child(ALL_REQUESTS).child(key).setValue(request);
         if (!fromManager) {
-            dbRef.child("Manager-Requests").child(tournament.getId()).child(key).setValue(request);
+            dbRef.child(MANAGER_REQUESTS).child(tournament.getId()).child(key).setValue(request);
             return true;
         }
-        dbRef.child("Player-Requests").child(player.getUserName()).child(key).setValue(request);
+        dbRef.child(PLAYER_REQUESTS).child(player.getUserName()).child(key).setValue(request);
         return true;
     }
 
+    public void updateRequest(TournamentRequest requestUpdated) {
+        dbRef.child(ALL_REQUESTS).child(requestUpdated.getId()).setValue(requestUpdated);
+        dbRef.child(PLAYER_REQUESTS).child(requestUpdated.getPlayer().getUserName()).child(requestUpdated.getId()).setValue(requestUpdated);
+    }
+
+    public void removeRequest(TournamentRequest requestRemoved) {
+        dbRef.child(ALL_REQUESTS).child(requestRemoved.getId()).removeValue();
+        dbRef.child(PLAYER_REQUESTS).child(requestRemoved.getPlayer().getUserName()).child(requestRemoved.getId()).removeValue();
+    }
+
+    // LOAD
     public void loadPlayerRequests(Player player, final OnDataLoadedListener listener) {
         listener.onStart();
-        dbRef.child("Player-Requests").child(player.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child(PLAYER_REQUESTS).child(player.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listener.onSuccess(snapshot);
@@ -63,15 +80,5 @@ public class RequestsService {
 
             }
         });
-    }
-
-    public void updateRequest(TournamentRequest requestUpdated) {
-        dbRef.child("All-Requests").child(requestUpdated.getId()).setValue(requestUpdated);
-        dbRef.child("Player-Requests").child(requestUpdated.getPlayer().getUserName()).child(requestUpdated.getId()).setValue(requestUpdated);
-    }
-
-    public void removeRequest(TournamentRequest requestRemoved) {
-        dbRef.child("All-Requests").child(requestRemoved.getId()).removeValue();
-        dbRef.child("Player-Requests").child(requestRemoved.getPlayer().getUserName()).child(requestRemoved.getId()).removeValue();
     }
 }

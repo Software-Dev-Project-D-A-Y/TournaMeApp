@@ -50,6 +50,8 @@ public class ManagerEditTournamentPresenter {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 tournament = dataSnapshot.getValue(Tournament.class);
+                if(tournament == null) return;
+
                 manager = tournament.getManager();
 
                 setTournament(tournament);
@@ -102,7 +104,7 @@ public class ManagerEditTournamentPresenter {
         });
     }
 
-    public void loadPlayers() {
+    private void loadPlayers() {
 
         tourService.loadTournamentPlayers(tournament, new OnDataLoadedListener() {
             @Override
@@ -168,7 +170,7 @@ public class ManagerEditTournamentPresenter {
                 }
                 Match match = new Match(tournament, homePlayer, awayPlayer);
                 matches.add(match);
-                matchesService.addMatches(match);
+                matchesService.addMatch(match);
 
             }
         }

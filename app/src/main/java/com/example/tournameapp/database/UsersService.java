@@ -25,16 +25,15 @@ public class UsersService {
     public final static String PLAYERS = "Players";
     public final static String MANAGERS = "Managers";
 
-    public static UsersService instance = null;
-
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
-
 
     private HashMap<String, String> userNames;
     private HashMap<String, String> emails;
     private HashMap<String, Manager> managers;
     private HashMap<String, Player> players;
+
+    private static UsersService instance = null;
 
     private UsersService() {
         database = FirebaseDatabase.getInstance();
@@ -167,6 +166,7 @@ public class UsersService {
         return instance;
     }
 
+    // INSERTIONS
     public boolean insertUser(Manager newManager) {
         dbRef.child(MANAGERS).child(newManager.getUserName()).setValue(newManager);
         dbRef.child(USER_NAMES).child(newManager.getUserName()).setValue(MANAGERS);
@@ -181,6 +181,23 @@ public class UsersService {
         return true;
     }
 
+    // LOAD
+    public void loadUsersData(final OnDataLoadedListener onDataLoadedListener){
+        onDataLoadedListener.onStart();
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                onDataLoadedListener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    // GETTERS
     public boolean isEmailExists(String email) {
         return emails.containsValue(email);
     }
@@ -201,18 +218,4 @@ public class UsersService {
         return players.get(userName);
     }
 
-    public void loadData(final OnDataLoadedListener onDataLoadedListener){
-        onDataLoadedListener.onStart();
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                onDataLoadedListener.onSuccess(snapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

@@ -19,8 +19,11 @@ import java.util.List;
 public class TournamentPresenter {
 
     private TournamentListener listener;
+
     private MatchesService matchesService;
+
     private Tournament tournament;
+
     private List<Match> matchesPlayed;
     private List<Player> players;
     private HashMap<String, TournamentTableRow> rows;
@@ -59,7 +62,7 @@ public class TournamentPresenter {
         });
     }
 
-    public void loadMatchesPlayed() {
+    private void loadMatchesPlayed() {
         matchesService.loadMatchesPlayed(tournament, new OnDataLoadedListener() {
             @Override
             public void onStart() {
@@ -78,7 +81,7 @@ public class TournamentPresenter {
         });
     }
 
-        private void initPlayers() {
+    private void initPlayers() {
         players = new ArrayList<>();
         for (Match match : matches) {
             if (!players.contains(match.getHomePlayer())) {
@@ -86,7 +89,6 @@ public class TournamentPresenter {
             }
         }
     }
-
 
     public List<TournamentTableRow>  initTableRows() {
         for (Player player : players) {
@@ -101,6 +103,7 @@ public class TournamentPresenter {
             int awayGoals = match.getAwayScore();
             TournamentTableRow homePlayerRow = rows.get(homePlayer);
             TournamentTableRow awayPlayerRow = rows.get(awayPlayer);
+            if(homePlayerRow == null || awayPlayerRow == null) return null;
 
             homePlayerRow.updateRow(homeGoals, awayGoals);
             awayPlayerRow.updateRow(awayGoals, homeGoals);
@@ -108,16 +111,16 @@ public class TournamentPresenter {
 
 
         rowsList = new ArrayList<>();
-        for (TournamentTableRow row : rows.values()){
-            rowsList.add(row);
-        }
+        rowsList.addAll(rows.values());
+//        for (TournamentTableRow row : rows.values()){
+//            rowsList.add(row);
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             rowsList.sort(new TournamentTableRow());
         }
     return rowsList;
     }
-
 
     public void setMatchesPlayed(List<Match> matchesPlayed) {
         this.matchesPlayed = matchesPlayed;
