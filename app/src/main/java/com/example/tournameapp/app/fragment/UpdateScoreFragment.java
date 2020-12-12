@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,16 +67,23 @@ public class UpdateScoreFragment extends DialogFragment {
     private void editMatchDialog(final Match match) {
         LayoutInflater factory = LayoutInflater.from(getContext());
         final View textEntryView = factory.inflate(R.layout.layout_edit_match, null);
+        final TextView homePlayerTxt = textEntryView.findViewById(R.id.homePlayerTxt);
+        final TextView awayPlayerTxt = textEntryView.findViewById(R.id.awayPlayerTxt);
         final EditText homePlayerScoreTxt = textEntryView.findViewById(R.id.homePlayerScoreTxt);
         final EditText awayPlayerScoreTxt = textEntryView.findViewById(R.id.awayPlayerScoreTxt);
 
+        homePlayerTxt.setText(match.getHomePlayer().getUserName()+":");
+        awayPlayerTxt.setText(match.getAwayPlayer().getUserName()+":");
+
+        if(match.isUpdated()){
+            homePlayerScoreTxt.setText(match.getHomeScore()+"");
+            awayPlayerScoreTxt.setText(match.getAwayScore()+"");
+        }
+
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle(match.matchToString());
-       // alert.setMessage("Enter home:");
         alert.setView(textEntryView);
 
-//        final EditText input = new EditText(getContext());
-//        alert.setView(input);
 
         alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {

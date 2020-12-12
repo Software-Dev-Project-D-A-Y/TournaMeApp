@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

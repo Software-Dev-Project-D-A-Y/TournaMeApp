@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".app.ManagerEditTournamentActivity"></activity>
-        <activity android:name=".app.PlayerActivity" />
-        <activity android:name=".app.ManagerActivity" />
-        <activity android:name=".app.SignUpActivity" />
-        <activity android:name=".app.LoginActivity" />
-        <activity android:name=".app.MainActivity">
+        <activity android:name=".app.activity.ManagerEditTournamentActivity"></activity>
+        <activity android:name=".app.activity.PlayerActivity" />
+        <activity android:name=".app.activity.ManagerActivity" />
+        <activity android:name=".app.activity.SignUpActivity" />
+        <activity android:name=".app.activity.LoginActivity" />
+        <activity android:name=".app.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

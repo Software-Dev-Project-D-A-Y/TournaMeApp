@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.activity.LoginActivity;
 import com.example.tournameapp.interfaces.OnSignUpListener;
 import com.example.tournameapp.utils.SignUpPresenter;
 
@@ -119,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
 
     @Override
     public void onSignUp() {
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -91,14 +91,14 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
 
     @Override
     public void onLogin(Manager manager) {
-        Intent intent = new Intent(this,ManagerActivity.class);
+        Intent intent = new Intent(this, ManagerActivity.class);
         intent.putExtra("loggedUser",manager.getUserName());
         startActivity(intent);
     }
 
     @Override
     public void onLogin(Player player) {
-        Intent intent = new Intent(this,PlayerActivity.class);
+        Intent intent = new Intent(this, PlayerActivity.class);
         intent.putExtra("loggedUser",player.getUserName());
         startActivity(intent);
     }

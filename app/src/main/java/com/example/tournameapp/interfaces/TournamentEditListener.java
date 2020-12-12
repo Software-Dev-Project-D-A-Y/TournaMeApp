@@ -10,13 +10,14 @@ public interface TournamentEditListener {
 
     void onTournamentLoaded(Tournament tournament);
     void onTournamentPlayersLoaded(List<Player> players);
+
     void onTournamentAllMatchesLoaded(List<Match> matches);
     void onTournamentMatchesPlayedLoaded(List<Match> matchesPlayed);
+
     void onTournamentStarted(String message);
+
     void onInviteUsernameError(String message);
-    void onInviteFailure(String message);
     void onInvite(String message);
-
-
+    void onInviteFailure(String message);
     void onMatchUpdated(Match match);
 }

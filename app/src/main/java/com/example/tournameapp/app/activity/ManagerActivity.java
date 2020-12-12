@@ -1,17 +1,19 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.database.UsersService;
+import com.example.tournameapp.app.fragment.ManagerTournamentsFragment;
+import com.example.tournameapp.app.fragment.AddTournamentFragment;
 import com.example.tournameapp.interfaces.ManagerObserver;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
@@ -66,9 +68,41 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                logoutDialog();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        logoutDialog();
+    }
+
+    private void logoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Log Out");
+        builder.setMessage("Are you sure?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void logout(){
@@ -78,9 +112,10 @@ public class ManagerActivity extends AppCompatActivity implements ManagerObserve
         editor.putString("loggedUser", "");
         editor.apply();
 
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
+
 
     @Override
     public void onAddTournamentSuccess(Manager manager) {

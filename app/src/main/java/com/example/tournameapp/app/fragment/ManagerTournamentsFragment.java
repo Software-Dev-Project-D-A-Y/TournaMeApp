@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.activity.ManagerEditTournamentActivity;
 import com.example.tournameapp.interfaces.ManagerObserver;
 import com.example.tournameapp.model.Tournament;
 
@@ -50,7 +51,7 @@ public class ManagerTournamentsFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_manager_tournaments, container, false);
 
         loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
-        myTournamentsLv = (ListView) view.findViewById(R.id.myTournamentLv);
+        myTournamentsLv = (ListView) view.findViewById(R.id.mMyTournamentLv);
 
         ArrayAdapter<Tournament> adapter = new ArrayAdapter<>(getContext(),R.layout.layout_tournaments_list,tournaments);
         myTournamentsLv.setAdapter(adapter);
@@ -60,7 +61,7 @@ public class ManagerTournamentsFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tournament tournamentChose = tournaments.get(position);
 
-                Intent intent = new Intent(getContext(),ManagerEditTournamentActivity.class);
+                Intent intent = new Intent(getContext(), ManagerEditTournamentActivity.class);
                 intent.putExtra("tournamentChose",tournamentChose.getId());
                 startActivity(intent);
             }

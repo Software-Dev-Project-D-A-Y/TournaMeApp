@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
+import com.example.tournameapp.app.fragment.PlayerTournamentsFragment;
 import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
 import com.example.tournameapp.utils.PlayerPresenter;
@@ -57,6 +60,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
                 presenter.onMyRequestsClicked();
             }
         });
+
         myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,13 +74,19 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
                 joinTournamentDialog();
             }
         });
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                logoutDialog();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        logoutDialog();
     }
 
     private void joinTournamentDialog() {
@@ -105,6 +115,33 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
         alert.show();
     }
 
+    private void logoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Log Out");
+        builder.setMessage("Are you sure?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
     private void logout() {
         SharedPreferences sharedPreferences = getSharedPreferences("rememberMe", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -116,6 +153,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
         startActivity(intent);
     }
 
+
+    @Override
+    public Player getPlayer() {
+        return presenter.getPlayer();
+    }
+
     @Override
     public void onMyRequestsSuccess(List<TournamentRequest> requests) {
         PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
@@ -125,6 +168,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
     @Override
     public void onRequestApproved(TournamentRequest requestChose) {
         presenter.setRequestApproved(requestChose);
+    }
+
+    @Override
+    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
+        PlayerTournamentsFragment playerTournamentsFragment = new PlayerTournamentsFragment(tournaments);
+        playerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 
     @Override
@@ -148,9 +197,5 @@ public class PlayerActivity extends AppCompatActivity implements PlayerObserver 
 
     }
 
-    @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerTournamentsFragment playerTournamentsFragment = new PlayerTournamentsFragment(tournaments);
-        playerTournamentsFragment.show(getSupportFragmentManager(),"My Tournaments");
-    }
+
 }

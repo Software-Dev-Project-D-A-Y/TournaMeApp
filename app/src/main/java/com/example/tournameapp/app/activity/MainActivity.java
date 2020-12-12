@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.activity.LoginActivity;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });

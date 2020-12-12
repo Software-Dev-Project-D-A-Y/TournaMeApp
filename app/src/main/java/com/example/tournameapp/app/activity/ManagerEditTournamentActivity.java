@@ -1,4 +1,4 @@
-package com.example.tournameapp.app;
+package com.example.tournameapp.app.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.fragment.TournamentFragment;
+import com.example.tournameapp.app.fragment.UpdateScoreFragment;
 import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Match;
@@ -115,6 +117,11 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
+    public void onMatchUpdated(Match match) {
+        presenter.updateMatch(match);
+    }
+
+    @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
         Log.d("Tournament Players", players.toString());
         playerAmountTxt.setText(players.size() + "/" + tournament.getCapacity() + " Players joined");
@@ -165,12 +172,9 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onMatchUpdated(Match match) {
-        presenter.updateMatch(match);
-    }
-
-    @Override
     public void onInviteFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+
 }

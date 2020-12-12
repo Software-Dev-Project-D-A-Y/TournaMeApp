@@ -32,21 +32,21 @@ public class TournamentsService {
 
     private static TournamentsService instance = null;
 
-    public static TournamentsService getInstance(){
-        if(instance == null){
+    public static TournamentsService getInstance() {
+        if (instance == null) {
             instance = new TournamentsService();
         }
 
         return instance;
     }
 
-    private TournamentsService(){
+    private TournamentsService() {
         database = FirebaseDatabase.getInstance();
         dbRef = database.getReference(TOURNAMENTS);
 
     }
 
-    public boolean insertTournament(Tournament tournament){
+    public boolean insertTournament(Tournament tournament) {
         String key = dbRef.child(ALL_TOURNAMENTS).push().getKey();
         tournament.setId(key);
         dbRef.child(ALL_TOURNAMENTS).child(key).setValue(tournament);
@@ -54,13 +54,28 @@ public class TournamentsService {
         return true;
     }
 
-    public boolean updateTournament(Tournament tournament){
+    public boolean updateTournament(final Tournament tournament) {
         dbRef.child(ALL_TOURNAMENTS).child(tournament.getId()).setValue(tournament);
         dbRef.child(MANAGER_TOURNAMENTS).child(tournament.getManager().getUserName()).child(tournament.getId()).setValue(tournament);
+        dbRef.child(PLAYER_TOURNAMENTS).orderByChild(tournament.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot player : snapshot.getChildren()) {
+                    if (player.hasChild(tournament.getId()))
+                    dbRef.child(PLAYER_TOURNAMENTS).child(player.getKey()).child(tournament.getId()).setValue(tournament);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return true;
     }
 
-    public void loadTournament(String tournamentID, final OnDataLoadedListener listener){
+    public void loadTournament(String tournamentID, final OnDataLoadedListener listener) {
         listener.onStart();
         dbRef.child(ALL_TOURNAMENTS).child(tournamentID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,7 +90,7 @@ public class TournamentsService {
         });
     }
 
-    public void loadManagerTournaments(Manager manager, final OnDataLoadedListener listener){
+    public void loadManagerTournaments(Manager manager, final OnDataLoadedListener listener) {
         listener.onStart();
         dbRef.child(MANAGER_TOURNAMENTS).child(manager.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -113,7 +128,7 @@ public class TournamentsService {
         });
     }
 
-    public void loadAllTournaments(final OnDataLoadedListener listener){
+    public void loadAllTournaments(final OnDataLoadedListener listener) {
         listener.onStart();
         dbRef.child(ALL_TOURNAMENTS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -130,7 +145,7 @@ public class TournamentsService {
     }
 
     //player
-    public void loadPlayerTournaments(Player player, final OnDataLoadedListener listener){
+    public void loadPlayerTournaments(Player player, final OnDataLoadedListener listener) {
         listener.onStart();
         dbRef.child(PLAYER_TOURNAMENTS).child(player.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

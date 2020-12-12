@@ -7,7 +7,7 @@
     tools:context=".app.ManagerTournamentsActivity">
 
     <ListView
-        android:id="@+id/myTournamentLv"
+        android:id="@+id/mMyTournamentLv"
         android:layout_width="347dp"
         android:layout_height="475dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="Wait until data is loading"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/myTournamentLv"
+        app:layout_constraintBottom_toTopOf="@+id/mMyTournamentLv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

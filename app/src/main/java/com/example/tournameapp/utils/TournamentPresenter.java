@@ -3,7 +3,6 @@ package com.example.tournameapp.utils;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.tournameapp.app.TournamentFragment;
 import com.example.tournameapp.database.MatchesService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.interfaces.TournamentListener;
@@ -14,7 +13,6 @@ import com.example.tournameapp.model.TournamentTableRow;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
