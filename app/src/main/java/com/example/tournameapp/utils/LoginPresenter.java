@@ -28,6 +28,8 @@ public class LoginPresenter {
 
         String type = usersService.getUserType(userLogged);
 
+        if(type == null) return;
+
         switch (type) {
             case UsersService.MANAGERS:
                 Manager manager = usersService.getManager(userLogged);
@@ -38,6 +40,9 @@ public class LoginPresenter {
                 Player player = usersService.getPlayer(userLogged);
                 onLoginListener.onLogin(player);
                 break;
+
+            default:
+                throw new RuntimeException("An Error Occurred");
         }
     }
 
@@ -70,6 +75,9 @@ public class LoginPresenter {
                 }
                 onLoginListener.onLogin(player);
                 break;
+
+            default:
+                throw new RuntimeException("An Error Occurred");
         }
 
         setLoggedUser(userName,rememberMe);
