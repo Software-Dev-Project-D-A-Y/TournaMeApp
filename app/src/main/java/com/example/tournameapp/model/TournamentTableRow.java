@@ -37,8 +37,22 @@ import java.util.Comparator;
 
         @Override
         public int compare(TournamentTableRow o1, TournamentTableRow o2) {
-            int comp = o2.player.getUserName().compareTo(o1.player.getUserName());
-            return comp;
+            int pointsComp = o1.getPoints() - o2.getPoints();
+            int goalDiffComp = o1.getGoalsDifference() - o2.getGoalsDifference();
+            int forGoalsComp = o1.getForGoals() - o2.getForGoals();
+            if(pointsComp == 0) {
+                if (goalDiffComp == 0){
+                    if (forGoalsComp == 0) {
+                        return o1.getPlayer().getUserName().compareTo(o2.getPlayer().getUserName());
+                    } else {
+                        return forGoalsComp;
+                    }
+                } else {
+                    return goalDiffComp;
+                }
+            } else {
+                return pointsComp;
+            }
         }
 
         public Player getPlayer() {
