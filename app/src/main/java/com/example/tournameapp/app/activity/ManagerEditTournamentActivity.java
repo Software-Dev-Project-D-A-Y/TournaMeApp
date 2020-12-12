@@ -30,13 +30,12 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     private ManagerEditTournamentPresenter presenter;
 
     private Tournament tournament;
-    private Manager manager;
 
     private TextView playerAmountTxt;
     private Button inviteBtn;
     private Button startTournamentBtn;
     private Button viewTableBtn;
-    private Button enterResultsBtn;
+    private Button tournamentMatchesBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         inviteBtn = (Button) findViewById(R.id.inviteBtn);
         startTournamentBtn = (Button) findViewById(R.id.startTournamentBtn);
         viewTableBtn = (Button) findViewById(R.id.viewTableBtn);
-        enterResultsBtn = (Button) findViewById(R.id.enterResultsBtn);
+        tournamentMatchesBtn = (Button) findViewById(R.id.tournamentMatchesBtn);
 
 
         Intent intent = getIntent();
@@ -93,7 +92,6 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     @Override
     public void onTournamentLoaded(final Tournament tournament) {
         this.tournament = tournament;
-        this.manager = tournament.getManager();
 
         Log.d("Tournament", "after loading");
         Log.d("Tournament", tournament.toString());
@@ -139,7 +137,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentAllMatchesLoaded(final List<Match> matches) {
-        enterResultsBtn.setOnClickListener(new View.OnClickListener() {
+        tournamentMatchesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UpdateScoreFragment fragment = new UpdateScoreFragment(matches);

@@ -76,7 +76,13 @@ public class TournamentFragment extends DialogFragment implements TournamentList
 
             //userName - Player
             TextView playerTxt = new TextView(getContext());
-            playerTxt.setText(row.getPlayer().getUserName());
+            String userName = row.getPlayer().getUserName();
+
+            if (userName.length() > 10){
+                userName = userName.substring(0,11);
+            }
+
+            playerTxt.setText(userName);
             playerTxt.setTextColor(Color.BLACK);
             if (row.getPlayer().equals(playerToWatch)) playerTxt.setTextColor(Color.RED);
             i_stPlaceRow.addView(playerTxt);
@@ -84,7 +90,7 @@ public class TournamentFragment extends DialogFragment implements TournamentList
 
             //wins
             TextView wTxt = new TextView(getContext());
-            wTxt.setText(row.getWins() + "");
+            wTxt.setText(" " + row.getWins() + "");
             wTxt.setTextColor(Color.BLACK);
             if (row.getPlayer().equals(playerToWatch)) wTxt.setTextColor(Color.RED);
             i_stPlaceRow.addView(wTxt);
