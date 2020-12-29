@@ -11,6 +11,7 @@ import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,11 @@ public class PlayerPresenter {
                 }
                 observer.onMyRequestsSuccess(requests);
             }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
         });
     }
 
@@ -80,6 +86,11 @@ public class PlayerPresenter {
                         observer.onAddFailure("Tournament is full!");
                     }
                 }
+
+                @Override
+                public void onError(DatabaseError error) {
+                    throw new RuntimeException(error.getMessage());
+                }
             });
             reqService.removeRequest(requestChose);
         } else {
@@ -106,6 +117,11 @@ public class PlayerPresenter {
 
                 observer.onMyTournamentsSuccess(tournaments);
             }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
         });
     }
 
@@ -130,6 +146,11 @@ public class PlayerPresenter {
                 }
                 observer.onJoinRequestFailure("Couldn't find this tournamnetID, try another tournament ID");
                 return;// there is no such tournament should update the player
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
             }
         });
 

@@ -77,7 +77,7 @@ public class RequestsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
     }

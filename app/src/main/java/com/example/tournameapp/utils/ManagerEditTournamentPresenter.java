@@ -13,6 +13,7 @@ import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,11 @@ public class ManagerEditTournamentPresenter {
 
                 listener.onTournamentLoaded(tournament);
             }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
         });
     }
 
@@ -82,6 +88,11 @@ public class ManagerEditTournamentPresenter {
                 }
                 listener.onTournamentMatchesPlayedLoaded(matchesPlayed);
             }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
         });
     }
 
@@ -100,6 +111,11 @@ public class ManagerEditTournamentPresenter {
                     matches.add(match);
                 }
                 listener.onTournamentAllMatchesLoaded(matches);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
             }
         });
     }
@@ -127,6 +143,11 @@ public class ManagerEditTournamentPresenter {
                 }
 
                 listener.onTournamentPlayersLoaded(players);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
             }
         });
     }

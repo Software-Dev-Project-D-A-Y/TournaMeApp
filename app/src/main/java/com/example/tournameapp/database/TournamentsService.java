@@ -100,7 +100,7 @@ public class TournamentsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
 
@@ -116,7 +116,7 @@ public class TournamentsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
     }
@@ -132,7 +132,7 @@ public class TournamentsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
     }
@@ -147,7 +147,7 @@ public class TournamentsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
     }
@@ -162,7 +162,7 @@ public class TournamentsService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                listener.onError(error);
             }
         });
     }

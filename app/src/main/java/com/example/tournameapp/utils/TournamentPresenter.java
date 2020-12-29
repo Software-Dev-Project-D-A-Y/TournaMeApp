@@ -11,6 +11,7 @@ import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentTableRow;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,11 @@ public class TournamentPresenter {
                 loadMatchesPlayed();
                 listener.onMatchesLoad(matches);
             }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
         });
     }
 
@@ -77,6 +83,11 @@ public class TournamentPresenter {
                 }
 
                 listener.onMatchesPlayedLoaded(matchesPlayed);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
             }
         });
     }
