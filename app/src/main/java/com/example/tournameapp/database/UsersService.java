@@ -192,11 +192,11 @@ public class UsersService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("error",error.getMessage());
             }
         });
     }
-
+//
     // GETTERS
     public boolean isEmailExists(String email) {
         return emails.containsValue(email);
