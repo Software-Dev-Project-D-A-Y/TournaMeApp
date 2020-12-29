@@ -197,6 +197,7 @@ public class UsersService {
         });
     }
 //
+    //
     // GETTERS
     public boolean isEmailExists(String email) {
         return emails.containsValue(email);
