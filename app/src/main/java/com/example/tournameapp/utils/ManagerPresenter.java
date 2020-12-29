@@ -8,6 +8,7 @@ import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,11 @@ public class ManagerPresenter {
                 }
 
                 observer.onMyTournamentsSuccess(tournaments);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
             }
         });
     }

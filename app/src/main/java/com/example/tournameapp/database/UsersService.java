@@ -182,17 +182,17 @@ public class UsersService {
     }
 
     // LOAD
-    public void loadUsersData(final OnDataLoadedListener onDataLoadedListener){
-        onDataLoadedListener.onStart();
+    public void loadUsersData(final OnDataLoadedListener listener){
+        listener.onStart();
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                onDataLoadedListener.onSuccess(snapshot);
+                listener.onSuccess(snapshot);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("error",error.getMessage());
+                listener.onError(error);
             }
         });
     }
