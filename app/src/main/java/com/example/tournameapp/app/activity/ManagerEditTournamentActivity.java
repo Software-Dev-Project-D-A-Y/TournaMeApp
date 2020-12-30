@@ -17,11 +17,10 @@ import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.TournamentFragment;
 import com.example.tournameapp.app.fragment.UpdateScoreFragment;
 import com.example.tournameapp.interfaces.TournamentEditListener;
-import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
-import com.example.tournameapp.utils.ManagerEditTournamentPresenter;
+import com.example.tournameapp.presenters.ManagerEditTournamentPresenter;
 
 import java.util.List;
 

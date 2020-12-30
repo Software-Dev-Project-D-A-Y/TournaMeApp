@@ -9,9 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.app.activity.LoginActivity;
 import com.example.tournameapp.interfaces.OnSignUpListener;
-import com.example.tournameapp.utils.SignUpPresenter;
+import com.example.tournameapp.presenters.SignUpPresenter;
 
 public class SignUpActivity extends AppCompatActivity implements OnSignUpListener {
 

@@ -1,8 +1,6 @@
 package com.example.tournameapp.app.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,21 +12,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.interfaces.TournamentListener;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentTableRow;
-import com.example.tournameapp.utils.TournamentPresenter;
+import com.example.tournameapp.presenters.TournamentPresenter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class TournamentFragment extends DialogFragment implements TournamentListener {

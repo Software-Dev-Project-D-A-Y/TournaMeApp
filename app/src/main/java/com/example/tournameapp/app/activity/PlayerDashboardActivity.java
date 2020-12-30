@@ -20,7 +20,7 @@ import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
-import com.example.tournameapp.utils.PlayerPresenter;
+import com.example.tournameapp.presenters.PlayerPresenter;
 
 import java.util.List;
 
