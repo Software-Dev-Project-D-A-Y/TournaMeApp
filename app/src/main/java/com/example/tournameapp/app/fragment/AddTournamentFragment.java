@@ -16,7 +16,7 @@ import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.OnAddTournamentListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
-import com.example.tournameapp.utils.AddTournamentPresenter;
+import com.example.tournameapp.presenters.AddTournamentPresenter;
 
 public class AddTournamentFragment extends DialogFragment implements OnAddTournamentListener {
 

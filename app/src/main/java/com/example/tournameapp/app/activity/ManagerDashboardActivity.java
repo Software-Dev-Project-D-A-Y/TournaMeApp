@@ -17,7 +17,7 @@ import com.example.tournameapp.app.fragment.AddTournamentFragment;
 import com.example.tournameapp.interfaces.ManagerObserver;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
-import com.example.tournameapp.utils.ManagerPresenter;
+import com.example.tournameapp.presenters.ManagerPresenter;
 
 import java.util.List;
 

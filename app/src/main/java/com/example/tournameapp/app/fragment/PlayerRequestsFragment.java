@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.tournameapp.utils.NotificationHelper;
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.TournamentRequest;
@@ -55,6 +56,8 @@ public class PlayerRequestsFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TournamentRequest requestChose = requests.get(position);
                 observer.onRequestApproved(requestChose);
+                NotificationHelper notificationHelper = NotificationHelper.getInstance(getContext());
+                notificationHelper.addRequestApprovedNotification(requestChose);
                 dismiss();
             }
         });

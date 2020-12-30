@@ -1,4 +1,4 @@
-package com.example.tournameapp.utils;
+package com.example.tournameapp.presenters;
 
 import com.example.tournameapp.interfaces.OnSignUpListener;
 import com.example.tournameapp.database.UsersService;
