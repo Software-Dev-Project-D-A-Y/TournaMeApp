@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
 import com.example.tournameapp.interfaces.TournamentEditListener;
 import com.example.tournameapp.model.Match;
 
@@ -51,7 +52,8 @@ public class UpdateScoreFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_update_score, container, false);
 
         matchesLv = (ListView) view.findViewById(R.id.mathcesLv);
-        ArrayAdapter<Match> adapter = new ArrayAdapter<>(getContext(), R.layout.layout_tournaments_list, matches);
+        //ArrayAdapter<Match> adapter = new ArrayAdapter<>(getContext(), R.layout.layout_tournaments_list, matches);
+        TournamentMatchesListAdapter adapter = new TournamentMatchesListAdapter(getContext(),R.layout.layout_matches, matches);
         matchesLv.setAdapter(adapter);
 
         matchesLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
