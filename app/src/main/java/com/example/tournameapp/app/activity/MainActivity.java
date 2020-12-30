@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         usersService.loadUsersData(new OnDataLoadedListener() {
             @Override
             public void onStart() {
-                loadDataTxt.setText("Wait until data is loaded");
+                loadDataTxt.setText("loading..");
             }
 
             @Override
