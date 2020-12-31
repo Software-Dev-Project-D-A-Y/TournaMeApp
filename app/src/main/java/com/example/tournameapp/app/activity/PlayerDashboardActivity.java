@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
-import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
+import com.example.tournameapp.app.fragment.PlayerTournamentsFragment;
 import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
@@ -51,21 +51,11 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
         String playerLogged = intent.getExtras().getString("loggedUser");
 
         presenter = new PlayerPresenter(this, playerLogged);
+        presenter.loadRequests();
+        presenter.loadPlayerTournaments();
 
         playerTextView.setText("Hello " + playerLogged);
 
-        myRequestsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onMyRequestsClicked();
-            }
-        });
-
-        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onMyTournamentClicked();            }
-        });
 
 
         joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +78,7 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     public void onBackPressed() {
         logoutDialog();
     }
+
 
     private void joinTournamentDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -160,24 +151,27 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyRequestsSuccess(List<TournamentRequest> requests) {
-        PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
-        fragment.show(getSupportFragmentManager(), "My Requests");
+    public void onPlayerRequestsLoaded(final List<TournamentRequest> requests) {
+        myRequestsBtn.setText("My Requests ("+requests.size()+")");
+        myRequestsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
+                fragment.show(getSupportFragmentManager(), "My Requests");
+            }
+        });
     }
 
     @Override
-    public void onRequestApproved(TournamentRequest requestChose) {
-        presenter.setRequestApproved(requestChose);
-    }
-
-    @Override
-    public void onPlayerAddedToTournament(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAddFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onPlayerTournamentsLoaded(final List<Tournament> tournaments) {
+        myTournamentsBtn.setText("My Tournaments ("+tournaments.size()+")");
+        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerTournamentsFragment fragment = new PlayerTournamentsFragment(tournaments);
+                fragment.show(getSupportFragmentManager(),"My Tournaments");
+            }
+        });
     }
 
     @Override
@@ -191,18 +185,8 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
-        fragment.show(getSupportFragmentManager(),"My Tournaments");
-    }
-
-    @Override
-    public void onPlayerLeaveClicked(Tournament tourToLeave) {
-        presenter.onPlayerLeave(tourToLeave);
-    }
-
-    @Override
-    public void onPlayerRemoved(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void refresh() {
+        presenter.loadRequests();
+        presenter.loadPlayerTournaments();
     }
 }

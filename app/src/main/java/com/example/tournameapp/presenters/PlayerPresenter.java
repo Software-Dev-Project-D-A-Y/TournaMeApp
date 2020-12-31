@@ -33,7 +33,7 @@ public class PlayerPresenter {
         this.listener = listener;
     }
 
-    public void onMyRequestsClicked() {
+    public void loadRequests() {
         reqService.loadPlayerRequests(player, new OnDataLoadedListener() {
             @Override
             public void onStart() {
@@ -47,7 +47,7 @@ public class PlayerPresenter {
                     TournamentRequest tr = child.getValue(TournamentRequest.class);
                     requests.add(tr);
                 }
-                listener.onMyRequestsSuccess(requests);
+                listener.onPlayerRequestsLoaded(requests);
             }
 
             @Override
@@ -57,49 +57,7 @@ public class PlayerPresenter {
         });
     }
 
-    public void setRequestApproved(final TournamentRequest requestChose) {
-        if (!requestChose.getTournament().isJoinable()) {
-            Log.d(requestChose.getTournament().toString(), "full capacity!");
-            return;
-        }
-
-        requestChose.setPlayerApprove(true);
-        if (requestChose.isManagerApprove() && requestChose.isPlayerApprove()) {
-            final Player player = requestChose.getPlayer();
-            final Tournament tournament = requestChose.getTournament();
-
-            tourService.loadTournamentPlayers(tournament, new OnDataLoadedListener() {
-                @Override
-                public void onStart() {
-
-                }
-
-                @Override
-                public void onSuccess(DataSnapshot dataSnapshot) {
-                    long numOfPlayers = dataSnapshot.getChildrenCount();
-
-                    if (numOfPlayers < tournament.getCapacity()) {
-                        tourService.addPlayerToTournament(player, tournament);
-                        listener.onPlayerAddedToTournament("Player added successfully!");
-                    } else {
-                        tournament.setJoinable(false);
-                        listener.onAddFailure("Tournament is full!");
-                    }
-                }
-
-                @Override
-                public void onError(DatabaseError error) {
-                    throw new RuntimeException(error.getMessage());
-                }
-            });
-            reqService.removeRequest(requestChose);
-        } else {
-            reqService.updateRequest(requestChose);
-        }
-
-    }
-
-    public void onMyTournamentClicked() {
+    public void loadPlayerTournaments() {
         tourService.loadPlayerTournaments(player, new OnDataLoadedListener() {
             @Override
             public void onStart() {
@@ -115,7 +73,7 @@ public class PlayerPresenter {
                     tournaments.add(tournament);
                 }
 
-                listener.onMyTournamentsSuccess(tournaments);
+                listener.onPlayerTournamentsLoaded(tournaments);
             }
 
             @Override
@@ -160,8 +118,4 @@ public class PlayerPresenter {
         return player;
     }
 
-    public void onPlayerLeave(Tournament tourToLeave) {
-        tourService.removePlayerFromTournament(player,tourToLeave);
-        listener.onPlayerRemoved(player.getUserName()+" Removed from "+tourToLeave.getTournamentName());
-    }
 }
