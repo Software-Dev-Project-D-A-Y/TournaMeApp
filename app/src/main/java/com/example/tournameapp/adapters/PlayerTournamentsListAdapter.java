@@ -26,7 +26,6 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
     private List<Tournament> tournaments;
     private OnLeaveListener listener;
 
-
     private class ViewHolder {
         TextView tournamentTxt;
         Button leaveBtn;
@@ -79,9 +78,6 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
         }
 
         return convertView;
-
     }
-
-
 }
 
