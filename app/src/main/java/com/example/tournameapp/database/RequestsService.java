@@ -61,6 +61,7 @@ public class RequestsService {
         dbRef.child(PLAYER_REQUESTS).child(requestUpdated.getPlayer().getUserName()).child(requestUpdated.getId()).setValue(requestUpdated);
     }
 
+    // REMOVES
     public void removeRequest(TournamentRequest requestRemoved) {
         dbRef.child(ALL_REQUESTS).child(requestRemoved.getId()).removeValue();
         dbRef.child(PLAYER_REQUESTS).child(requestRemoved.getPlayer().getUserName()).child(requestRemoved.getId()).removeValue();

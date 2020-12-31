@@ -21,4 +21,7 @@ public interface PlayerObserver {
     void onJoinRequestFailure(String message);
 
 
+    void onPlayerLeaveClicked(Tournament tourToLeave);
+
+    void onPlayerRemoved(String message);
 }

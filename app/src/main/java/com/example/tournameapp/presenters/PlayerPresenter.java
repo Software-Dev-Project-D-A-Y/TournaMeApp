@@ -159,4 +159,9 @@ public class PlayerPresenter {
     public Player getPlayer(){
         return player;
     }
+
+    public void onPlayerLeave(Tournament tourToLeave) {
+        tourService.removePlayerFromTournament(player,tourToLeave);
+        observer.onPlayerRemoved(player.getUserName()+" Removed from "+tourToLeave.getTournamentName());
+    }
 }

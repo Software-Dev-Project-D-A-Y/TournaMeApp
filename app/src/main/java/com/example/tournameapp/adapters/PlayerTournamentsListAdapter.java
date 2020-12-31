@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.interfaces.OnLeaveListener;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Tournament;
 
@@ -23,6 +24,8 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
     private Context context;
     private int resource;
     private List<Tournament> tournaments;
+    private OnLeaveListener listener;
+
 
     private class ViewHolder {
         TextView tournamentTxt;
@@ -34,14 +37,18 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
         this.context = context;
         this.resource = resource;
         this.tournaments = tournaments;
+        this.listener = null;
     }
 
+    public void setOnLeaveListener(OnLeaveListener listener){
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder = new ViewHolder();
-        Tournament tournament = tournaments.get(position);
+        final Tournament tournament = tournaments.get(position);
 
         if (convertView == null) {
             LayoutInflater vi;
@@ -55,7 +62,9 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
         holder.leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (listener != null) {
+                    listener.onLeave(tournament,position);
+                }
             }
         });
 
@@ -64,13 +73,9 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
 
         if (!(tournament.isActive())) {
             holder.tournamentTxt.setTextColor(Color.RED);
-            holder.leaveBtn.setTextColor(Color.GREEN);
         } else {
             holder.leaveBtn.setVisibility(View.GONE);
             holder.tournamentTxt.setTextColor(Color.GREEN);
-            holder.leaveBtn.setTextColor(Color.RED);
-            holder.leaveBtn.setText("");
-
         }
 
         return convertView;

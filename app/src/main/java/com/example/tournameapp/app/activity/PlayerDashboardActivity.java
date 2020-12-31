@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -194,8 +195,15 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     @Override
     public void onJoinRequestFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
     }
 
+    @Override
+    public void onPlayerLeaveClicked(Tournament tourToLeave) {
+        presenter.onPlayerLeave(tourToLeave);
+    }
 
+    @Override
+    public void onPlayerRemoved(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

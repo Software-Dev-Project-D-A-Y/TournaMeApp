@@ -1,23 +1,23 @@
 package com.example.tournameapp.app.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.adapters.PlayerTournamentsListAdapter;
-import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
+import com.example.tournameapp.interfaces.OnLeaveListener;
 import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.Tournament;
 
@@ -50,11 +50,18 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_tournaments, container, false);
+        loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
+
 
         adapter = new PlayerTournamentsListAdapter(getContext(),R.layout.layout_player_tournaments, tournaments);
-        loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
-        myTournamentsLv = (ListView) view.findViewById(R.id.pMyTournamentsLv);
+        adapter.setOnLeaveListener(new OnLeaveListener() {
+            @Override
+            public void onLeave(Tournament tourToLeave, int position) {
+                leaveTournamentDialog(tourToLeave,position);
+            }
+        });
 
+        myTournamentsLv = (ListView) view.findViewById(R.id.pMyTournamentsLv);
         myTournamentsLv.setAdapter(adapter);
 
         myTournamentsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +74,34 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
         });
 
         return view;
+    }
+
+    private void leaveTournamentDialog(final Tournament tourToLeave, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Leave "+tourToLeave.getTournamentName());
+        builder.setMessage("Are you sure?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                observer.onPlayerLeaveClicked(tourToLeave);
+                tournaments.remove(position);
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
 
