@@ -15,7 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.utils.NotificationHelper;
 import com.example.tournameapp.R;
-import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.model.TournamentRequest;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class PlayerRequestsFragment extends DialogFragment {
     private List<TournamentRequest> requests;
     private ListView myRequestsLw;
 
-    private PlayerObserver observer;
+    private PlayerActionsListener observer;
 
     public PlayerRequestsFragment(List<TournamentRequest> requests) {
         this.requests = requests;
@@ -34,8 +34,8 @@ public class PlayerRequestsFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof PlayerObserver){
-            observer = (PlayerObserver) context;
+        if(context instanceof PlayerActionsListener){
+            observer = (PlayerActionsListener) context;
         } else {
             throw new RuntimeException(context.toString()+" Must implement PlayerObserver interface!");
         }

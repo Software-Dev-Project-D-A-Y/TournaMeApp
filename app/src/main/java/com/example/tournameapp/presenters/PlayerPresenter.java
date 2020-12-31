@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
-import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
@@ -22,10 +22,10 @@ public class PlayerPresenter {
     private TournamentsService tourService;
     private RequestsService reqService;
 
-    private PlayerObserver observer;
+    private PlayerActionsListener observer;
     private Player player;
 
-    public PlayerPresenter(PlayerObserver observer, String playerLogged) {
+    public PlayerPresenter(PlayerActionsListener observer, String playerLogged) {
         this.usersService = UsersService.getInstance();
         this.tourService = TournamentsService.getInstance();
         this.reqService = RequestsService.getInstance();

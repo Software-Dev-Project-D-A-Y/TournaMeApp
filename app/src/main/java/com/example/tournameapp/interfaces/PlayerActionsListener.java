@@ -6,7 +6,7 @@ import com.example.tournameapp.model.TournamentRequest;
 
 import java.util.List;
 
-public interface PlayerObserver {
+public interface PlayerActionsListener {
     
     Player getPlayer();
 

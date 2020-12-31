@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
 import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
-import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
@@ -25,7 +24,7 @@ import com.example.tournameapp.presenters.PlayerPresenter;
 
 import java.util.List;
 
-public class PlayerDashboardActivity extends AppCompatActivity implements PlayerObserver {
+public class PlayerDashboardActivity extends AppCompatActivity implements PlayerActionsListener {
 
     private TextView playerTextView;
     private Button myRequestsBtn;

@@ -63,7 +63,7 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onLeave(tournament,position);
+                    listener.onLeave(tournament);
                 }
             }
         });
