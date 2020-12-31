@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
 import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
-import com.example.tournameapp.interfaces.PlayerObserver;
+import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
@@ -24,7 +24,7 @@ import com.example.tournameapp.presenters.PlayerPresenter;
 
 import java.util.List;
 
-public class PlayerDashboardActivity extends AppCompatActivity implements PlayerObserver {
+public class PlayerDashboardActivity extends AppCompatActivity implements PlayerActionsListener {
 
     private TextView playerTextView;
     private Button myRequestsBtn;
@@ -171,12 +171,6 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
-        fragment.show(getSupportFragmentManager(),"My Tournaments");
-    }
-
-    @Override
     public void onPlayerAddedToTournament(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -194,8 +188,21 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     @Override
     public void onJoinRequestFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
     }
 
+    @Override
+    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
+        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
+        fragment.show(getSupportFragmentManager(),"My Tournaments");
+    }
 
+    @Override
+    public void onPlayerLeaveClicked(Tournament tourToLeave) {
+        presenter.onPlayerLeave(tourToLeave);
+    }
+
+    @Override
+    public void onPlayerRemoved(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.tournameapp.model;
 
+import androidx.annotation.Nullable;
+
 import com.example.tournameapp.model.Manager;
 
 import java.util.Date;
@@ -112,6 +114,13 @@ public class Tournament {
 
     public void setJoinable(boolean joinable) {
         isJoinable = joinable;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Tournament)) return false;
+        Tournament other = (Tournament) obj;
+        return this.id.equals(other.getId());
     }
 
     @Override
