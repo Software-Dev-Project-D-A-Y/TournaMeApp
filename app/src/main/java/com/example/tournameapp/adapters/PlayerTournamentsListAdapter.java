@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.OnLeaveListener;
-import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
@@ -62,7 +61,7 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onLeave(tournament);
+                    listener.onLeaveTournamentClicked(tournament);
                 }
             }
         });

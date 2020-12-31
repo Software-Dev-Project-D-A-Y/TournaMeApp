@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,21 +52,11 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
         String playerLogged = intent.getExtras().getString("loggedUser");
 
         presenter = new PlayerPresenter(this, playerLogged);
+        presenter.loadRequests();
+        presenter.loadPlayerTournaments();
 
         playerTextView.setText("Hello " + playerLogged);
 
-        myRequestsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onMyRequestsClicked();
-            }
-        });
-
-        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onMyTournamentClicked();            }
-        });
 
 
         joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
@@ -160,24 +151,15 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyRequestsSuccess(List<TournamentRequest> requests) {
-        PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
-        fragment.show(getSupportFragmentManager(), "My Requests");
-    }
-
-    @Override
-    public void onRequestApproved(TournamentRequest requestChose) {
-        presenter.setRequestApproved(requestChose);
-    }
-
-    @Override
-    public void onPlayerAddedToTournament(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAddFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onPlayerRequestsLoaded(final List<TournamentRequest> requests) {
+        myRequestsBtn.setText("My Requests ("+requests.size()+")");
+        myRequestsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerRequestsFragment fragment = new PlayerRequestsFragment(requests);
+                fragment.show(getSupportFragmentManager(), "My Requests");
+            }
+        });
     }
 
     @Override
@@ -191,9 +173,15 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
-        fragment.show(getSupportFragmentManager(),"My Tournaments");
+    public void onPlayerTournamentsLoaded(final List<Tournament> tournaments) {
+        myTournamentsBtn.setText("My Tournaments ("+tournaments.size()+")");
+        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
+                fragment.show(getSupportFragmentManager(),"My Tournaments");
+            }
+        });
     }
 
     @Override
@@ -204,5 +192,11 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     @Override
     public void onPlayerRemoved(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void refresh() {
+        presenter.loadRequests();
+        presenter.loadPlayerTournaments();
     }
 }

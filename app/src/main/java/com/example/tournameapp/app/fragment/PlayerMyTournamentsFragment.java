@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +20,19 @@ import com.example.tournameapp.R;
 import com.example.tournameapp.adapters.PlayerTournamentsListAdapter;
 import com.example.tournameapp.interfaces.OnLeaveListener;
 import com.example.tournameapp.interfaces.PlayerActionsListener;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
+import com.example.tournameapp.presenters.PlayerTournamentsPresenter;
 
 import java.util.List;
 
-public class PlayerMyTournamentsFragment extends DialogFragment {
+public class PlayerMyTournamentsFragment extends DialogFragment implements OnLeaveListener {
+
 
     private List<Tournament> tournaments;
+    private PlayerTournamentsPresenter presenter;
+    private Player player;
+
     private TextView loadingLbl;
     private ListView myTournamentsLv;
     private PlayerTournamentsListAdapter adapter;
@@ -44,6 +51,8 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
         } else {
             throw new RuntimeException(context.toString() + " Must implement PlayerObserver interface!");
         }
+        player = observer.getPlayer();
+        presenter = new PlayerTournamentsPresenter(this,player);
     }
 
     @Nullable
@@ -54,12 +63,7 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
 
 
         adapter = new PlayerTournamentsListAdapter(getContext(),R.layout.layout_player_tournaments, tournaments);
-        adapter.setOnLeaveListener(new OnLeaveListener() {
-            @Override
-            public void onLeave(Tournament tourToLeave) {
-                leaveTournamentDialog(tourToLeave);
-            }
-        });
+        adapter.setOnLeaveListener(this);
 
         myTournamentsLv = (ListView) view.findViewById(R.id.pMyTournamentsLv);
         myTournamentsLv.setAdapter(adapter);
@@ -85,7 +89,8 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                observer.onPlayerLeaveClicked(tourToLeave);
+                //observer.onPlayerLeaveClicked(tourToLeave);
+                presenter.onPlayerLeave(tourToLeave);
                 tournaments.remove(tourToLeave);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -102,6 +107,18 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onLeaveTournamentClicked(Tournament tourToLeave) {
+        leaveTournamentDialog(tourToLeave);
+    }
+
+    @Override
+    public void onLeave(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        dismiss();
+        observer.refresh();
     }
 }
 
