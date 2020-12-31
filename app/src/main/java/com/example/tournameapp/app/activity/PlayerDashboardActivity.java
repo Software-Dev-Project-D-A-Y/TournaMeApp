@@ -171,12 +171,6 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
-        fragment.show(getSupportFragmentManager(),"My Tournaments");
-    }
-
-    @Override
     public void onPlayerAddedToTournament(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -194,6 +188,12 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     @Override
     public void onJoinRequestFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
+        PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
+        fragment.show(getSupportFragmentManager(),"My Tournaments");
     }
 
     @Override

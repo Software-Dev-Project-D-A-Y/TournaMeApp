@@ -13,15 +13,12 @@ public interface PlayerActionsListener {
     void onMyRequestsSuccess(List<TournamentRequest> requests);
     void onRequestApproved(TournamentRequest requestChose);
 
-    void onMyTournamentsSuccess(List<Tournament> tournaments);
-
     void onPlayerAddedToTournament(String message);
     void onAddFailure(String message);
     void onJoinRequestSuccess(String message);
     void onJoinRequestFailure(String message);
 
-
+    void onMyTournamentsSuccess(List<Tournament> tournaments);
     void onPlayerLeaveClicked(Tournament tourToLeave);
-
     void onPlayerRemoved(String message);
 }

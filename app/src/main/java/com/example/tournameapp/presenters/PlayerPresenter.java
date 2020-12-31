@@ -22,15 +22,15 @@ public class PlayerPresenter {
     private TournamentsService tourService;
     private RequestsService reqService;
 
-    private PlayerActionsListener observer;
+    private PlayerActionsListener listener;
     private Player player;
 
-    public PlayerPresenter(PlayerActionsListener observer, String playerLogged) {
+    public PlayerPresenter(PlayerActionsListener listener, String playerLogged) {
         this.usersService = UsersService.getInstance();
         this.tourService = TournamentsService.getInstance();
         this.reqService = RequestsService.getInstance();
         this.player = usersService.getPlayer(playerLogged);
-        this.observer = observer;
+        this.listener = listener;
     }
 
     public void onMyRequestsClicked() {
@@ -47,7 +47,7 @@ public class PlayerPresenter {
                     TournamentRequest tr = child.getValue(TournamentRequest.class);
                     requests.add(tr);
                 }
-                observer.onMyRequestsSuccess(requests);
+                listener.onMyRequestsSuccess(requests);
             }
 
             @Override
@@ -80,10 +80,10 @@ public class PlayerPresenter {
 
                     if (numOfPlayers < tournament.getCapacity()) {
                         tourService.addPlayerToTournament(player, tournament);
-                        observer.onPlayerAddedToTournament("Player added successfully!");
+                        listener.onPlayerAddedToTournament("Player added successfully!");
                     } else {
                         tournament.setJoinable(false);
-                        observer.onAddFailure("Tournament is full!");
+                        listener.onAddFailure("Tournament is full!");
                     }
                 }
 
@@ -115,7 +115,7 @@ public class PlayerPresenter {
                     tournaments.add(tournament);
                 }
 
-                observer.onMyTournamentsSuccess(tournaments);
+                listener.onMyTournamentsSuccess(tournaments);
             }
 
             @Override
@@ -140,11 +140,11 @@ public class PlayerPresenter {
                     if (key.equals(tournamentID)) {
                         Tournament tournament = child.getValue(Tournament.class);
                         reqService.insertTournamentRequest(tournament, player, false);
-                        observer.onJoinRequestSuccess("request sent successfully");
+                        listener.onJoinRequestSuccess("request sent successfully");
                         return;
                     }
                 }
-                observer.onJoinRequestFailure("Couldn't find this tournamnetID, try another tournament ID");
+                listener.onJoinRequestFailure("Couldn't find this tournamnetID, try another tournament ID");
                 return;// there is no such tournament should update the player
             }
 
@@ -162,6 +162,6 @@ public class PlayerPresenter {
 
     public void onPlayerLeave(Tournament tourToLeave) {
         tourService.removePlayerFromTournament(player,tourToLeave);
-        observer.onPlayerRemoved(player.getUserName()+" Removed from "+tourToLeave.getTournamentName());
+        listener.onPlayerRemoved(player.getUserName()+" Removed from "+tourToLeave.getTournamentName());
     }
 }
