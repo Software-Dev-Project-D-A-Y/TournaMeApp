@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.adapters.PlayerTournamentsListAdapter;
+import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
 import com.example.tournameapp.interfaces.PlayerObserver;
 import com.example.tournameapp.model.Tournament;
 
@@ -26,6 +28,7 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
     private List<Tournament> tournaments;
     private TextView loadingLbl;
     private ListView myTournamentsLv;
+    private PlayerTournamentsListAdapter adapter;
 
     private PlayerObserver observer;
 
@@ -48,10 +51,10 @@ public class PlayerMyTournamentsFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_tournaments, container, false);
 
+        adapter = new PlayerTournamentsListAdapter(getContext(),R.layout.layout_player_tournaments, tournaments);
         loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
         myTournamentsLv = (ListView) view.findViewById(R.id.pMyTournamentsLv);
 
-        ArrayAdapter<Tournament> adapter = new ArrayAdapter<>(getContext(), R.layout.layout_tournaments_list, tournaments);
         myTournamentsLv.setAdapter(adapter);
 
         myTournamentsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
