@@ -16,8 +16,5 @@ public interface PlayerActionsListener {
     void onJoinRequestSuccess(String message);
     void onJoinRequestFailure(String message);
 
-    void onPlayerLeaveClicked(Tournament tourToLeave);
-    void onPlayerRemoved(String message);
-
     void refresh();
 }

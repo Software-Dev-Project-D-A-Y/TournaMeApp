@@ -1,6 +1,5 @@
 package com.example.tournameapp.presenters;
 
-import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
 import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;

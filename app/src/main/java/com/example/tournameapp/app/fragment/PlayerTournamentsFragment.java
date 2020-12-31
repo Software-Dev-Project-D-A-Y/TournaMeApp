@@ -26,20 +26,19 @@ import com.example.tournameapp.presenters.PlayerTournamentsPresenter;
 
 import java.util.List;
 
-public class PlayerMyTournamentsFragment extends DialogFragment implements OnLeaveListener {
+public class PlayerTournamentsFragment extends DialogFragment implements OnLeaveListener {
 
 
     private List<Tournament> tournaments;
     private PlayerTournamentsPresenter presenter;
     private Player player;
 
-    private TextView loadingLbl;
     private ListView myTournamentsLv;
     private PlayerTournamentsListAdapter adapter;
 
     private PlayerActionsListener observer;
 
-    public PlayerMyTournamentsFragment(List<Tournament> tournaments) {
+    public PlayerTournamentsFragment(List<Tournament> tournaments) {
         this.tournaments = tournaments;
     }
 
@@ -59,8 +58,6 @@ public class PlayerMyTournamentsFragment extends DialogFragment implements OnLea
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_tournaments, container, false);
-        loadingLbl = (TextView) view.findViewById(R.id.loadingLbl);
-
 
         adapter = new PlayerTournamentsListAdapter(getContext(),R.layout.layout_player_tournaments, tournaments);
         adapter.setOnLeaveListener(this);
@@ -89,7 +86,6 @@ public class PlayerMyTournamentsFragment extends DialogFragment implements OnLea
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                //observer.onPlayerLeaveClicked(tourToLeave);
                 presenter.onPlayerLeave(tourToLeave);
                 tournaments.remove(tourToLeave);
                 adapter.notifyDataSetChanged();

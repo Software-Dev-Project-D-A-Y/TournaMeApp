@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.PlayerRequestsFragment;
-import com.example.tournameapp.app.fragment.PlayerMyTournamentsFragment;
+import com.example.tournameapp.app.fragment.PlayerTournamentsFragment;
 import com.example.tournameapp.interfaces.PlayerActionsListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
@@ -79,6 +78,7 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     public void onBackPressed() {
         logoutDialog();
     }
+
 
     private void joinTournamentDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -163,34 +163,24 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     }
 
     @Override
-    public void onJoinRequestSuccess(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onJoinRequestFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onPlayerTournamentsLoaded(final List<Tournament> tournaments) {
         myTournamentsBtn.setText("My Tournaments ("+tournaments.size()+")");
         myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlayerMyTournamentsFragment fragment = new PlayerMyTournamentsFragment(tournaments);
+                PlayerTournamentsFragment fragment = new PlayerTournamentsFragment(tournaments);
                 fragment.show(getSupportFragmentManager(),"My Tournaments");
             }
         });
     }
 
     @Override
-    public void onPlayerLeaveClicked(Tournament tourToLeave) {
-        presenter.onPlayerLeave(tourToLeave);
+    public void onJoinRequestSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onPlayerRemoved(String message) {
+    public void onJoinRequestFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
