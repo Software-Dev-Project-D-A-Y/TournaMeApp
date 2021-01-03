@@ -54,7 +54,7 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_update_score, container, false);
+        View view = inflater.inflate(R.layout.fragment_tournament_matches, container, false);
 
         matchesLv = (ListView) view.findViewById(R.id.mathcesLv);
         adapter = new TournamentMatchesListAdapter(getContext(),R.layout.layout_matches, matches);

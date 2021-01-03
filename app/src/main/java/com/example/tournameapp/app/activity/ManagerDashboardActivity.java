@@ -40,6 +40,7 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
         managerTextView = (TextView) findViewById(R.id.managerTextView);
         addNewTournamentBtn = (Button) findViewById(R.id.mAddTournamentBtn);
         myTournamentsBtn = (Button) findViewById(R.id.mMyTournamentsBtn);
+        myTournamentsBtn.setEnabled(false);
         logoutBtn = (Button) findViewById(R.id.mLogoutBtn);
 
         Intent intent = getIntent();
@@ -120,6 +121,7 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
 
     @Override
     public void onManagerTournamentsLoaded(final List<Tournament> tournaments) {
+        myTournamentsBtn.setEnabled(true);
         myTournamentsBtn.setText("My Tournaments ("+tournaments.size()+")");
         myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
