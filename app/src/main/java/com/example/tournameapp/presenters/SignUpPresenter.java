@@ -7,17 +7,42 @@ import com.example.tournameapp.model.Player;
 import com.example.tournameapp.utils.validation.Validation;
 import com.example.tournameapp.utils.validation.ValidationException;
 
+/**
+ * Presenter class for retrieve data from database and handling sign-up logic
+ *
+ * @author Alon Perlmuter
+ * @author Yishay Garame
+ * @author Dovie Chitiz
+ */
 public class SignUpPresenter {
 
-
+    // listener to notify SignUpActivity on changes
     private OnSignUpListener onSignUpListener;
+
+    // for getting users data from database
     private UsersService usersService;
 
+    /**
+     * @param onSignUpListener listener to notify activity on changes
+     */
     public SignUpPresenter(OnSignUpListener onSignUpListener) {
         this.onSignUpListener = onSignUpListener;
+        // getting UsersService instance
         this.usersService = UsersService.getInstance();
     }
 
+
+    /**
+     * Signing up a new manager with given parameters
+     *
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param email
+     * @param username
+     * @param password
+     * @param confirmPassword
+     */
     public void signUpManager(String firstName, String lastName, int age, String email, String username, String password, String confirmPassword) {
         boolean isValid = checkValidation(firstName, lastName, age, email, username, password, confirmPassword);
         if (!isValid) return;
@@ -30,6 +55,17 @@ public class SignUpPresenter {
 
     }
 
+    /**
+     * Signing up a new player with given parameters
+     *
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param email
+     * @param username
+     * @param password
+     * @param confirmPassword
+     */
     public void signUpPlayer(String firstName, String lastName, int age, String email, String username, String password, String confirmPassword) {
         boolean isValid = checkValidation(firstName, lastName, age, email, username, password, confirmPassword);
         if (!isValid) return;
@@ -43,6 +79,19 @@ public class SignUpPresenter {
 
     }
 
+    /**
+     * Checks if all input parameters are valid, using {@link Validation} class
+     * calls the suitable error methods of listener if needed
+     *
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param email
+     * @param username
+     * @param password
+     * @param confirmPassword
+     * @return true only if all parameters are valid, false otherwise
+     */
     private boolean checkValidation(String firstName, String lastName, int age, String email, String username, String password, String confirmPassword) {
         boolean res = true;
 
