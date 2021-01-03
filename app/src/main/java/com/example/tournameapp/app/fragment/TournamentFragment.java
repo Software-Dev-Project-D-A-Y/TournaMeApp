@@ -143,7 +143,6 @@ public class TournamentFragment extends DialogFragment implements TournamentList
     @Override
     public void onMatchesPlayedLoaded(List<Match> matchesPlayed) {
         presenter.setMatchesPlayed(matchesPlayed);
-        Log.d("Dovie", "The Gay");
         View view = getView();
         init(view);
     }
