@@ -7,7 +7,7 @@ import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.interfaces.TournamentEditListener;
+import com.example.tournameapp.interfaces.EditTournamentListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
@@ -18,9 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerEditTournamentPresenter {
+public class EditTournamentPresenter {
 
-    private TournamentEditListener listener;
+    private EditTournamentListener listener;
 
     private TournamentsService tourService;
     private UsersService usersService;
@@ -33,12 +33,24 @@ public class ManagerEditTournamentPresenter {
     private List<Player> players;
     private List<Match> matches;
 
-    public ManagerEditTournamentPresenter(TournamentEditListener listener) {
+    public EditTournamentPresenter(EditTournamentListener listener) {
         this.listener = listener;
         tourService = TournamentsService.getInstance();
         usersService = UsersService.getInstance();
         reqService = RequestsService.getInstance();
         matchesService = MatchesService.getInstance();
+    }
+
+    public void loadTournament() {
+        if(tournament == null || manager == null) {
+            throw new RuntimeException("Tournament or Manager contains null value!");
+        }
+
+        loadPlayers();
+        loadAllMatches();
+        loadMatchesPlayed();
+
+        listener.onTournamentLoaded(tournament);
     }
 
     public void loadTournament(String tournamentID) {
@@ -139,9 +151,10 @@ public class ManagerEditTournamentPresenter {
 
                 if (players.size() >= tournament.getCapacity()) {
                     tournament.setJoinable(false);
-                    tourService.updateTournament(tournament);
+                } else {
+                    tournament.setJoinable(true);
                 }
-
+                tourService.updateTournament(tournament);
                 listener.onTournamentPlayersLoaded(players);
             }
 
@@ -209,7 +222,4 @@ public class ManagerEditTournamentPresenter {
         return matches;
     }
 
-    public void updateMatch(Match match) {
-        matchesService.updateMatch(match);
-    }
 }

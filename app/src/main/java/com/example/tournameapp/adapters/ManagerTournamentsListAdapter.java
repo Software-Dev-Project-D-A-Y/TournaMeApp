@@ -16,7 +16,7 @@ import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
 
-public class MyTournamentsListAdapter extends ArrayAdapter<Tournament> {
+public class ManagerTournamentsListAdapter extends ArrayAdapter<Tournament> {
 
     private Context context;
     private int resource;
@@ -26,7 +26,7 @@ public class MyTournamentsListAdapter extends ArrayAdapter<Tournament> {
         TextView tournamentTxt;
     }
 
-    public MyTournamentsListAdapter(@NonNull Context context, int resource, @NonNull List<Tournament> tournaments) {
+    public ManagerTournamentsListAdapter(@NonNull Context context, int resource, @NonNull List<Tournament> tournaments) {
         super(context, resource, tournaments);
         this.context = context;
         this.resource = resource;

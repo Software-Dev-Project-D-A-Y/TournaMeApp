@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,30 +19,34 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
-import com.example.tournameapp.interfaces.TournamentEditListener;
+import com.example.tournameapp.interfaces.EditTournamentListener;
+import com.example.tournameapp.interfaces.OnMatchUpdateListener;
 import com.example.tournameapp.model.Match;
+import com.example.tournameapp.presenters.TournamentMatchesPresenter;
 
 import java.util.List;
 
-public class UpdateScoreFragment extends DialogFragment {
+public class TournamentMatchesFragment extends DialogFragment implements OnMatchUpdateListener {
 
     private List<Match> matches;
     private ListView matchesLv;
 
-    private TournamentEditListener listener;
+    private EditTournamentListener listener;
     private TournamentMatchesListAdapter adapter;
+    private TournamentMatchesPresenter presenter;
 
-    public UpdateScoreFragment(List<Match> matches){
+    public TournamentMatchesFragment(List<Match> matches){
+        presenter = new TournamentMatchesPresenter(this);
         this.matches = matches;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof TournamentEditListener) {
-            listener = (TournamentEditListener) context;
+        if(context instanceof EditTournamentListener) {
+            listener = (EditTournamentListener) context;
         } else {
-            throw new RuntimeException(context+" need to implements TournamentEditListener interface");
+            throw new RuntimeException(context+" need to implements OnEditListener interface");
         }
 
     }
@@ -96,8 +100,7 @@ public class UpdateScoreFragment extends DialogFragment {
                 match.setAwayScore(awayPlayerNewScore);
                 match.setUpdated(true);
 
-                listener.onMatchUpdated(match);
-                adapter.notifyDataSetChanged();
+                presenter.updateMatch(match);
                 return;
             }
         });
@@ -111,5 +114,11 @@ public class UpdateScoreFragment extends DialogFragment {
         alert.show();
     }
 
+    @Override
+    public void onMatchUpdated(String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        adapter.notifyDataSetChanged();
+        // REFRESH
+    }
 }
 

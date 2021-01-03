@@ -5,10 +5,11 @@ import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
 
-public interface ManagerObserver {
+public interface ManagerActionsListener {
 
     Manager getManager();
 
-    void onAddTournamentSuccess(Manager manager);
-    void onMyTournamentsSuccess(List<Tournament> tournaments);
+    void onManagerTournamentsLoaded(List<Tournament> tournaments);
+
+    void refresh();
 }

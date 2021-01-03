@@ -3,7 +3,7 @@ package com.example.tournameapp.presenters;
 import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
-import com.example.tournameapp.interfaces.ManagerObserver;
+import com.example.tournameapp.interfaces.ManagerActionsListener;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
@@ -21,9 +21,9 @@ public class ManagerPresenter {
 
     private Manager manager;
 
-    private ManagerObserver observer;
+    private ManagerActionsListener observer;
 
-    public ManagerPresenter(ManagerObserver observer, String managerLogged){
+    public ManagerPresenter(ManagerActionsListener observer, String managerLogged){
         this.usersService = UsersService.getInstance();
         this.tourService = TournamentsService.getInstance();
         this.reqService = RequestsService.getInstance();
@@ -31,11 +31,7 @@ public class ManagerPresenter {
         this.observer = observer;
     }
 
-    public void onAddTournamentClicked() {
-        observer.onAddTournamentSuccess(manager);
-    }
-
-    public void onMyTournamentClicked() {
+    public void loadTournaments() {
         tourService.loadManagerTournaments(manager, new OnDataLoadedListener() {
             @Override
             public void onStart() {
@@ -51,7 +47,7 @@ public class ManagerPresenter {
                     tournaments.add(tournament);
                 }
 
-                observer.onMyTournamentsSuccess(tournaments);
+                observer.onManagerTournamentsLoaded(tournaments);
             }
 
             @Override

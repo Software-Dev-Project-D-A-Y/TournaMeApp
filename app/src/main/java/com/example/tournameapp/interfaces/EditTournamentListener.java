@@ -6,7 +6,7 @@ import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
 
-public interface TournamentEditListener {
+public interface EditTournamentListener {
 
     void onTournamentLoaded(Tournament tournament);
     void onTournamentPlayersLoaded(List<Player> players);
@@ -15,9 +15,9 @@ public interface TournamentEditListener {
     void onTournamentMatchesPlayedLoaded(List<Match> matchesPlayed);
 
     void onTournamentStarted(String message);
-
     void onInviteUsernameError(String message);
     void onInvite(String message);
     void onInviteFailure(String message);
-    void onMatchUpdated(Match match);
+
+    void refresh();
 }
