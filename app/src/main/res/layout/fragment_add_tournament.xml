@@ -41,14 +41,6 @@
             android:hint="Tounament Description"
             android:inputType="textMultiLine" />
 
-        <EditText
-            android:id="@+id/tournamentDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="tournamentDate"
-            android:inputType="date" />
-
         <Button
             android:id="@+id/addNewTournamentBtn"
             android:layout_width="match_parent"

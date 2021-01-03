@@ -7,79 +7,61 @@
     tools:context=".app.activity.PlayerDashboardActivity"
     android:background="@drawable/two_layer_color">
 
-    <TextView
-        android:id="@+id/playerTextView"
-        android:layout_width="99dp"
-        android:layout_height="54dp"
-        android:gravity="center"
-        android:text="PLAYER"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
-
-    <Button
-        android:id="@+id/pMyRequestsBtn"
-        android:layout_width="106dp"
-        android:layout_height="49dp"
-        android:background="@drawable/shape"
-        android:text="My Requests"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerTextView"
-        app:layout_constraintVertical_bias="0.15" />
-
-    <Button
-        android:id="@+id/pMyTournamentsBtn"
-        android:layout_width="180dp"
-        android:layout_height="41dp"
-        android:text="My Tournaments"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pMyRequestsBtn"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/shape" />
-
-    <Button
-        android:id="@+id/pJoinTournamentBtn"
-        android:layout_width="145dp"
-        android:layout_height="50dp"
-        android:background="@drawable/shape"
-        android:text="@string/join_tournament"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pMyTournamentsBtn"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/pLogoutBtn"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape"
-        android:text="Log Out"
+        android:layout_height="550dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pJoinTournamentBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="120dp"
-        android:layout_height="92dp"
-        app:layout_constraintBottom_toTopOf="@+id/playerTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48"
-        app:srcCompat="@drawable/the_logo" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="120dp"
+            android:layout_height="92dp"
+            app:srcCompat="@drawable/the_logo" />
+
+        <TextView
+            android:id="@+id/playerTextView"
+            android:layout_width="99dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="PLAYER"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/pMyRequestsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:background="@drawable/shape"
+            android:padding="10dp"
+            android:text="My Requests" />
+
+        <Button
+            android:id="@+id/pMyTournamentsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:background="@drawable/shape"
+            android:padding="10dp"
+            android:text="My Tournaments" />
+
+        <Button
+            android:id="@+id/pJoinTournamentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/shape"
+            android:padding="10dp"
+            android:text="@string/join_tournament" />
+
+        <Button
+            android:id="@+id/pLogoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:padding="10dp"
+            android:text="Log Out" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
