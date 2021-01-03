@@ -33,7 +33,6 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Manager "
-            android:textAllCaps="true"
             android:textColor="#3F51B5"
             android:textSize="18sp"
             android:textStyle="bold|italic"
@@ -45,7 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape"
             android:padding="10dp"
-            android:text="Add new tournament" />
+            android:text="Add New Tournament" />
 
         <Button
             android:id="@+id/mMyTournamentsBtn"
@@ -61,7 +60,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape"
             android:padding="10dp"
-            android:text="Logout" />
+            android:text="Log Out" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

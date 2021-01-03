@@ -28,7 +28,7 @@
             android:layout_width="99dp"
             android:layout_height="54dp"
             android:gravity="center"
-            android:text="PLAYER"
+            android:text="Player"
             android:textStyle="bold|italic" />
 
         <Button

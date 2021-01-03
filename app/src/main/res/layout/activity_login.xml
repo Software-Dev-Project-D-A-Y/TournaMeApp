@@ -53,28 +53,28 @@
         android:id="@+id/signUpBtn"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Sign up as manager"
+        android:background="@drawable/shape"
+        android:text="Sign Up as Manager"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInBtn"
-        app:layout_constraintVertical_bias="0.39"
-        android:background="@drawable/shape"
-        android:textColor="@android:color/black"/>
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/playerSignUpBtn"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Sign up as player"
+        android:background="@drawable/shape"
+        android:text="Sign Up as Player"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpBtn"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/shape"
-        android:textColor="@android:color/black" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
         android:id="@+id/rememberMeCb"
