@@ -7,91 +7,64 @@
     tools:context=".app.activity.EditTournamentActivity"
     android:background="@drawable/two_layer_color">
 
-    <Button
-        android:id="@+id/inviteBtn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
-        android:background="@drawable/shape"
-        android:text="Invite"
-        app:layout_constraintBottom_toTopOf="@+id/tournamentMatchesBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/playerAmountTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/inviteBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
-
-    <Button
-        android:id="@+id/startTournamentBtn"
-        android:layout_width="174dp"
-        android:layout_height="49dp"
-        android:background="@drawable/shape"
-        android:text="Start Tournament"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/viewTableBtn"
-        android:layout_width="102dp"
-        android:layout_height="53dp"
-        android:background="@drawable/shape"
-        android:text="View Table"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="123dp"
+            android:layout_height="101dp"
+            app:srcCompat="@drawable/the_logo" />
 
-    <Button
-        android:id="@+id/tournamentMatchesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape"
-        android:text="Matches"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.411" />
+        <TextView
+            android:id="@+id/playerAmountTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:text="TextView" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="123dp"
-        android:layout_height="101dp"
-        app:layout_constraintBottom_toTopOf="@+id/playerAmountTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32"
-        app:srcCompat="@drawable/the_logo" />
+        <Button
+            android:id="@+id/viewTableBtn"
+            android:layout_width="102dp"
+            android:layout_height="53dp"
+            android:background="@drawable/shape"
+            android:text="View Table" />
 
-    <Button
-        android:id="@+id/participantsBtn"
-        android:layout_width="122dp"
-        android:layout_height="48dp"
-        android:background="@drawable/shape"
-        android:text="Participants"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.597" />
+        <Button
+            android:id="@+id/tournamentMatchesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:text="Matches" />
+
+        <Button
+            android:id="@+id/participantsBtn"
+            android:layout_width="122dp"
+            android:layout_height="48dp"
+            android:background="@drawable/shape"
+            android:text="Participants" />
+
+        <Button
+            android:id="@+id/inviteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:text="Invite" />
+
+        <Button
+            android:id="@+id/startTournamentBtn"
+            android:layout_width="174dp"
+            android:layout_height="49dp"
+            android:background="@drawable/shape"
+            android:text="Start Tournament" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
