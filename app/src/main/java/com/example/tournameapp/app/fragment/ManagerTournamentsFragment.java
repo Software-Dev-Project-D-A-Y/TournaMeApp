@@ -16,22 +16,22 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.adapters.MyTournamentsListAdapter;
-import com.example.tournameapp.app.activity.ManagerEditTournamentActivity;
+import com.example.tournameapp.app.activity.EditTournamentActivity;
 import com.example.tournameapp.interfaces.ManagerActionsListener;
 import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
 
-public class ManagerMyTournamentsFragment extends DialogFragment {
+public class ManagerTournamentsFragment extends DialogFragment {
 
     private TextView loadingLbl;
     private ListView myTournamentsLv;
 
     private List<Tournament> tournaments;
 
-    private ManagerActionsListener observer;
+    private ManagerActionsListener listener;
 
-    public ManagerMyTournamentsFragment(List<Tournament> tournaments){
+    public ManagerTournamentsFragment(List<Tournament> tournaments){
         this.tournaments = tournaments;
     }
 
@@ -39,9 +39,9 @@ public class ManagerMyTournamentsFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if(context instanceof ManagerActionsListener){
-            observer = (ManagerActionsListener) context;
+            listener = (ManagerActionsListener) context;
         } else {
-            throw new RuntimeException(context.toString()+" Must implement ManagerObserver interface!");
+            throw new RuntimeException(context.toString()+" Must implement ManagerActionsListener interface!");
         }
     }
 
@@ -61,7 +61,7 @@ public class ManagerMyTournamentsFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tournament tournamentChose = tournaments.get(position);
 
-                Intent intent = new Intent(getContext(), ManagerEditTournamentActivity.class);
+                Intent intent = new Intent(getContext(), EditTournamentActivity.class);
                 intent.putExtra("tournamentChose",tournamentChose.getId());
                 startActivity(intent);
             }

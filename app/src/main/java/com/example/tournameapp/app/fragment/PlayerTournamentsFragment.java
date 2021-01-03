@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,7 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
     private ListView myTournamentsLv;
     private PlayerTournamentsListAdapter adapter;
 
-    private PlayerActionsListener observer;
+    private PlayerActionsListener listener;
 
     public PlayerTournamentsFragment(List<Tournament> tournaments) {
         this.tournaments = tournaments;
@@ -46,11 +45,11 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof PlayerActionsListener) {
-            observer = (PlayerActionsListener) context;
+            listener = (PlayerActionsListener) context;
         } else {
             throw new RuntimeException(context.toString() + " Must implement PlayerObserver interface!");
         }
-        player = observer.getPlayer();
+        player = listener.getPlayer();
         presenter = new PlayerTournamentsPresenter(this,player);
     }
 
@@ -69,7 +68,7 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tournament tournamentChose = tournaments.get(position);
-                TournamentFragment tournamentFragment = new TournamentFragment(tournamentChose,observer.getPlayer());
+                TournamentFragment tournamentFragment = new TournamentFragment(tournamentChose, listener.getPlayer());
                 tournamentFragment.show(getFragmentManager(), "player Tournament");
             }
         });
@@ -114,7 +113,7 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
     public void onLeave(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         dismiss();
-        observer.refresh();
+        listener.refresh();
     }
 }
 

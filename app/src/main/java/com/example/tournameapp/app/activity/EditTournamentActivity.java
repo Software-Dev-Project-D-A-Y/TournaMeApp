@@ -15,18 +15,18 @@ import android.widget.Toast;
 
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.TournamentFragment;
-import com.example.tournameapp.app.fragment.UpdateScoreFragment;
-import com.example.tournameapp.interfaces.TournamentEditListener;
+import com.example.tournameapp.app.fragment.TournamentMatchesFragment;
+import com.example.tournameapp.interfaces.EditTournamentListener;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
-import com.example.tournameapp.presenters.ManagerEditTournamentPresenter;
+import com.example.tournameapp.presenters.EditTournamentPresenter;
 
 import java.util.List;
 
-public class ManagerEditTournamentActivity extends AppCompatActivity implements TournamentEditListener {
+public class EditTournamentActivity extends AppCompatActivity implements EditTournamentListener {
 
-    private ManagerEditTournamentPresenter presenter;
+    private EditTournamentPresenter presenter;
 
     private Tournament tournament;
 
@@ -52,9 +52,14 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
 
-        presenter = new ManagerEditTournamentPresenter(this);
+        presenter = new EditTournamentPresenter(this);
 
         inviteBtn.setEnabled(false);
+        startTournamentBtn.setEnabled(false);
+        viewTableBtn.setEnabled(false);
+        tournamentMatchesBtn.setEnabled(false);
+        participantsBtn.setEnabled(false);
+
         playerAmountTxt.setText("Loading data...");
 
         Log.d("Tournament", "Before loading");
@@ -105,6 +110,10 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
             }
         });
 
+        if(!tournament.isActive()) {
+            startTournamentBtn.setEnabled(true);
+        }
+
         viewTableBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,24 +124,24 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onMatchUpdated(Match match) {
-        presenter.updateMatch(match);
-    }
-
-    @Override
     public void onTournamentPlayersLoaded(List<Player> players) {
+        participantsBtn.setEnabled(true);
+        participantsBtn.setText("Participants ("+players.size()+")");
+
         Log.d("Tournament Players", players.toString());
         playerAmountTxt.setText(players.size() + "/" + tournament.getCapacity() + " Players joined");
 
         if (players.size() < tournament.getCapacity()) {
-            return;
+            startTournamentBtn.setEnabled(false);
         }
+
         startTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.startTournament(tournament);
             }
         });
+
         participantsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,12 +152,13 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
 
     @Override
     public void onTournamentAllMatchesLoaded(final List<Match> matches) {
+        viewTableBtn.setEnabled(true);
+        tournamentMatchesBtn.setEnabled(true);
         tournamentMatchesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateScoreFragment fragment = new UpdateScoreFragment(matches);
+                TournamentMatchesFragment fragment = new TournamentMatchesFragment(matches);
                 fragment.show(getSupportFragmentManager(), "Update Score Table");
-
             }
         });
     }
@@ -161,8 +171,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     @Override
     public void onTournamentStarted(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
-
+        startTournamentBtn.setEnabled(false);
     }
 
     @Override

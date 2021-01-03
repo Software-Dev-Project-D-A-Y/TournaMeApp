@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.app.fragment.ManagerMyTournamentsFragment;
+import com.example.tournameapp.app.fragment.ManagerTournamentsFragment;
 import com.example.tournameapp.app.fragment.AddTournamentFragment;
 import com.example.tournameapp.interfaces.ManagerActionsListener;
 import com.example.tournameapp.model.Manager;
@@ -124,7 +124,7 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
         myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ManagerMyTournamentsFragment fragment = new ManagerMyTournamentsFragment(tournaments);
+                ManagerTournamentsFragment fragment = new ManagerTournamentsFragment(tournaments);
                 fragment.show(getSupportFragmentManager(),"My Tournaments");
             }
         });

@@ -1,5 +1,6 @@
 package com.example.tournameapp.app.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,16 @@ public class AddTournamentFragment extends DialogFragment implements OnAddTourna
 
     private AddTournamentPresenter presenter;
     private ManagerActionsListener listener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof ManagerActionsListener){
+            listener = (ManagerActionsListener) context;
+        } else {
+            throw new RuntimeException(context.toString()+" Must implement ManagerActionsListener interface!");
+        }
+    }
 
     public AddTournamentFragment(Manager manager){
         this.presenter = new AddTournamentPresenter(manager,this);
@@ -77,6 +88,7 @@ public class AddTournamentFragment extends DialogFragment implements OnAddTourna
     @Override
     public void onAdd(Tournament newTournament) {
         Toast.makeText(getActivity(),"Tournament Added for "+newTournament.getManager().getUserName(),Toast.LENGTH_SHORT).show();
+        listener.refresh();
         dismiss();
     }
 }

@@ -7,7 +7,7 @@ import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.interfaces.TournamentEditListener;
+import com.example.tournameapp.interfaces.EditTournamentListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
@@ -18,9 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerEditTournamentPresenter {
+public class EditTournamentPresenter {
 
-    private TournamentEditListener listener;
+    private EditTournamentListener listener;
 
     private TournamentsService tourService;
     private UsersService usersService;
@@ -33,7 +33,7 @@ public class ManagerEditTournamentPresenter {
     private List<Player> players;
     private List<Match> matches;
 
-    public ManagerEditTournamentPresenter(TournamentEditListener listener) {
+    public EditTournamentPresenter(EditTournamentListener listener) {
         this.listener = listener;
         tourService = TournamentsService.getInstance();
         usersService = UsersService.getInstance();
@@ -209,7 +209,4 @@ public class ManagerEditTournamentPresenter {
         return matches;
     }
 
-    public void updateMatch(Match match) {
-        matchesService.updateMatch(match);
-    }
 }
