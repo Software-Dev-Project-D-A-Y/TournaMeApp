@@ -65,6 +65,15 @@
             android:background="@drawable/shape"
             android:text="Start Tournament" />
 
+        <Button
+            android:id="@+id/deleteTournamentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape"
+            android:padding="10dp"
+            android:text="Delete Tournament"
+            android:textColor="#FF0303" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
