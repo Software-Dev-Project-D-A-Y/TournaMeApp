@@ -36,6 +36,7 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
     private Button viewTableBtn;
     private Button tournamentMatchesBtn;
     private Button participantsBtn;
+    private Button deleteTournamentBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         viewTableBtn = (Button) findViewById(R.id.viewTableBtn);
         tournamentMatchesBtn = (Button) findViewById(R.id.tournamentMatchesBtn);
         participantsBtn = (Button) findViewById(R.id.participantsBtn);
+        deleteTournamentBtn = (Button) findViewById(R.id.deleteTournamentBtn);
 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
@@ -60,6 +62,7 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         viewTableBtn.setEnabled(false);
         tournamentMatchesBtn.setEnabled(false);
         participantsBtn.setEnabled(false);
+        deleteTournamentBtn.setEnabled(false);
 
         playerAmountTxt.setText("Loading data...");
 
@@ -90,11 +93,37 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         alert.show();
     }
 
+    private void deleteTournamentDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Delete "+tournament.getTournamentName());
+        alert.setMessage("Type '"+tournament.getTournamentName()+"' to delete");
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                presenter.deleteTournament(value);
+                return;
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        alert.show();
+    }
+
     @Override
     public void onTournamentLoaded(final Tournament tournament) {
         this.tournament = tournament;
 
         inviteBtn.setEnabled(true);
+        deleteTournamentBtn.setEnabled(true);
         inviteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +140,13 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
             public void onClick(View v) {
                 TournamentFragment fragment = new TournamentFragment(tournament);
                 fragment.show(getSupportFragmentManager(), "View Table");
+            }
+        });
+
+        deleteTournamentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteTournamentDialog();
             }
         });
     }
@@ -186,9 +222,21 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
     }
 
     @Override
+    public void onDeleteError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,ManagerDashboardActivity.class);
+        intent.putExtra("loggedUser",tournament.getManager().getUserName());
+        startActivity(intent);
+    }
+
+    @Override
     public void refresh() {
         presenter.loadTournament();
     }
-
 
 }

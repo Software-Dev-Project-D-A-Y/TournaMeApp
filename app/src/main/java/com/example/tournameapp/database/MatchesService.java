@@ -81,4 +81,9 @@ public class MatchesService {
         });
     }
 
+    public void removeTournamentMatches(Tournament tournament) {
+        String key = tournament.getId();
+        dbRef.child(ALL_MATCHES).child(key).removeValue();
+        dbRef.child(MATCHES_PLAYED).child(key).removeValue();
+    }
 }

@@ -174,4 +174,34 @@ public class TournamentsService {
         dbRef.child(TOURNAMENT_PLAYERS).child(tournamentID).child(username).removeValue();
         dbRef.child(PLAYER_TOURNAMENTS).child(username).child(tournamentID).removeValue();
     }
+
+    public void removeTournament(final Tournament tournament) {
+        final String key = tournament.getId();
+        // remove from all-tournaments and manager-tournaments
+        dbRef.child(ALL_TOURNAMENTS).child(key).removeValue();
+        dbRef.child(MANAGER_TOURNAMENTS).child(tournament.getManager().getUserName()).child(key).removeValue();
+        // remove tournament from each player
+        loadTournamentPlayers(tournament, new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+                Log.d("Removing","Removing from tournament players");
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String playerID = child.getKey();
+                    Log.d("playerID",playerID);
+                    dbRef.child(PLAYER_TOURNAMENTS).child(playerID).child(key).removeValue();
+                }
+                // remove from tournament-players
+                dbRef.child(TOURNAMENT_PLAYERS).child(key).removeValue();
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+
+            }
+        });
+    }
 }
