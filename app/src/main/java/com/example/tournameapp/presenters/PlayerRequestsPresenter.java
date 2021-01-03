@@ -4,9 +4,8 @@ import android.util.Log;
 
 import com.example.tournameapp.database.RequestsService;
 import com.example.tournameapp.database.TournamentsService;
-import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.interfaces.OnRequestApprovedListener;
+import com.example.tournameapp.interfaces.RequestListener;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.model.TournamentRequest;
@@ -17,15 +16,20 @@ public class PlayerRequestsPresenter {
 
     private TournamentsService tourService;
     private RequestsService reqService;
-    private OnRequestApprovedListener listener;
+    private RequestListener listener;
 
-    public PlayerRequestsPresenter(OnRequestApprovedListener listener) {
+    public PlayerRequestsPresenter(RequestListener listener) {
         this.tourService = TournamentsService.getInstance();
         this.reqService = RequestsService.getInstance();
         this.listener = listener;
     }
 
-    public void setRequestApproved(final TournamentRequest requestChose) {
+    public void declineRequest(TournamentRequest requestChose) {
+        reqService.removeRequest(requestChose);
+        listener.onRequestDeclined("You have not been added to this tournament");
+    }
+
+    public void acceptRequest(final TournamentRequest requestChose) {
         if (!requestChose.getTournament().isJoinable()) {
             Log.d(requestChose.getTournament().toString(), "full capacity!");
             return;
@@ -48,7 +52,7 @@ public class PlayerRequestsPresenter {
 
                     if (numOfPlayers < tournament.getCapacity()) {
                         tourService.addPlayerToTournament(player, tournament);
-                        listener.onRequestApproved("Player added successfully!");
+                        listener.onRequestAccepted("Player added successfully!");
                     } else {
                         tournament.setJoinable(false);
                         listener.onRequestFailure("Tournament is full!");

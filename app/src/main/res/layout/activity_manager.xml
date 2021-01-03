@@ -11,19 +11,27 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="291dp"
-        android:layout_height="525dp"
+        android:layout_width="wrap_content"
+        android:layout_height="550dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="110dp"
+            android:layout_height="84dp"
+            app:srcCompat="@drawable/the_logo" />
+
         <TextView
             android:id="@+id/managerTextView"
             android:layout_width="match_parent"
             android:layout_height="71dp"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Manager "
             android:textAllCaps="true"
             android:textColor="#3F51B5"
@@ -33,39 +41,27 @@
 
         <Button
             android:id="@+id/mAddTournamentBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add new tournament"
             android:background="@drawable/shape"
-            />
+            android:padding="10dp"
+            android:text="Add new tournament" />
 
         <Button
             android:id="@+id/mMyTournamentsBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Tournaments"
             android:background="@drawable/shape"
-            />
+            android:padding="10dp"
+            android:text="My Tournaments" />
 
         <Button
             android:id="@+id/mLogoutBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
             android:background="@drawable/shape"
-            />
+            android:padding="10dp"
+            android:text="Logout" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="110dp"
-        android:layout_height="84dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009"
-        app:srcCompat="@drawable/the_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,6 +64,6 @@ public class TournamentRequest {
 
     @Override
     public String toString() {
-        return tournament.getTournamentName()+" -> "+player.getUserName();
+        return tournament.getTournamentName();
     }
 }
