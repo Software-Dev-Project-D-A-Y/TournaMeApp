@@ -41,6 +41,18 @@ public class EditTournamentPresenter {
         matchesService = MatchesService.getInstance();
     }
 
+    public void loadTournament() {
+        if(tournament == null || manager == null) {
+            throw new RuntimeException("Tournament or Manager contains null value!");
+        }
+
+        loadPlayers();
+        loadAllMatches();
+        loadMatchesPlayed();
+
+        listener.onTournamentLoaded(tournament);
+    }
+
     public void loadTournament(String tournamentID) {
         tourService.loadTournament(tournamentID, new OnDataLoadedListener() {
             @Override
@@ -139,9 +151,10 @@ public class EditTournamentPresenter {
 
                 if (players.size() >= tournament.getCapacity()) {
                     tournament.setJoinable(false);
-                    tourService.updateTournament(tournament);
+                } else {
+                    tournament.setJoinable(true);
                 }
-
+                tourService.updateTournament(tournament);
                 listener.onTournamentPlayersLoaded(players);
             }
 

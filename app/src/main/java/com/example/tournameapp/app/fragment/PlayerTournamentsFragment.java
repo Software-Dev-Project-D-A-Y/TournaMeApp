@@ -47,7 +47,7 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
         if (context instanceof PlayerActionsListener) {
             listener = (PlayerActionsListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " Must implement PlayerObserver interface!");
+            throw new RuntimeException(context.toString() + " Must implement PlayerActionsListener interface!");
         }
         player = listener.getPlayer();
         presenter = new PlayerTournamentsPresenter(this,player);
@@ -85,7 +85,7 @@ public class PlayerTournamentsFragment extends DialogFragment implements OnLeave
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                presenter.onPlayerLeave(tourToLeave);
+                presenter.leaveTournament(tourToLeave);
                 tournaments.remove(tourToLeave);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();

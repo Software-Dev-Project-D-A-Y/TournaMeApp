@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.app.fragment.ParticipantsFragment;
 import com.example.tournameapp.app.fragment.TournamentFragment;
 import com.example.tournameapp.app.fragment.TournamentMatchesFragment;
 import com.example.tournameapp.interfaces.EditTournamentListener;
@@ -53,6 +54,7 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         String tournamentID = intent.getExtras().getString("tournamentChose");
 
         presenter = new EditTournamentPresenter(this);
+        presenter.loadTournament(tournamentID);
 
         inviteBtn.setEnabled(false);
         startTournamentBtn.setEnabled(false);
@@ -61,10 +63,6 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         participantsBtn.setEnabled(false);
 
         playerAmountTxt.setText("Loading data...");
-
-        Log.d("Tournament", "Before loading");
-
-        presenter.loadTournament(tournamentID);
 
     }
 
@@ -87,7 +85,6 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         return;
                     }
                 });
@@ -97,10 +94,6 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
     @Override
     public void onTournamentLoaded(final Tournament tournament) {
         this.tournament = tournament;
-
-        Log.d("Tournament", "after loading");
-        Log.d("Tournament", tournament.toString());
-
 
         inviteBtn.setEnabled(true);
         inviteBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +117,10 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
     }
 
     @Override
-    public void onTournamentPlayersLoaded(List<Player> players) {
+    public void onTournamentPlayersLoaded(final List<Player> players) {
         participantsBtn.setEnabled(true);
         participantsBtn.setText("Participants ("+players.size()+")");
 
-        Log.d("Tournament Players", players.toString());
         playerAmountTxt.setText(players.size() + "/" + tournament.getCapacity() + " Players joined");
 
         if (players.size() < tournament.getCapacity()) {
@@ -145,13 +137,17 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
         participantsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ParticipantsFragment fragment = new ParticipantsFragment(tournament,players);
+                fragment.show(getSupportFragmentManager(), "Participants List");
             }
         });
     }
 
     @Override
     public void onTournamentAllMatchesLoaded(final List<Match> matches) {
+        if(matches.size() == 0) {
+            return;
+        }
         viewTableBtn.setEnabled(true);
         tournamentMatchesBtn.setEnabled(true);
         tournamentMatchesBtn.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +166,7 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
 
     @Override
     public void onTournamentStarted(String message) {
+        refresh();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         startTournamentBtn.setEnabled(false);
     }
@@ -187,6 +184,11 @@ public class EditTournamentActivity extends AppCompatActivity implements EditTou
     @Override
     public void onInviteFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void refresh() {
+        presenter.loadTournament();
     }
 
 

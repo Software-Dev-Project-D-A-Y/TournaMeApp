@@ -18,4 +18,6 @@ public interface EditTournamentListener {
     void onInviteUsernameError(String message);
     void onInvite(String message);
     void onInviteFailure(String message);
+
+    void refresh();
 }
