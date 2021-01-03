@@ -57,7 +57,7 @@ public class PlayerPresenter {
         });
     }
 
-    public void loadPlayerTournaments() {
+    public void loadTournaments() {
         tourService.loadPlayerTournaments(player, new OnDataLoadedListener() {
             @Override
             public void onStart() {

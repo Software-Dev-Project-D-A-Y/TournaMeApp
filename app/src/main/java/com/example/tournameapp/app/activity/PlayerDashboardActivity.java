@@ -52,7 +52,7 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
 
         presenter = new PlayerPresenter(this, playerLogged);
         presenter.loadRequests();
-        presenter.loadPlayerTournaments();
+        presenter.loadTournaments();
 
         playerTextView.setText("Hello " + playerLogged);
 
@@ -187,6 +187,6 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
     @Override
     public void refresh() {
         presenter.loadRequests();
-        presenter.loadPlayerTournaments();
+        presenter.loadTournaments();
     }
 }

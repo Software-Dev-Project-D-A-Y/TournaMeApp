@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.tournameapp.R;
 import com.example.tournameapp.adapters.MyTournamentsListAdapter;
 import com.example.tournameapp.app.activity.ManagerEditTournamentActivity;
-import com.example.tournameapp.interfaces.ManagerObserver;
+import com.example.tournameapp.interfaces.ManagerActionsListener;
 import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class ManagerMyTournamentsFragment extends DialogFragment {
 
     private List<Tournament> tournaments;
 
-    private ManagerObserver observer;
+    private ManagerActionsListener observer;
 
     public ManagerMyTournamentsFragment(List<Tournament> tournaments){
         this.tournaments = tournaments;
@@ -39,8 +38,8 @@ public class ManagerMyTournamentsFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof ManagerObserver){
-            observer = (ManagerObserver) context;
+        if(context instanceof ManagerActionsListener){
+            observer = (ManagerActionsListener) context;
         } else {
             throw new RuntimeException(context.toString()+" Must implement ManagerObserver interface!");
         }

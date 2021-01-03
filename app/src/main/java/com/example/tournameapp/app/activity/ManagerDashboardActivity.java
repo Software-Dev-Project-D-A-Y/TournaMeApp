@@ -14,14 +14,14 @@ import android.widget.TextView;
 import com.example.tournameapp.R;
 import com.example.tournameapp.app.fragment.ManagerMyTournamentsFragment;
 import com.example.tournameapp.app.fragment.AddTournamentFragment;
-import com.example.tournameapp.interfaces.ManagerObserver;
+import com.example.tournameapp.interfaces.ManagerActionsListener;
 import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Tournament;
 import com.example.tournameapp.presenters.ManagerPresenter;
 
 import java.util.List;
 
-public class ManagerDashboardActivity extends AppCompatActivity implements ManagerObserver{
+public class ManagerDashboardActivity extends AppCompatActivity implements ManagerActionsListener {
 
     private TextView managerTextView;
     private Button addNewTournamentBtn;
@@ -46,6 +46,7 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
         String managerLogged = intent.getExtras().getString("loggedUser");
 
         presenter = new ManagerPresenter(this,managerLogged);
+        presenter.loadTournaments();
 
         managerTextView.setText("Hello "+managerLogged);
 
@@ -57,13 +58,6 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
             }
         });
 
-
-        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onMyTournamentClicked();
-            }
-        });
 
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,14 +117,22 @@ public class ManagerDashboardActivity extends AppCompatActivity implements Manag
         return presenter.getManager();
     }
 
+
     @Override
-    public void onAddTournamentSuccess(Manager manager) {
+    public void onManagerTournamentsLoaded(final List<Tournament> tournaments) {
+        myTournamentsBtn.setText("My Tournaments ("+tournaments.size()+")");
+        myTournamentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ManagerMyTournamentsFragment fragment = new ManagerMyTournamentsFragment(tournaments);
+                fragment.show(getSupportFragmentManager(),"My Tournaments");
+            }
+        });
 
     }
 
     @Override
-    public void onMyTournamentsSuccess(List<Tournament> tournaments) {
-        ManagerMyTournamentsFragment fragment = new ManagerMyTournamentsFragment(tournaments);
-        fragment.show(getSupportFragmentManager(),"My Tournaments");
+    public void refresh() {
+        presenter.loadTournaments();
     }
 }
