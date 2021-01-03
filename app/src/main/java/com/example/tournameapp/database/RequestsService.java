@@ -67,10 +67,66 @@ public class RequestsService {
         dbRef.child(PLAYER_REQUESTS).child(requestRemoved.getPlayer().getUserName()).child(requestRemoved.getId()).removeValue();
     }
 
+    public void removeTournamentRequests(final Tournament tournament) {
+        loadAllRequests(new OnDataLoadedListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot child : dataSnapshot.getChildren()) {
+                    TournamentRequest req = child.getValue(TournamentRequest.class);
+                    if(req.getTournament().equals(tournament)) {
+                        dbRef.child(ALL_REQUESTS).child(req.getId()).removeValue();
+                        removeRequestFromPlayer(req);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
+        });
+    }
+
+    private void removeRequestFromPlayer(final TournamentRequest req) {
+        dbRef.child(PLAYER_REQUESTS).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child : snapshot.getChildren()) {
+                    dbRef.child(PLAYER_REQUESTS).child(child.getKey()).child(req.getId()).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw new RuntimeException(error.getMessage());
+            }
+        });
+    }
+
     // LOAD
     public void loadPlayerRequests(Player player, final OnDataLoadedListener listener) {
         listener.onStart();
         dbRef.child(PLAYER_REQUESTS).child(player.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listener.onSuccess(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onError(error);
+            }
+        });
+    }
+
+    public void loadAllRequests(final OnDataLoadedListener listener) {
+        listener.onStart();
+        dbRef.child(ALL_REQUESTS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listener.onSuccess(snapshot);

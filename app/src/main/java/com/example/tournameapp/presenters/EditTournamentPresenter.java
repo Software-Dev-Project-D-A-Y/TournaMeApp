@@ -222,4 +222,17 @@ public class EditTournamentPresenter {
         return matches;
     }
 
+    public void deleteTournament(String value) {
+        if(!tournament.getTournamentName().equals(value)) {
+            listener.onDeleteError("Wrong name!");
+            return;
+        }
+
+        Log.d("PLAYERS",players.toString());
+        tourService.removeTournament(tournament);
+        matchesService.removeTournamentMatches(tournament);
+        reqService.removeTournamentRequests(tournament);
+
+        listener.onDeleteSuccess("Tournament deleted successfully");
+    }
 }

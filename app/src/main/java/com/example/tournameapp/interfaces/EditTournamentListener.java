@@ -19,5 +19,10 @@ public interface EditTournamentListener {
     void onInvite(String message);
     void onInviteFailure(String message);
 
+    void onDeleteError(String message);
+    void onDeleteSuccess(String message);
+
     void refresh();
+
+
 }
