@@ -58,7 +58,7 @@ public class TournamentPresenter {
                 Log.d("matches",matches.toString());
                 initPlayers();
                 loadMatchesPlayed();
-                listener.onMatchesLoad(matches);
+                listener.onMatchesLoaded(matches);
             }
 
             @Override

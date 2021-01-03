@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface TournamentListener {
 
-
-    void onMatchesLoad(List<Match> matches);
-
+    void onMatchesLoaded(List<Match> matches);
     void onMatchesPlayedLoaded(List<Match> matchesPlayed);
 }

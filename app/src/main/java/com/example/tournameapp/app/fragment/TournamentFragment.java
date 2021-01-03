@@ -136,7 +136,7 @@ public class TournamentFragment extends DialogFragment implements TournamentList
     }
 
     @Override
-    public void onMatchesLoad(List<Match> matches) {
+    public void onMatchesLoaded(List<Match> matches) {
 
     }
 
