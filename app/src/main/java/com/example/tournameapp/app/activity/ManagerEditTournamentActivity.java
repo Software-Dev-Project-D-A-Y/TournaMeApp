@@ -35,6 +35,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
     private Button startTournamentBtn;
     private Button viewTableBtn;
     private Button tournamentMatchesBtn;
+    private Button participantsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
         startTournamentBtn = (Button) findViewById(R.id.startTournamentBtn);
         viewTableBtn = (Button) findViewById(R.id.viewTableBtn);
         tournamentMatchesBtn = (Button) findViewById(R.id.tournamentMatchesBtn);
-
+        participantsBtn = (Button) findViewById(R.id.participantsBtn);
 
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
@@ -130,6 +131,12 @@ public class ManagerEditTournamentActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 presenter.startTournament(tournament);
+            }
+        });
+        participantsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
