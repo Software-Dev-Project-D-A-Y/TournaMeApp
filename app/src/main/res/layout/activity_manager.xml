@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/managerTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="71dp"
             android:gravity="center"
             android:padding="10dp"
