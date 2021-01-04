@@ -12,8 +12,16 @@ import com.example.tournameapp.R;
 import com.example.tournameapp.interfaces.OnSignUpListener;
 import com.example.tournameapp.presenters.SignUpPresenter;
 
+/**
+ * Activity that presents the sign-up form
+ *
+ * @author Alon Perlmuter
+ * @author Yishay Garame
+ * @author Dovie Chitiz
+ */
 public class SignUpActivity extends AppCompatActivity implements OnSignUpListener {
 
+    // widgets
     private TextView signAsTxt;
     private String signAs;
 
@@ -26,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
     private TextView emailSignUpTxt;
     private Button signUpBtn;
 
+    // presenter
     private SignUpPresenter signUpPresenter;
 
     @Override
@@ -33,11 +42,13 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        // init presenter
         signUpPresenter = new SignUpPresenter(this);
 
         Intent intent = getIntent();
         signAs = intent.getExtras().getString("signAs");
 
+        // init widgets
         firstNameSignUpTxt = (TextView) findViewById(R.id.firstNameSignUpTxt);
         lastNameSignUpTxt = (TextView) findViewById(R.id.lastNameSignUpTxt);
         usernameSignUpTxt = (TextView) findViewById(R.id.usernameSignUpTxt);
@@ -67,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
                     age = -1;
                 }
 
+                // passing data to the presenter
                 switch (signAs) {
                     case "Manager":
                         signUpPresenter.signUpManager(firstName,lastName,age,email,username,password,confirmPassword);
@@ -82,41 +94,79 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpListene
         });
     }
 
+
+    /**
+     * set error message on first name text field
+     * @param message message to show
+     */
     @Override
     public void onFirstNameError(String message) {
         firstNameSignUpTxt.setError(message);
     }
 
+    /**
+     * set error message on last name text field
+     * @param message message to show
+     */
     @Override
     public void onLastNameError(String message) {
         lastNameSignUpTxt.setError(message);
     }
 
+
+    /**
+     * set error message on age text field
+     * @param message message to show
+     */
     @Override
     public void onAgeError(String message) {
         ageSignUpTxt.setError(message);
     }
 
+
+    /**
+     * set error message on username text field
+     * @param message message to show
+     */
     @Override
     public void onUsernameError(String message) {
         usernameSignUpTxt.setError(message);
     }
 
+
+    /**
+     * set error message on password text field
+     * @param message message to show
+     */
     @Override
     public void onPasswordError(String message) {
         passwordSignUpTxt.setError(message);
     }
 
+
+    /**
+     * set error message on confirm-password text field
+     * @param message message to show
+     */
     @Override
     public void onMatchedPasswordsError(String message) {
         confirmPassSignUpTxt.setError(message);
     }
 
+
+    /**
+     * set error message on email text field
+     * @param message message to show
+     */
     @Override
     public void onEmailError(String message) {
         emailSignUpTxt.setError(message);
     }
 
+
+    /**
+     * returning to LoginActivity when sign-up succeed
+     */
     @Override
     public void onSignUp() {
         Intent intent = new Intent(this, LoginActivity.class);

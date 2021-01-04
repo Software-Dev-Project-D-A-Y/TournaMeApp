@@ -16,6 +16,13 @@ import com.example.tournameapp.model.Manager;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.presenters.LoginPresenter;
 
+/**
+ * Activity that presents the login form
+ *
+ * @author Alon Perlmuter
+ * @author Yishay Garame
+ * @author Dovie Chitiz
+ */
 public class LoginActivity extends AppCompatActivity implements OnLoginListener {
 
     private TextView usernameTxt;
@@ -31,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // init widgets
         usernameTxt = (TextView) findViewById(R.id.usernameTxt);
         passwordTxt = (TextView) findViewById(R.id.passwordTxt);
         rememberMeCb = (CheckBox) findViewById(R.id.rememberMeCb);
@@ -38,9 +46,11 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
         managerSignUpBtn = (Button) findViewById(R.id.signUpBtn);
         playerSignUpBtn = (Button) findViewById(R.id.playerSignUpBtn);
 
+        // init presenter and check if user is already logged
         loginPresenter = new LoginPresenter(this);
         loginPresenter.checkLoggedUser();
 
+        // handle clicks events
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,26 +79,39 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
                 startActivity(intent);
             }
         });
-
-
     }
 
+    /**
+     * @return SharedPreferences object of this context
+     */
     @Override
     public SharedPreferences getSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("rememberMe",MODE_PRIVATE);
         return sharedPreferences;
     }
 
+    /**
+     * set error message on username text field
+     * @param message message to show
+     */
     @Override
     public void onUserNameError(String message) {
         usernameTxt.setError(message);
     }
 
+    /**
+     * set error message on password text field
+     * @param message message to show
+     */
     @Override
     public void onPasswordError(String message) {
         passwordTxt.setError(message);
     }
 
+    /**
+     * go to manager dashboard
+     * @param manager manager that logs in
+     */
     @Override
     public void onLogin(Manager manager) {
         Intent intent = new Intent(this, ManagerDashboardActivity.class);
@@ -96,6 +119,11 @@ public class LoginActivity extends AppCompatActivity implements OnLoginListener 
         startActivity(intent);
     }
 
+
+    /**
+     * go to player dashboard
+     * @param player player that logs in
+     */
     @Override
     public void onLogin(Player player) {
         Intent intent = new Intent(this, PlayerDashboardActivity.class);

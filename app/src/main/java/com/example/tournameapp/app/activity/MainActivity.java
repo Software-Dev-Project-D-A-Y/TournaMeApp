@@ -13,10 +13,16 @@ import com.example.tournameapp.interfaces.OnDataLoadedListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+/**
+ * Activity that loads all users data for future use in login and sign-up
+ *
+ * @author Alon Perlmuter
+ * @author Yishay Garame
+ * @author Dovie Chitiz
+ */
 public class MainActivity extends AppCompatActivity {
 
     private UsersService usersService;
-
     private TextView loadDataTxt;
 
     @Override
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadDataTxt = findViewById(R.id.loadDataTxt);
 
+        // instance of UsersService for loading users data
         usersService = UsersService.getInstance();
         usersService.loadUsersData(new OnDataLoadedListener() {
             @Override
