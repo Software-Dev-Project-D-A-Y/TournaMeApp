@@ -1,5 +1,7 @@
 package com.example.tournameapp.database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
@@ -71,7 +73,7 @@ public class RequestsService {
         loadAllRequests(new OnDataLoadedListener() {
             @Override
             public void onStart() {
-
+                Log.d("Removing request","Removing requests from "+tournament.getTournamentName());
             }
 
             @Override
@@ -80,29 +82,13 @@ public class RequestsService {
                     TournamentRequest req = child.getValue(TournamentRequest.class);
                     if(req.getTournament().equals(tournament)) {
                         dbRef.child(ALL_REQUESTS).child(req.getId()).removeValue();
-                        removeRequestFromPlayer(req);
+                        dbRef.child(PLAYER_REQUESTS).child(req.getPlayer().getUserName()).child(req.getId()).removeValue();
                     }
                 }
             }
 
             @Override
             public void onError(DatabaseError error) {
-                throw new RuntimeException(error.getMessage());
-            }
-        });
-    }
-
-    private void removeRequestFromPlayer(final TournamentRequest req) {
-        dbRef.child(PLAYER_REQUESTS).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot child : snapshot.getChildren()) {
-                    dbRef.child(PLAYER_REQUESTS).child(child.getKey()).child(req.getId()).removeValue();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
                 throw new RuntimeException(error.getMessage());
             }
         });

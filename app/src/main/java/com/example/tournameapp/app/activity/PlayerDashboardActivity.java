@@ -24,14 +24,23 @@ import com.example.tournameapp.presenters.PlayerPresenter;
 
 import java.util.List;
 
+/**
+ * Dashboard page of Player after login
+ *
+ * @author Alon Perlmuter
+ * @author Yishay Garame
+ * @author Dovie Chitiz
+ */
 public class PlayerDashboardActivity extends AppCompatActivity implements PlayerActionsListener {
 
+    // widgets
     private TextView playerTextView;
     private Button myRequestsBtn;
     private Button myTournamentsBtn;
     private Button joinTournamentBtn;
     private Button logoutBtn;
 
+    // presenter
     private PlayerPresenter presenter;
 
 
@@ -41,23 +50,25 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
         setContentView(R.layout.activity_player);
         setTitle("Player Dashboard");
 
+        // init widget
         playerTextView = (TextView) findViewById(R.id.playerTextView);
         myRequestsBtn = (Button) findViewById(R.id.pMyRequestsBtn);
         myTournamentsBtn = (Button) findViewById(R.id.pMyTournamentsBtn);
         joinTournamentBtn = (Button) findViewById(R.id.pJoinTournamentBtn);
         logoutBtn = (Button) findViewById(R.id.pLogoutBtn);
 
+        // get logged user from intent
         Intent intent = getIntent();
         String playerLogged = intent.getExtras().getString("loggedUser");
 
+        // init presenter and load data
         presenter = new PlayerPresenter(this, playerLogged);
         presenter.loadRequests();
         presenter.loadTournaments();
 
         playerTextView.setText("Hello " + playerLogged);
 
-
-
+        // click events
         joinTournamentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,12 +85,15 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
 
     }
 
+    /**
+     * Overrides onBackPressed to act like our custom logout
+     */
     @Override
     public void onBackPressed() {
         logoutDialog();
     }
 
-
+    // join dialog - enter a tournamentID
     private void joinTournamentDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Join a Tournament");
@@ -99,13 +113,13 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         return;
                     }
                 });
         alert.show();
     }
 
+    // logout dialog
     private void logoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -133,6 +147,7 @@ public class PlayerDashboardActivity extends AppCompatActivity implements Player
 
     }
 
+    // logout user using SharedPreferences
     private void logout() {
         SharedPreferences sharedPreferences = getSharedPreferences("rememberMe", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
