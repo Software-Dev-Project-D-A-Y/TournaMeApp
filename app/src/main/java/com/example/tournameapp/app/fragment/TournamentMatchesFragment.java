@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
+import com.example.tournameapp.TournamentDataListener;
 import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
 import com.example.tournameapp.interfaces.EditTournamentListener;
 import com.example.tournameapp.interfaces.OnMatchUpdateListener;
@@ -35,7 +36,7 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
     private TournamentMatchesListAdapter adapter;
     private TournamentMatchesPresenter presenter;
 
-    public TournamentMatchesFragment(List<Match> matches){
+    public TournamentMatchesFragment(List<Match> matches) {
         presenter = new TournamentMatchesPresenter(this);
         this.matches = matches;
     }
@@ -43,12 +44,11 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof EditTournamentListener) {
+        if (context instanceof EditTournamentListener) {
             listener = (EditTournamentListener) context;
         } else {
-            throw new RuntimeException(context+" need to implements OnEditListener interface");
+            listener = null;
         }
-
     }
 
     @Nullable
@@ -57,16 +57,17 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
         View view = inflater.inflate(R.layout.fragment_tournament_matches, container, false);
 
         matchesLv = (ListView) view.findViewById(R.id.mathcesLv);
-        adapter = new TournamentMatchesListAdapter(getContext(),R.layout.layout_matches, matches);
+        adapter = new TournamentMatchesListAdapter(getContext(), R.layout.layout_matches, matches);
         matchesLv.setAdapter(adapter);
 
-        matchesLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                editMatchDialog(matches.get(position));
-            }
-        });
-
+        if (listener != null) {
+            matchesLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    editMatchDialog(matches.get(position));
+                }
+            });
+        }
         return view;
     }
 
@@ -78,12 +79,12 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
         final EditText homePlayerScoreTxt = textEntryView.findViewById(R.id.homePlayerScoreTxt);
         final EditText awayPlayerScoreTxt = textEntryView.findViewById(R.id.awayPlayerScoreTxt);
 
-        homePlayerTxt.setText(match.getHomePlayer().getUserName()+":");
-        awayPlayerTxt.setText(match.getAwayPlayer().getUserName()+":");
+        homePlayerTxt.setText(match.getHomePlayer().getUserName() + ":");
+        awayPlayerTxt.setText(match.getAwayPlayer().getUserName() + ":");
 
-        if(match.isUpdated()){
-            homePlayerScoreTxt.setText(match.getHomeScore()+"");
-            awayPlayerScoreTxt.setText(match.getAwayScore()+"");
+        if (match.isUpdated()) {
+            homePlayerScoreTxt.setText(match.getHomeScore() + "");
+            awayPlayerScoreTxt.setText(match.getAwayScore() + "");
         }
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
@@ -116,7 +117,7 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
 
     @Override
     public void onMatchUpdated(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
         // REFRESH
     }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
+import com.example.tournameapp.interfaces.TournamentListener;
+import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Tournament;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +25,11 @@ import com.example.tournameapp.ui.main.SectionsPagerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-public class PlayerTournamentActivity extends AppCompatActivity {
+import java.util.List;
+
+public class TournamentDashboardActivity extends AppCompatActivity implements TournamentDataListener {
+
+    private TournamentDashboardPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +37,17 @@ public class PlayerTournamentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_tournament);
         Intent intent = getIntent();
         String tournamentID = intent.getExtras().getString("tournamentChose");
-
-        UsersService usersService = UsersService.getInstance();
-        TournamentsService tournamentsService = TournamentsService.getInstance();
-
-        tournamentsService.loadTournament(tournamentID, new OnDataLoadedListener() {
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                Tournament tournament = dataSnapshot.getValue(Tournament.class);
-                onTournamentLoaded(tournament);
-            }
-
-            @Override
-            public void onError(DatabaseError error) {
-
-            }
-        });
-
+        String playerUsername = intent.getExtras().getString("player");
+        presenter = new TournamentDashboardPresenter(this);
+        presenter.loadData(tournamentID,playerUsername);
     }
 
-    private void onTournamentLoaded(Tournament tournament){
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),tournament);
+    @Override
+    public void onDataLoaded(Tournament tournament, List<Match> allMatches, List<Match> myMatches){
+        Log.d("allMatches","size: "+allMatches.size()+","+allMatches.toString());
+        Log.d("myMatches","size: "+myMatches.size()+","+myMatches.toString());
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),tournament,allMatches,myMatches);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -70,4 +62,5 @@ public class PlayerTournamentActivity extends AppCompatActivity {
             }
         });
     }
+
 }
