@@ -27,6 +27,8 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
 
     private class ViewHolder {
         TextView tournamentTxt;
+        Button playerViewTableBtn;
+        Button playerMyMatchesBtn;
         Button leaveBtn;
     }
 
@@ -56,6 +58,9 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
         if (tournament == null) return convertView;
 
         holder.tournamentTxt = (TextView) convertView.findViewById(R.id.playerTournamentsTxt);
+        holder.playerViewTableBtn = (Button) convertView.findViewById(R.id.playerViewTableBtn);
+        holder.playerMyMatchesBtn = (Button) convertView.findViewById(R.id.playerMyMatchesBtn);
+
         holder.leaveBtn = (Button) convertView.findViewById(R.id.playerLeaveTourBtn);
         holder.leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +75,12 @@ public class PlayerTournamentsListAdapter extends ArrayAdapter<Tournament> {
         holder.tournamentTxt.setText(tournamentStr);
 
         if (!(tournament.isActive())) {
+            holder.playerViewTableBtn.setVisibility(View.GONE);
+            holder.playerMyMatchesBtn.setVisibility(View.GONE);
             holder.tournamentTxt.setTextColor(Color.RED);
         } else {
+            holder.playerViewTableBtn.setVisibility(View.GONE);
+            holder.playerMyMatchesBtn.setVisibility(View.GONE);
             holder.leaveBtn.setVisibility(View.GONE);
             holder.tournamentTxt.setTextColor(Color.GREEN);
         }

@@ -31,16 +31,25 @@ public class TournamentFragment extends DialogFragment implements TournamentList
 
     private Player playerToWatch = null;
 
+    private static TournamentFragment instance = null;
+
+    public static TournamentFragment getInstance(Tournament tournament) {
+        if(instance == null) {
+            instance = new TournamentFragment(tournament);
+        }
+        return instance;
+    }
 
     public TournamentFragment(Tournament tournament) {
         presenter = new TournamentPresenter(this, tournament);
-        presenter.loadAllMatches();
+//        presenter.loadAllMatches();
+        Log.d("CONSTRUCTOR","call");
     }
 
     public TournamentFragment(Tournament tournament, Player playerToWatch) {
         presenter = new TournamentPresenter(this, tournament);
         this.playerToWatch = playerToWatch;
-        presenter.loadAllMatches();
+        //presenter.loadAllMatches();
     }
 
 
@@ -48,7 +57,8 @@ public class TournamentFragment extends DialogFragment implements TournamentList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_table, container, false);
-
+        Log.d("onCreateView","call");
+        presenter.loadAllMatches();
         return view;
     }
 

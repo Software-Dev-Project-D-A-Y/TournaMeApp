@@ -77,6 +77,7 @@ public class TournamentPresenter {
 
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
+                matchesPlayed.clear();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     Match match = child.getValue(Match.class);
                     matchesPlayed.add(match);
@@ -102,6 +103,7 @@ public class TournamentPresenter {
     }
 
     public List<TournamentTableRow>  initTableRows() {
+        rows.clear();
         for (Player player : players) {
             TournamentTableRow row = new TournamentTableRow(player);
             rows.put(player.getUserName(), row);

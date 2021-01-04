@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">TournaMeApp</string>
     <string name="join_tournament">Join Tournament</string>
+    <string name="title_activity_player_tournament_acitivity">PlayerTournamentAcitivity</string>
+    <string name="table_tab">View Table</string>
+    <string name="my_matches_tab">My Matches</string>
+    <string name="title_activity_player_tournament">PlayerTournamentActivity</string>
+    <string name="all_matches_tab">All Matches</string>
 </resources>
