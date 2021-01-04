@@ -2,8 +2,8 @@
     <string name="app_name">TournaMeApp</string>
     <string name="join_tournament">Join Tournament</string>
     <string name="title_activity_player_tournament_acitivity">PlayerTournamentAcitivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="table_tab">View Table</string>
+    <string name="my_matches_tab">My Matches</string>
     <string name="title_activity_player_tournament">PlayerTournamentActivity</string>
-    <string name="tab_text_3">Table</string>
+    <string name="all_matches_tab">All Matches</string>
 </resources>

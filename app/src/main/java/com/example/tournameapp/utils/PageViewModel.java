@@ -1,4 +1,4 @@
-package com.example.tournameapp.ui.main;
+package com.example.tournameapp.utils;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

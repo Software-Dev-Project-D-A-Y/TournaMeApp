@@ -1,4 +1,4 @@
-package com.example.tournameapp.ui.main;
+package com.example.tournameapp.adapters;
 
 import android.content.Context;
 
@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.TournamentDashboardActivity;
 import com.example.tournameapp.app.fragment.TournamentFragment;
 import com.example.tournameapp.app.fragment.TournamentMatchesFragment;
 import com.example.tournameapp.model.Match;
+import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
 
 import java.util.List;
@@ -21,21 +21,23 @@ import java.util.List;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class TournamentSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2,R.string.tab_text_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.table_tab, R.string.my_matches_tab,R.string.all_matches_tab};
     private final Context mContext;
-    private Tournament tournament;
-    private List<Match> allMatches;
-    private List<Match> myMatches;
+    private Tournament mTournament;
+    private List<Match> mAllMatches;
+    private List<Match> mMyMatches;
+    private Player mPlayer;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm,Tournament tournament, List<Match> allMatches, List<Match> myMatches) {
+    public TournamentSectionsPagerAdapter(Context context, FragmentManager fm, Tournament tournament, List<Match> allMatches, List<Match> myMatches,Player player) {
         super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
-        this.tournament = tournament;
-        this.allMatches = allMatches;
-        this.myMatches = myMatches;
+        this.mTournament = tournament;
+        this.mAllMatches = allMatches;
+        this.mMyMatches = myMatches;
+        this.mPlayer = player;
     }
 
 
@@ -44,13 +46,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new TournamentFragment(tournament);
+                fragment = new TournamentFragment(mTournament, mPlayer);
                 break;
             case 1:
-                fragment = new TournamentMatchesFragment(allMatches);
+                fragment = new TournamentMatchesFragment(mMyMatches);
                 break;
             case 2:
-                fragment = new TournamentMatchesFragment(myMatches);
+                fragment = new TournamentMatchesFragment(mAllMatches);
                 break;
 
         }

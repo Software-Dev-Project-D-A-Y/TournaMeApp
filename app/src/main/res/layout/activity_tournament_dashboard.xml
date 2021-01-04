@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TournamentDashboardActivity">
+    tools:context=".app.activity.TournamentDashboardActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,12 +20,12 @@
             app:srcCompat="@drawable/the_logo" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tournamentNameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TextView"
-            android:textSize="36sp" />
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -39,11 +39,4 @@
         android:layout_height="507dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,10 +1,10 @@
-package com.example.tournameapp;
+package com.example.tournameapp.presenters;
 
+import com.example.tournameapp.interfaces.TournamentDataListener;
 import com.example.tournameapp.database.MatchesService;
 import com.example.tournameapp.database.TournamentsService;
 import com.example.tournameapp.database.UsersService;
 import com.example.tournameapp.interfaces.OnDataLoadedListener;
-import com.example.tournameapp.interfaces.TournamentListener;
 import com.example.tournameapp.model.Match;
 import com.example.tournameapp.model.Player;
 import com.example.tournameapp.model.Tournament;
@@ -72,7 +72,7 @@ public class TournamentDashboardPresenter {
                         myMatches.add(match);
                     }
                 }
-                listener.onDataLoaded(tournament,allMatches,myMatches);
+                listener.onDataLoaded(tournament,allMatches,myMatches,player);
             }
 
             @Override

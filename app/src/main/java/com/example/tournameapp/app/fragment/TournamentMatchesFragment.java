@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tournameapp.R;
-import com.example.tournameapp.TournamentDataListener;
 import com.example.tournameapp.adapters.TournamentMatchesListAdapter;
 import com.example.tournameapp.interfaces.EditTournamentListener;
 import com.example.tournameapp.interfaces.OnMatchUpdateListener;
@@ -67,8 +66,46 @@ public class TournamentMatchesFragment extends DialogFragment implements OnMatch
                     editMatchDialog(matches.get(position));
                 }
             });
+        } else {
+            matchesLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    showMatchDialog(matches.get(position));
+                }
+            });
         }
         return view;
+    }
+
+    private void showMatchDialog(final Match match) {
+        LayoutInflater factory = LayoutInflater.from(getContext());
+        final View textEntryView = factory.inflate(R.layout.layout_show_match, null);
+        final TextView homePlayerTxt = textEntryView.findViewById(R.id.showHomeNameTxt);
+        final TextView awayPlayerTxt = textEntryView.findViewById(R.id.showAwayNameTxt);
+        final TextView homePlayerScoreTxt = textEntryView.findViewById(R.id.showHomeScoreTxt);
+        final TextView awayPlayerScoreTxt = textEntryView.findViewById(R.id.showAwayScoreTxt);
+
+        homePlayerTxt.setText(match.getHomePlayer().getUserName() + ":");
+        awayPlayerTxt.setText(match.getAwayPlayer().getUserName() + ":");
+
+        if (match.isUpdated()) {
+            homePlayerScoreTxt.setText(match.getHomeScore() + "");
+            awayPlayerScoreTxt.setText(match.getAwayScore() + "");
+        } else {
+            return;
+        }
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle(match.matchToString());
+        alert.setView(textEntryView);
+
+        alert.setNegativeButton("Close",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        alert.show();
     }
 
     private void editMatchDialog(final Match match) {
